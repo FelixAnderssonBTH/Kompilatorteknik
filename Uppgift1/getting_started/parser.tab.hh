@@ -49,7 +49,7 @@
 
   #include <string>
   #include "Node.h"
-  #define USE_LEX_ONLY true //change this macro to true if you want to isolate the lexer from the parser.
+  #define USE_LEX_ONLY false //change this macro to true if you want to isolate the lexer from the parser.
 
 #line 55 "parser.tab.hh"
 
@@ -383,27 +383,15 @@ namespace yy {
     union union_type
     {
       // root
-      // expression
+      // Expression
       // factor
+      // Identifier
       char dummy1[sizeof (Node *)];
 
-      // PLUSOP
-      // MINUSOP
-      // MULTOP
       // INT
-      // LP
-      // RP
-      // LB
-      // RB
       // LS
       // RS
       // CEMI
-      // LEFT_ARROW
-      // RIGHT_ARROW
-      // AND
-      // OR
-      // EQUAL
-      // DIVIDE
       // NOT
       // DOT
       // EUQUAL_SIGN
@@ -428,6 +416,20 @@ namespace yy {
       // LENGHT
       // PRINTLN
       // STR
+      // ID
+      // LP
+      // RP
+      // LB
+      // RB
+      // PLUSOP
+      // MINUSOP
+      // MULTOP
+      // DIVIDE
+      // AND
+      // OR
+      // EQUAL
+      // LEFT_ARROW
+      // RIGHT_ARROW
       char dummy2[sizeof (std::string)];
     };
 
@@ -472,47 +474,48 @@ namespace yy {
     END = 0,                       // "end of file"
     YYerror = 256,                 // error
     YYUNDEF = 257,                 // "invalid token"
-    PLUSOP = 258,                  // PLUSOP
-    MINUSOP = 259,                 // MINUSOP
-    MULTOP = 260,                  // MULTOP
-    INT = 261,                     // INT
-    LP = 262,                      // LP
-    RP = 263,                      // RP
-    LB = 264,                      // LB
-    RB = 265,                      // RB
-    LS = 266,                      // LS
-    RS = 267,                      // RS
-    CEMI = 268,                    // CEMI
-    LEFT_ARROW = 269,              // LEFT_ARROW
-    RIGHT_ARROW = 270,             // RIGHT_ARROW
-    AND = 271,                     // AND
-    OR = 272,                      // OR
-    EQUAL = 273,                   // EQUAL
-    DIVIDE = 274,                  // DIVIDE
-    NOT = 275,                     // NOT
-    DOT = 276,                     // DOT
-    EUQUAL_SIGN = 277,             // EUQUAL_SIGN
-    SEMI = 278,                    // SEMI
-    CLASS = 279,                   // CLASS
-    EXTENDS = 280,                 // EXTENDS
-    PUBLIC = 281,                  // PUBLIC
-    VOID = 282,                    // VOID
-    STATIC = 283,                  // STATIC
-    MAIN = 284,                    // MAIN
-    STRING = 285,                  // STRING
-    BOOL = 286,                    // BOOL
-    INTEGER = 287,                 // INTEGER
-    IF = 288,                      // IF
-    ELSE = 289,                    // ELSE
-    WHILE = 290,                   // WHILE
-    TRUE = 291,                    // TRUE
-    FALSE = 292,                   // FALSE
-    THIS = 293,                    // THIS
-    NEW = 294,                     // NEW
-    RETURN = 295,                  // RETURN
-    LENGHT = 296,                  // LENGHT
-    PRINTLN = 297,                 // PRINTLN
-    STR = 298                      // STR
+    INT = 258,                     // INT
+    LS = 259,                      // LS
+    RS = 260,                      // RS
+    CEMI = 261,                    // CEMI
+    NOT = 262,                     // NOT
+    DOT = 263,                     // DOT
+    EUQUAL_SIGN = 264,             // EUQUAL_SIGN
+    SEMI = 265,                    // SEMI
+    CLASS = 266,                   // CLASS
+    EXTENDS = 267,                 // EXTENDS
+    PUBLIC = 268,                  // PUBLIC
+    VOID = 269,                    // VOID
+    STATIC = 270,                  // STATIC
+    MAIN = 271,                    // MAIN
+    STRING = 272,                  // STRING
+    BOOL = 273,                    // BOOL
+    INTEGER = 274,                 // INTEGER
+    IF = 275,                      // IF
+    ELSE = 276,                    // ELSE
+    WHILE = 277,                   // WHILE
+    TRUE = 278,                    // TRUE
+    FALSE = 279,                   // FALSE
+    THIS = 280,                    // THIS
+    NEW = 281,                     // NEW
+    RETURN = 282,                  // RETURN
+    LENGHT = 283,                  // LENGHT
+    PRINTLN = 284,                 // PRINTLN
+    STR = 285,                     // STR
+    ID = 286,                      // ID
+    LP = 287,                      // LP
+    RP = 288,                      // RP
+    LB = 289,                      // LB
+    RB = 290,                      // RB
+    PLUSOP = 291,                  // PLUSOP
+    MINUSOP = 292,                 // MINUSOP
+    MULTOP = 293,                  // MULTOP
+    DIVIDE = 294,                  // DIVIDE
+    AND = 295,                     // AND
+    OR = 296,                      // OR
+    EQUAL = 297,                   // EQUAL
+    LEFT_ARROW = 298,              // LEFT_ARROW
+    RIGHT_ARROW = 299              // RIGHT_ARROW
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -529,56 +532,58 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 44, ///< Number of tokens.
+        YYNTOKENS = 45, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
         S_YYUNDEF = 2,                           // "invalid token"
-        S_PLUSOP = 3,                            // PLUSOP
-        S_MINUSOP = 4,                           // MINUSOP
-        S_MULTOP = 5,                            // MULTOP
-        S_INT = 6,                               // INT
-        S_LP = 7,                                // LP
-        S_RP = 8,                                // RP
-        S_LB = 9,                                // LB
-        S_RB = 10,                               // RB
-        S_LS = 11,                               // LS
-        S_RS = 12,                               // RS
-        S_CEMI = 13,                             // CEMI
-        S_LEFT_ARROW = 14,                       // LEFT_ARROW
-        S_RIGHT_ARROW = 15,                      // RIGHT_ARROW
-        S_AND = 16,                              // AND
-        S_OR = 17,                               // OR
-        S_EQUAL = 18,                            // EQUAL
-        S_DIVIDE = 19,                           // DIVIDE
-        S_NOT = 20,                              // NOT
-        S_DOT = 21,                              // DOT
-        S_EUQUAL_SIGN = 22,                      // EUQUAL_SIGN
-        S_SEMI = 23,                             // SEMI
-        S_CLASS = 24,                            // CLASS
-        S_EXTENDS = 25,                          // EXTENDS
-        S_PUBLIC = 26,                           // PUBLIC
-        S_VOID = 27,                             // VOID
-        S_STATIC = 28,                           // STATIC
-        S_MAIN = 29,                             // MAIN
-        S_STRING = 30,                           // STRING
-        S_BOOL = 31,                             // BOOL
-        S_INTEGER = 32,                          // INTEGER
-        S_IF = 33,                               // IF
-        S_ELSE = 34,                             // ELSE
-        S_WHILE = 35,                            // WHILE
-        S_TRUE = 36,                             // TRUE
-        S_FALSE = 37,                            // FALSE
-        S_THIS = 38,                             // THIS
-        S_NEW = 39,                              // NEW
-        S_RETURN = 40,                           // RETURN
-        S_LENGHT = 41,                           // LENGHT
-        S_PRINTLN = 42,                          // PRINTLN
-        S_STR = 43,                              // STR
-        S_YYACCEPT = 44,                         // $accept
-        S_root = 45,                             // root
-        S_expression = 46,                       // expression
-        S_factor = 47                            // factor
+        S_INT = 3,                               // INT
+        S_LS = 4,                                // LS
+        S_RS = 5,                                // RS
+        S_CEMI = 6,                              // CEMI
+        S_NOT = 7,                               // NOT
+        S_DOT = 8,                               // DOT
+        S_EUQUAL_SIGN = 9,                       // EUQUAL_SIGN
+        S_SEMI = 10,                             // SEMI
+        S_CLASS = 11,                            // CLASS
+        S_EXTENDS = 12,                          // EXTENDS
+        S_PUBLIC = 13,                           // PUBLIC
+        S_VOID = 14,                             // VOID
+        S_STATIC = 15,                           // STATIC
+        S_MAIN = 16,                             // MAIN
+        S_STRING = 17,                           // STRING
+        S_BOOL = 18,                             // BOOL
+        S_INTEGER = 19,                          // INTEGER
+        S_IF = 20,                               // IF
+        S_ELSE = 21,                             // ELSE
+        S_WHILE = 22,                            // WHILE
+        S_TRUE = 23,                             // TRUE
+        S_FALSE = 24,                            // FALSE
+        S_THIS = 25,                             // THIS
+        S_NEW = 26,                              // NEW
+        S_RETURN = 27,                           // RETURN
+        S_LENGHT = 28,                           // LENGHT
+        S_PRINTLN = 29,                          // PRINTLN
+        S_STR = 30,                              // STR
+        S_ID = 31,                               // ID
+        S_LP = 32,                               // LP
+        S_RP = 33,                               // RP
+        S_LB = 34,                               // LB
+        S_RB = 35,                               // RB
+        S_PLUSOP = 36,                           // PLUSOP
+        S_MINUSOP = 37,                          // MINUSOP
+        S_MULTOP = 38,                           // MULTOP
+        S_DIVIDE = 39,                           // DIVIDE
+        S_AND = 40,                              // AND
+        S_OR = 41,                               // OR
+        S_EQUAL = 42,                            // EQUAL
+        S_LEFT_ARROW = 43,                       // LEFT_ARROW
+        S_RIGHT_ARROW = 44,                      // RIGHT_ARROW
+        S_YYACCEPT = 45,                         // $accept
+        S_root = 46,                             // root
+        S_Expression = 47,                       // Expression
+        S_factor = 48,                           // factor
+        S_Identifier = 49                        // Identifier
       };
     };
 
@@ -614,28 +619,16 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
+      case symbol_kind::S_Identifier: // Identifier
         value.move< Node * > (std::move (that.value));
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LB: // LB
-      case symbol_kind::S_RB: // RB
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
       case symbol_kind::S_CEMI: // CEMI
-      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
-      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_EQUAL: // EQUAL
-      case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -660,6 +653,20 @@ namespace yy {
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINTLN: // PRINTLN
       case symbol_kind::S_STR: // STR
+      case symbol_kind::S_ID: // ID
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_PLUSOP: // PLUSOP
+      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_MULTOP: // MULTOP
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -733,28 +740,16 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
+      case symbol_kind::S_Identifier: // Identifier
         value.template destroy< Node * > ();
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LB: // LB
-      case symbol_kind::S_RB: // RB
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
       case symbol_kind::S_CEMI: // CEMI
-      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
-      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_EQUAL: // EQUAL
-      case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -779,6 +774,20 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINTLN: // PRINTLN
       case symbol_kind::S_STR: // STR
+      case symbol_kind::S_ID: // ID
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_PLUSOP: // PLUSOP
+      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_MULTOP: // MULTOP
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
         value.template destroy< std::string > ();
         break;
 
@@ -978,51 +987,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_PLUSOP (std::string v)
-      {
-        return symbol_type (token::PLUSOP, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_PLUSOP (const std::string& v)
-      {
-        return symbol_type (token::PLUSOP, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_MINUSOP (std::string v)
-      {
-        return symbol_type (token::MINUSOP, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_MINUSOP (const std::string& v)
-      {
-        return symbol_type (token::MINUSOP, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_MULTOP (std::string v)
-      {
-        return symbol_type (token::MULTOP, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_MULTOP (const std::string& v)
-      {
-        return symbol_type (token::MULTOP, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_INT (std::string v)
       {
         return symbol_type (token::INT, std::move (v));
@@ -1033,66 +997,6 @@ switch (yykind)
       make_INT (const std::string& v)
       {
         return symbol_type (token::INT, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_LP (std::string v)
-      {
-        return symbol_type (token::LP, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_LP (const std::string& v)
-      {
-        return symbol_type (token::LP, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_RP (std::string v)
-      {
-        return symbol_type (token::RP, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_RP (const std::string& v)
-      {
-        return symbol_type (token::RP, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_LB (std::string v)
-      {
-        return symbol_type (token::LB, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_LB (const std::string& v)
-      {
-        return symbol_type (token::LB, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_RB (std::string v)
-      {
-        return symbol_type (token::RB, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_RB (const std::string& v)
-      {
-        return symbol_type (token::RB, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1138,96 +1042,6 @@ switch (yykind)
       make_CEMI (const std::string& v)
       {
         return symbol_type (token::CEMI, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_LEFT_ARROW (std::string v)
-      {
-        return symbol_type (token::LEFT_ARROW, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_LEFT_ARROW (const std::string& v)
-      {
-        return symbol_type (token::LEFT_ARROW, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_RIGHT_ARROW (std::string v)
-      {
-        return symbol_type (token::RIGHT_ARROW, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_RIGHT_ARROW (const std::string& v)
-      {
-        return symbol_type (token::RIGHT_ARROW, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_AND (std::string v)
-      {
-        return symbol_type (token::AND, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_AND (const std::string& v)
-      {
-        return symbol_type (token::AND, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_OR (std::string v)
-      {
-        return symbol_type (token::OR, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_OR (const std::string& v)
-      {
-        return symbol_type (token::OR, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_EQUAL (std::string v)
-      {
-        return symbol_type (token::EQUAL, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_EQUAL (const std::string& v)
-      {
-        return symbol_type (token::EQUAL, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_DIVIDE (std::string v)
-      {
-        return symbol_type (token::DIVIDE, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_DIVIDE (const std::string& v)
-      {
-        return symbol_type (token::DIVIDE, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1590,6 +1404,216 @@ switch (yykind)
         return symbol_type (token::STR, v);
       }
 #endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_ID (std::string v)
+      {
+        return symbol_type (token::ID, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_ID (const std::string& v)
+      {
+        return symbol_type (token::ID, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LP (std::string v)
+      {
+        return symbol_type (token::LP, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LP (const std::string& v)
+      {
+        return symbol_type (token::LP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RP (std::string v)
+      {
+        return symbol_type (token::RP, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RP (const std::string& v)
+      {
+        return symbol_type (token::RP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LB (std::string v)
+      {
+        return symbol_type (token::LB, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LB (const std::string& v)
+      {
+        return symbol_type (token::LB, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RB (std::string v)
+      {
+        return symbol_type (token::RB, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RB (const std::string& v)
+      {
+        return symbol_type (token::RB, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_PLUSOP (std::string v)
+      {
+        return symbol_type (token::PLUSOP, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_PLUSOP (const std::string& v)
+      {
+        return symbol_type (token::PLUSOP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MINUSOP (std::string v)
+      {
+        return symbol_type (token::MINUSOP, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_MINUSOP (const std::string& v)
+      {
+        return symbol_type (token::MINUSOP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MULTOP (std::string v)
+      {
+        return symbol_type (token::MULTOP, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_MULTOP (const std::string& v)
+      {
+        return symbol_type (token::MULTOP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DIVIDE (std::string v)
+      {
+        return symbol_type (token::DIVIDE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_DIVIDE (const std::string& v)
+      {
+        return symbol_type (token::DIVIDE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_AND (std::string v)
+      {
+        return symbol_type (token::AND, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_AND (const std::string& v)
+      {
+        return symbol_type (token::AND, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_OR (std::string v)
+      {
+        return symbol_type (token::OR, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_OR (const std::string& v)
+      {
+        return symbol_type (token::OR, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EQUAL (std::string v)
+      {
+        return symbol_type (token::EQUAL, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_EQUAL (const std::string& v)
+      {
+        return symbol_type (token::EQUAL, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LEFT_ARROW (std::string v)
+      {
+        return symbol_type (token::LEFT_ARROW, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LEFT_ARROW (const std::string& v)
+      {
+        return symbol_type (token::LEFT_ARROW, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RIGHT_ARROW (std::string v)
+      {
+        return symbol_type (token::RIGHT_ARROW, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RIGHT_ARROW (const std::string& v)
+      {
+        return symbol_type (token::RIGHT_ARROW, v);
+      }
+#endif
 
 
     class context
@@ -1666,7 +1690,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const signed char yypgoto_[];
+    static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -1918,9 +1942,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 16,     ///< Last index in yytable_.
-      yynnts_ = 4,  ///< Number of nonterminal symbols.
-      yyfinal_ = 7 ///< Termination state number.
+      yylast_ = 162,     ///< Last index in yytable_.
+      yynnts_ = 5,  ///< Number of nonterminal symbols.
+      yyfinal_ = 18 ///< Termination state number.
     };
 
 
@@ -1966,10 +1990,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44
     };
     // Last valid token kind.
-    const int code_max = 298;
+    const int code_max = 299;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1988,28 +2012,16 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
+      case symbol_kind::S_Identifier: // Identifier
         value.copy< Node * > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LB: // LB
-      case symbol_kind::S_RB: // RB
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
       case symbol_kind::S_CEMI: // CEMI
-      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
-      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_EQUAL: // EQUAL
-      case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -2034,6 +2046,20 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINTLN: // PRINTLN
       case symbol_kind::S_STR: // STR
+      case symbol_kind::S_ID: // ID
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_PLUSOP: // PLUSOP
+      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_MULTOP: // MULTOP
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -2069,28 +2095,16 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
+      case symbol_kind::S_Identifier: // Identifier
         value.move< Node * > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LB: // LB
-      case symbol_kind::S_RB: // RB
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
       case symbol_kind::S_CEMI: // CEMI
-      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
-      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_EQUAL: // EQUAL
-      case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -2115,6 +2129,20 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINTLN: // PRINTLN
       case symbol_kind::S_STR: // STR
+      case symbol_kind::S_ID: // ID
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_PLUSOP: // PLUSOP
+      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_MULTOP: // MULTOP
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2183,7 +2211,7 @@ switch (yykind)
 
 
 } // yy
-#line 2187 "parser.tab.hh"
+#line 2215 "parser.tab.hh"
 
 
 

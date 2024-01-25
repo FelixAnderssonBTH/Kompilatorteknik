@@ -7,7 +7,7 @@
 %code requires{
   #include <string>
   #include "Node.h"
-  #define USE_LEX_ONLY true //change this macro to true if you want to isolate the lexer from the parser.
+  #define USE_LEX_ONLY false //change this macro to true if you want to isolate the lexer from the parser.
 }
 
 %code{
@@ -19,30 +19,44 @@
 }
 
 // definition of set of tokens. All tokens are of type string
-%token <std::string> PLUSOP MINUSOP MULTOP INT LP RP LB RB LS RS CEMI LEFT_ARROW RIGHT_ARROW AND OR EQUAL DIVIDE NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINTLN STR
+%token <std::string> INT LS RS CEMI NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINTLN STR ID
+%token <std::string> LP RP LB RB
+%token <std::string> PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> Goal MainClass ClassDeclaration VarDeclaration MethodDeclaration Type Statement Expression Identifier
+%type <Node *> root Expression factor Identifier
 
 %%
-Goal:
-
-MainClass:
-
-ClassDeclaration:
-
-VarDeclaration:
-
-MethodDeclaration:
-
-Type:
-
-Statement:
-
+root:       Expression {root = $1;};
 Expression:
+Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3); }
+            | Expression MINUSOP Expression { $$ = new Node("SubExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression MULTOP Expression { $$ = new Node("MultExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression DIVIDE Expression { $$ = new Node("DivideExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression AND Expression { $$ = new Node("AndExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression OR Expression { $$ = new Node("OrExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression EQUAL Expression { $$ = new Node("EqualExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression LEFT_ARROW Expression { $$ = new Node("LeftArrowExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression RIGHT_ARROW Expression { $$ = new Node("RightArrowExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression LS Expression RS { $$ = new Node("ArrayExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression DOT Expression LENGHT { $$ = new Node("LenghtExpression", "", yylineno); $$->children.push_back($1);}
+            | TRUE {$$ = new Node("TRUE", "",yylineno);}
+            | FALSE {$$ = new Node("FALSE", "",yylineno);}
+            | THIS {$$ = new Node("THIS", "",yylineno);}
+            | NEW INTEGER LS Expression RS {$$ = new Node("newIntExpression", "",yylineno); $$->children.push_back($4);}
+            | NEW Identifier LP RP {$$ = new Node("newIdentifierExpression", "",yylineno); $$->children.push_back($2);}
+            | NOT Expression {$$ = new Node("NotExpression", "",yylineno); $$->children.push_back($2);}
+            | LP Expression RP {$$ = new Node("BracketsExpression", "",yylineno); $$->children.push_back($2);}
+            | factor      {$$ = $1; /* printf("r4 ");*/};
+            | Identifier      {$$ = $1; /* printf("r4 ");*/};
 
-Identifier:
+factor:     INT           {  $$ = new Node("", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+            | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
+Identifier: STR           {  $$ = new Node("", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+            | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
+
+
 
 
 
