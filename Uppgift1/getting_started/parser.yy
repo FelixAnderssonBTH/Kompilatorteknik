@@ -25,10 +25,18 @@
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root Expression factor Identifier
+%type <Node *> root Statement Expression factor Identifier
 
 %%
-root:       Expression {root = $1;};
+root:       Statement {root = $1;};
+
+Statement:
+LP RP { $$ = new Node("EmptyStatement", "",yylineno); }
+            |Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            |Identifier LS Expression RS EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);$$->children.push_back($6);}
+            
+
+
 Expression:
 Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3); }
             | Expression MINUSOP Expression { $$ = new Node("SubExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
@@ -51,9 +59,9 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | factor      {$$ = $1; /* printf("r4 ");*/};
             | Identifier      {$$ = $1; /* printf("r4 ");*/};
 
-factor:     INT           {  $$ = new Node("", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
-Identifier: STR           {  $$ = new Node("", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+Identifier: STR           {  $$ = new Node("Str", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
 
 

@@ -1,1 +1,1 @@
-hej || 1 == true
+hej || 1 == true;

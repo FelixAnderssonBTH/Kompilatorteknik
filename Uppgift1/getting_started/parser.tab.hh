@@ -383,6 +383,7 @@ namespace yy {
     union union_type
     {
       // root
+      // Statement
       // Expression
       // factor
       // Identifier
@@ -581,9 +582,10 @@ namespace yy {
         S_RIGHT_ARROW = 44,                      // RIGHT_ARROW
         S_YYACCEPT = 45,                         // $accept
         S_root = 46,                             // root
-        S_Expression = 47,                       // Expression
-        S_factor = 48,                           // factor
-        S_Identifier = 49                        // Identifier
+        S_Statement = 47,                        // Statement
+        S_Expression = 48,                       // Expression
+        S_factor = 49,                           // factor
+        S_Identifier = 50                        // Identifier
       };
     };
 
@@ -619,6 +621,7 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -740,6 +743,7 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -1682,7 +1686,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const signed char yypact_[];
+    static const short yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1690,7 +1694,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const short yypgoto_[];
+    static const signed char yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -1942,9 +1946,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 162,     ///< Last index in yytable_.
-      yynnts_ = 5,  ///< Number of nonterminal symbols.
-      yyfinal_ = 18 ///< Termination state number.
+      yylast_ = 210,     ///< Last index in yytable_.
+      yynnts_ = 6,  ///< Number of nonterminal symbols.
+      yyfinal_ = 17 ///< Termination state number.
     };
 
 
@@ -2012,6 +2016,7 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -2095,6 +2100,7 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -2211,7 +2217,7 @@ switch (yykind)
 
 
 } // yy
-#line 2215 "parser.tab.hh"
+#line 2221 "parser.tab.hh"
 
 
 
