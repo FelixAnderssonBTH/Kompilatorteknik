@@ -19,7 +19,7 @@
 }
 
 // definition of set of tokens. All tokens are of type string
-%token <std::string> INT LS RS CEMI NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINTLN STR ID
+%token <std::string> INT LS RS CEMI NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR ID
 %token <std::string> LP RP LB RB
 %token <std::string> PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
@@ -32,8 +32,11 @@ root:       Statement {root = $1;};
 
 Statement:
 LP RP { $$ = new Node("EmptyStatement", "",yylineno); }
-            |Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
-            |Identifier LS Expression RS EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);$$->children.push_back($6);}
+            | IF LP Expression RP Statement ELSE Statement {$$ = new Node(" IfElseStatement", ""); $$->children.push_back($3); $$->children.push_back($5); $$->children.push_back($7);}
+            | WHILE LP Expression RP Statement {$$ = new Node("WhileStatement", ""), $$->children.push_back($3), $$->children.push_back($5);}
+            | PRINT LP Expression RP SEMI {$$ = new Node("PrintStatement", ""); $$->children.push_back($3);}
+            | Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Identifier LS Expression RS EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);$$->children.push_back($6);}
             
 
 

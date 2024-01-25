@@ -46,7 +46,7 @@
 "new"                   {if(USE_LEX_ONLY) {printf("NEW ");} else {return yy::parser::make_NEW(yytext);}}
 "return"                {if(USE_LEX_ONLY) {printf("RETURN ");} else {return yy::parser::make_RETURN(yytext);}}
 "lenght"                {if(USE_LEX_ONLY) {printf("LENGHT ");} else {return yy::parser::make_LENGHT(yytext);}}
-"System.out.println"    {if(USE_LEX_ONLY) {printf("PRINTLN ");} else {return yy::parser::make_PRINTLN(yytext);}}
+"System.out.println"    {if(USE_LEX_ONLY) {printf("PRINT ");} else {return yy::parser::make_PRINT(yytext);}}
 
 0|[1-9][0-9]*           {if(USE_LEX_ONLY) {printf("INT ");} else {return yy::parser::make_INT(yytext);}}
 [a-zA-Z][a-zA-Z0-9_]*   {if(USE_LEX_ONLY) {printf("STR ");} else {return yy::parser::make_STR(yytext);}}
