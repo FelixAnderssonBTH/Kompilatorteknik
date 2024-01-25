@@ -202,6 +202,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
         break;
 
@@ -232,6 +267,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.move< std::string > (YY_MOVE (that.value));
         break;
 
@@ -262,6 +332,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.copy< std::string > (that.value);
         break;
 
@@ -290,6 +395,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.move< std::string > (that.value);
         break;
 
@@ -559,6 +699,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         yylhs.value.emplace< std::string > ();
         break;
 
@@ -579,7 +754,7 @@ namespace yy {
   case 2: // root: expression
 #line 33 "parser.yy"
                        {root = yystack_[0].value.as < Node * > ();}
-#line 583 "parser.tab.cc"
+#line 758 "parser.tab.cc"
     break;
 
   case 3: // expression: expression PLUSOP expression
@@ -594,7 +769,7 @@ namespace yy {
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r1 "); */
                           }
-#line 598 "parser.tab.cc"
+#line 773 "parser.tab.cc"
     break;
 
   case 4: // expression: expression MINUSOP expression
@@ -605,7 +780,7 @@ namespace yy {
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r2 "); */
                           }
-#line 609 "parser.tab.cc"
+#line 784 "parser.tab.cc"
     break;
 
   case 5: // expression: expression MULTOP expression
@@ -616,29 +791,29 @@ namespace yy {
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r3 "); */
                           }
-#line 620 "parser.tab.cc"
+#line 795 "parser.tab.cc"
     break;
 
   case 6: // expression: factor
 #line 57 "parser.yy"
                           {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); /* printf("r4 ");*/}
-#line 626 "parser.tab.cc"
+#line 801 "parser.tab.cc"
     break;
 
   case 7: // factor: INT
 #line 60 "parser.yy"
                           {  yylhs.value.as < Node * > () = new Node("Int", yystack_[0].value.as < std::string > (), yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-#line 632 "parser.tab.cc"
+#line 807 "parser.tab.cc"
     break;
 
   case 8: // factor: LP expression RP
 #line 61 "parser.yy"
                                { yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > (); /* printf("r6 ");  simply return the expression */}
-#line 638 "parser.tab.cc"
+#line 813 "parser.tab.cc"
     break;
 
 
-#line 642 "parser.tab.cc"
+#line 817 "parser.tab.cc"
 
             default:
               break;
@@ -1033,14 +1208,14 @@ namespace yy {
   const signed char
   parser::yystos_[] =
   {
-       0,     6,     7,    10,    11,    12,    11,     0,     3,     4,
-       5,     8,    11,    11,    11
+       0,     6,     7,    45,    46,    47,    46,     0,     3,     4,
+       5,     8,    46,    46,    46
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,     9,    10,    11,    11,    11,    11,    12,    12
+       0,    44,    45,    46,    46,    46,    46,    47,    47
   };
 
   const signed char
@@ -1057,7 +1232,12 @@ namespace yy {
   const parser::yytname_[] =
   {
   "\"end of file\"", "error", "\"invalid token\"", "PLUSOP", "MINUSOP",
-  "MULTOP", "INT", "LP", "RP", "$accept", "root", "expression", "factor", YY_NULLPTR
+  "MULTOP", "INT", "LP", "RP", "LB", "RB", "LS", "RS", "CEMI",
+  "LEFT_ARROW", "RIGHT_ARROW", "AND", "OR", "EQUAL", "DIVIDE", "NOT",
+  "DOT", "EUQUAL_SIGN", "SEMI", "CLASS", "EXTENDS", "PUBLIC", "VOID",
+  "STATIC", "MAIN", "STRING", "BOOL", "INTEGER", "IF", "ELSE", "WHILE",
+  "TRUE", "FALSE", "THIS", "NEW", "RETURN", "LENGHT", "PRINTLN", "STR",
+  "$accept", "root", "expression", "factor", YY_NULLPTR
   };
 #endif
 
@@ -1098,5 +1278,5 @@ namespace yy {
 
 
 } // yy
-#line 1102 "parser.tab.cc"
+#line 1282 "parser.tab.cc"
 

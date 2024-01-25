@@ -393,6 +393,41 @@ namespace yy {
       // INT
       // LP
       // RP
+      // LB
+      // RB
+      // LS
+      // RS
+      // CEMI
+      // LEFT_ARROW
+      // RIGHT_ARROW
+      // AND
+      // OR
+      // EQUAL
+      // DIVIDE
+      // NOT
+      // DOT
+      // EUQUAL_SIGN
+      // SEMI
+      // CLASS
+      // EXTENDS
+      // PUBLIC
+      // VOID
+      // STATIC
+      // MAIN
+      // STRING
+      // BOOL
+      // INTEGER
+      // IF
+      // ELSE
+      // WHILE
+      // TRUE
+      // FALSE
+      // THIS
+      // NEW
+      // RETURN
+      // LENGHT
+      // PRINTLN
+      // STR
       char dummy2[sizeof (std::string)];
     };
 
@@ -442,7 +477,42 @@ namespace yy {
     MULTOP = 260,                  // MULTOP
     INT = 261,                     // INT
     LP = 262,                      // LP
-    RP = 263                       // RP
+    RP = 263,                      // RP
+    LB = 264,                      // LB
+    RB = 265,                      // RB
+    LS = 266,                      // LS
+    RS = 267,                      // RS
+    CEMI = 268,                    // CEMI
+    LEFT_ARROW = 269,              // LEFT_ARROW
+    RIGHT_ARROW = 270,             // RIGHT_ARROW
+    AND = 271,                     // AND
+    OR = 272,                      // OR
+    EQUAL = 273,                   // EQUAL
+    DIVIDE = 274,                  // DIVIDE
+    NOT = 275,                     // NOT
+    DOT = 276,                     // DOT
+    EUQUAL_SIGN = 277,             // EUQUAL_SIGN
+    SEMI = 278,                    // SEMI
+    CLASS = 279,                   // CLASS
+    EXTENDS = 280,                 // EXTENDS
+    PUBLIC = 281,                  // PUBLIC
+    VOID = 282,                    // VOID
+    STATIC = 283,                  // STATIC
+    MAIN = 284,                    // MAIN
+    STRING = 285,                  // STRING
+    BOOL = 286,                    // BOOL
+    INTEGER = 287,                 // INTEGER
+    IF = 288,                      // IF
+    ELSE = 289,                    // ELSE
+    WHILE = 290,                   // WHILE
+    TRUE = 291,                    // TRUE
+    FALSE = 292,                   // FALSE
+    THIS = 293,                    // THIS
+    NEW = 294,                     // NEW
+    RETURN = 295,                  // RETURN
+    LENGHT = 296,                  // LENGHT
+    PRINTLN = 297,                 // PRINTLN
+    STR = 298                      // STR
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -459,7 +529,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 9, ///< Number of tokens.
+        YYNTOKENS = 44, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -470,10 +540,45 @@ namespace yy {
         S_INT = 6,                               // INT
         S_LP = 7,                                // LP
         S_RP = 8,                                // RP
-        S_YYACCEPT = 9,                          // $accept
-        S_root = 10,                             // root
-        S_expression = 11,                       // expression
-        S_factor = 12                            // factor
+        S_LB = 9,                                // LB
+        S_RB = 10,                               // RB
+        S_LS = 11,                               // LS
+        S_RS = 12,                               // RS
+        S_CEMI = 13,                             // CEMI
+        S_LEFT_ARROW = 14,                       // LEFT_ARROW
+        S_RIGHT_ARROW = 15,                      // RIGHT_ARROW
+        S_AND = 16,                              // AND
+        S_OR = 17,                               // OR
+        S_EQUAL = 18,                            // EQUAL
+        S_DIVIDE = 19,                           // DIVIDE
+        S_NOT = 20,                              // NOT
+        S_DOT = 21,                              // DOT
+        S_EUQUAL_SIGN = 22,                      // EUQUAL_SIGN
+        S_SEMI = 23,                             // SEMI
+        S_CLASS = 24,                            // CLASS
+        S_EXTENDS = 25,                          // EXTENDS
+        S_PUBLIC = 26,                           // PUBLIC
+        S_VOID = 27,                             // VOID
+        S_STATIC = 28,                           // STATIC
+        S_MAIN = 29,                             // MAIN
+        S_STRING = 30,                           // STRING
+        S_BOOL = 31,                             // BOOL
+        S_INTEGER = 32,                          // INTEGER
+        S_IF = 33,                               // IF
+        S_ELSE = 34,                             // ELSE
+        S_WHILE = 35,                            // WHILE
+        S_TRUE = 36,                             // TRUE
+        S_FALSE = 37,                            // FALSE
+        S_THIS = 38,                             // THIS
+        S_NEW = 39,                              // NEW
+        S_RETURN = 40,                           // RETURN
+        S_LENGHT = 41,                           // LENGHT
+        S_PRINTLN = 42,                          // PRINTLN
+        S_STR = 43,                              // STR
+        S_YYACCEPT = 44,                         // $accept
+        S_root = 45,                             // root
+        S_expression = 46,                       // expression
+        S_factor = 47                            // factor
       };
     };
 
@@ -520,6 +625,41 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -604,6 +744,41 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.template destroy< std::string > ();
         break;
 
@@ -888,6 +1063,531 @@ switch (yykind)
       make_RP (const std::string& v)
       {
         return symbol_type (token::RP, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LB (std::string v)
+      {
+        return symbol_type (token::LB, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LB (const std::string& v)
+      {
+        return symbol_type (token::LB, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RB (std::string v)
+      {
+        return symbol_type (token::RB, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RB (const std::string& v)
+      {
+        return symbol_type (token::RB, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LS (std::string v)
+      {
+        return symbol_type (token::LS, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LS (const std::string& v)
+      {
+        return symbol_type (token::LS, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RS (std::string v)
+      {
+        return symbol_type (token::RS, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RS (const std::string& v)
+      {
+        return symbol_type (token::RS, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_CEMI (std::string v)
+      {
+        return symbol_type (token::CEMI, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_CEMI (const std::string& v)
+      {
+        return symbol_type (token::CEMI, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LEFT_ARROW (std::string v)
+      {
+        return symbol_type (token::LEFT_ARROW, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LEFT_ARROW (const std::string& v)
+      {
+        return symbol_type (token::LEFT_ARROW, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RIGHT_ARROW (std::string v)
+      {
+        return symbol_type (token::RIGHT_ARROW, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RIGHT_ARROW (const std::string& v)
+      {
+        return symbol_type (token::RIGHT_ARROW, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_AND (std::string v)
+      {
+        return symbol_type (token::AND, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_AND (const std::string& v)
+      {
+        return symbol_type (token::AND, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_OR (std::string v)
+      {
+        return symbol_type (token::OR, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_OR (const std::string& v)
+      {
+        return symbol_type (token::OR, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EQUAL (std::string v)
+      {
+        return symbol_type (token::EQUAL, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_EQUAL (const std::string& v)
+      {
+        return symbol_type (token::EQUAL, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DIVIDE (std::string v)
+      {
+        return symbol_type (token::DIVIDE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_DIVIDE (const std::string& v)
+      {
+        return symbol_type (token::DIVIDE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_NOT (std::string v)
+      {
+        return symbol_type (token::NOT, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_NOT (const std::string& v)
+      {
+        return symbol_type (token::NOT, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DOT (std::string v)
+      {
+        return symbol_type (token::DOT, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_DOT (const std::string& v)
+      {
+        return symbol_type (token::DOT, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EUQUAL_SIGN (std::string v)
+      {
+        return symbol_type (token::EUQUAL_SIGN, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_EUQUAL_SIGN (const std::string& v)
+      {
+        return symbol_type (token::EUQUAL_SIGN, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_SEMI (std::string v)
+      {
+        return symbol_type (token::SEMI, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_SEMI (const std::string& v)
+      {
+        return symbol_type (token::SEMI, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_CLASS (std::string v)
+      {
+        return symbol_type (token::CLASS, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_CLASS (const std::string& v)
+      {
+        return symbol_type (token::CLASS, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EXTENDS (std::string v)
+      {
+        return symbol_type (token::EXTENDS, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_EXTENDS (const std::string& v)
+      {
+        return symbol_type (token::EXTENDS, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_PUBLIC (std::string v)
+      {
+        return symbol_type (token::PUBLIC, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_PUBLIC (const std::string& v)
+      {
+        return symbol_type (token::PUBLIC, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_VOID (std::string v)
+      {
+        return symbol_type (token::VOID, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_VOID (const std::string& v)
+      {
+        return symbol_type (token::VOID, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_STATIC (std::string v)
+      {
+        return symbol_type (token::STATIC, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_STATIC (const std::string& v)
+      {
+        return symbol_type (token::STATIC, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MAIN (std::string v)
+      {
+        return symbol_type (token::MAIN, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_MAIN (const std::string& v)
+      {
+        return symbol_type (token::MAIN, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_STRING (std::string v)
+      {
+        return symbol_type (token::STRING, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_STRING (const std::string& v)
+      {
+        return symbol_type (token::STRING, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_BOOL (std::string v)
+      {
+        return symbol_type (token::BOOL, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_BOOL (const std::string& v)
+      {
+        return symbol_type (token::BOOL, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_INTEGER (std::string v)
+      {
+        return symbol_type (token::INTEGER, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_INTEGER (const std::string& v)
+      {
+        return symbol_type (token::INTEGER, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IF (std::string v)
+      {
+        return symbol_type (token::IF, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_IF (const std::string& v)
+      {
+        return symbol_type (token::IF, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_ELSE (std::string v)
+      {
+        return symbol_type (token::ELSE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_ELSE (const std::string& v)
+      {
+        return symbol_type (token::ELSE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_WHILE (std::string v)
+      {
+        return symbol_type (token::WHILE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_WHILE (const std::string& v)
+      {
+        return symbol_type (token::WHILE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_TRUE (std::string v)
+      {
+        return symbol_type (token::TRUE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_TRUE (const std::string& v)
+      {
+        return symbol_type (token::TRUE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_FALSE (std::string v)
+      {
+        return symbol_type (token::FALSE, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_FALSE (const std::string& v)
+      {
+        return symbol_type (token::FALSE, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_THIS (std::string v)
+      {
+        return symbol_type (token::THIS, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_THIS (const std::string& v)
+      {
+        return symbol_type (token::THIS, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_NEW (std::string v)
+      {
+        return symbol_type (token::NEW, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_NEW (const std::string& v)
+      {
+        return symbol_type (token::NEW, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_RETURN (std::string v)
+      {
+        return symbol_type (token::RETURN, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RETURN (const std::string& v)
+      {
+        return symbol_type (token::RETURN, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LENGHT (std::string v)
+      {
+        return symbol_type (token::LENGHT, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_LENGHT (const std::string& v)
+      {
+        return symbol_type (token::LENGHT, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_PRINTLN (std::string v)
+      {
+        return symbol_type (token::PRINTLN, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_PRINTLN (const std::string& v)
+      {
+        return symbol_type (token::PRINTLN, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_STR (std::string v)
+      {
+        return symbol_type (token::STR, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_STR (const std::string& v)
+      {
+        return symbol_type (token::STR, v);
       }
 #endif
 
@@ -1263,10 +1963,13 @@ switch (yykind)
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
     // Last valid token kind.
-    const int code_max = 263;
+    const int code_max = 298;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1296,6 +1999,41 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -1342,6 +2080,41 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_LEFT_ARROW: // LEFT_ARROW
+      case symbol_kind::S_RIGHT_ARROW: // RIGHT_ARROW
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_EQUAL: // EQUAL
+      case symbol_kind::S_DIVIDE: // DIVIDE
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_DOT: // DOT
+      case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_CLASS: // CLASS
+      case symbol_kind::S_EXTENDS: // EXTENDS
+      case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_STATIC: // STATIC
+      case symbol_kind::S_MAIN: // MAIN
+      case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_BOOL: // BOOL
+      case symbol_kind::S_INTEGER: // INTEGER
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_TRUE: // TRUE
+      case symbol_kind::S_FALSE: // FALSE
+      case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_NEW: // NEW
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_LENGHT: // LENGHT
+      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_STR: // STR
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -1410,7 +2183,7 @@ switch (yykind)
 
 
 } // yy
-#line 1414 "parser.tab.hh"
+#line 2187 "parser.tab.hh"
 
 
 
