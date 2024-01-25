@@ -22,41 +22,27 @@
 %token <std::string> PLUSOP MINUSOP MULTOP INT LP RP LB RB LS RS CEMI LEFT_ARROW RIGHT_ARROW AND OR EQUAL DIVIDE NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINTLN STR
 %token END 0 "end of file"
 
-//definition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
-%left PLUSOP MINUSOP
-%left MULTOP
-
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor
+%type <Node *> Goal MainClass ClassDeclaration VarDeclaration MethodDeclaration Type Statement Expression Identifier
 
 %%
-root:       expression {root = $1;};
+Goal:
 
-expression: expression PLUSOP expression {      /*
-                                                  Create a subtree that corresponds to the AddExpression
-                                                  The root of the subtree is AddExpression
-                                                  The childdren of the AddExpression subtree are the left hand side (expression accessed through $1) and right hand side of the expression (expression accessed through $3)
-                                                */
-                            $$ = new Node("AddExpression", "", yylineno);
-                            $$->children.push_back($1);
-                            $$->children.push_back($3);
-                            /* printf("r1 "); */
-                          }
-            | expression MINUSOP expression {
-                            $$ = new Node("SubExpression", "", yylineno);
-                            $$->children.push_back($1);
-                            $$->children.push_back($3);
-                            /* printf("r2 "); */
-                          }
-            | expression MULTOP expression {
-                            $$ = new Node("MultExpression", "", yylineno);
-                            $$->children.push_back($1);
-                            $$->children.push_back($3);
-                            /* printf("r3 "); */
-                          }
-            | factor      {$$ = $1; /* printf("r4 ");*/}
-            ;
+MainClass:
 
-factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-            | LP expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */}
-    ;
+ClassDeclaration:
+
+VarDeclaration:
+
+MethodDeclaration:
+
+Type:
+
+Statement:
+
+Expression:
+
+Identifier:
+
+
+
