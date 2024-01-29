@@ -30,7 +30,8 @@
 %%
 root:       Expression {root = $1;};
  
-ClassDeclaration:
+ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "");}
+            | 
 
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
 
