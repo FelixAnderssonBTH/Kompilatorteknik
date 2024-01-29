@@ -7,7 +7,7 @@ MethodDeclaration ::= "public" Type Identifier "(" ( Type Identifier ( "," Type 
                     | "boolean"
                     | "int"
                     | Identifier
-        Statement ::= ##### "{" ( Statement )* "}"
+        Statement ::= "{" ( Statement )* "}"
                     | "if" "(" Expression ")" Statement ("else" Statement)?
                     | "while" "(" Expression ")" Statement
                     | "System.out.println" "(" Expression ")" ";"

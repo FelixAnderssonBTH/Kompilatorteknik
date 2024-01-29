@@ -25,19 +25,42 @@
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root Statement Expression factor Identifier
+%type <Node *> root VarDeclaration MethodDeclaration MethodDeclaration_Body Recursive_MethodDeclaration Type Statement Recursive_statement Expression factor Identifier
 
 %%
 root:       Expression {root = $1;};
+ 
+VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
+
+MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB
+            | PUBLIC Type Identifier LP RP LB RETURN Expression SEMI RB
+
+MethodDeclaration_Body: RETURN Expression SEMI {$$ = $2;}
+            | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "");$$->children.push_back($1); $$->children.push_back($3);}
+            | Recursive_MethodDeclaration Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "");$$->children.push_back($1); $$->children.push_back($2); $$->children.push_back($4);};
+
+Recursive_MethodDeclaration: VarDeclaration {$$ = new Node("MethodDeclaration_Variables", ""); $$->children.push_back($1);}
+            | Recursive_MethodDeclaration VarDeclaration {$$ = $1; $$->children.push_back($2);};
+            |Statement {$$ = new Node("MethodDeclaration_Statements", ""); $$->children.push_back($1);}
+            | Recursive_MethodDeclaration Statement {$$ = $1; $$->children.push_back($2);};
+
+Type: INTEGER LB RB {$$ = new Node("Type", "int[]");}
+            | BOOL {$$ = new Node("Type", "boolean");}
+            | INTEGER {$$ = new Node("Type", "integer");}
+            | Identifier {$$ = new Node("Type", "Identifier"); $$->children.push_back($1);};
 
 Statement:
 LP RP { $$ = new Node("EmptyStatement", "",yylineno); }
+            | LP Recursive_statement RP {$$ = $2;}
             | IF LP Expression RP Statement ELSE Statement {$$ = new Node(" IfElseStatement", ""); $$->children.push_back($3); $$->children.push_back($5); $$->children.push_back($7);}
             | WHILE LP Expression RP Statement {$$ = new Node("WhileStatement", ""), $$->children.push_back($3), $$->children.push_back($5);}
             | PRINT LP Expression RP SEMI {$$ = new Node("PrintStatement", ""); $$->children.push_back($3);}
             | Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Identifier LS Expression RS EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);$$->children.push_back($6);}
-            
+
+Recursive_statement: 
+  Statement {$$ = $1;}
+| Recursive_statement Statement { $$ = new Node("Statement", ""); $$->children.push_back($1); $$->children.push_back($2);};          
 
 
 Expression:
