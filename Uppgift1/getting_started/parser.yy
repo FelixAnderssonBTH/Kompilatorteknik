@@ -25,11 +25,13 @@
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root VarDeclaration MethodDeclaration MethodDeclaration_Body Recursive_MethodDeclaration Type Statement Recursive_statement Expression factor Identifier
+%type <Node *> root ClassDeclaration VarDeclaration MethodDeclaration MethodDeclaration_Body Recursive_MethodDeclaration Type Statement Recursive_statement Expression factor Identifier
 
 %%
 root:       Expression {root = $1;};
  
+ClassDeclaration:
+
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
 
 MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB
@@ -89,8 +91,3 @@ factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 "
             | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
 Identifier: STR           {  $$ = new Node("Str", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
-
-
-
-
-
