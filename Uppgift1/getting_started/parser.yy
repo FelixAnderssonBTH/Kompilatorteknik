@@ -28,7 +28,7 @@
 %type <Node *> root Statement Expression factor Identifier
 
 %%
-root:       Statement {root = $1;};
+root:       Expression {root = $1;};
 
 Statement:
 LP RP { $$ = new Node("EmptyStatement", "",yylineno); }

@@ -1055,7 +1055,7 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 49 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("PRINTLN ");} else {return yy::parser::make_PRINTLN(yytext);}}
+{if(USE_LEX_ONLY) {printf("PRINT ");} else {return yy::parser::make_PRINT(yytext);}}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP

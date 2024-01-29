@@ -383,7 +383,6 @@ namespace yy {
     union union_type
     {
       // root
-      // Statement
       // Expression
       // factor
       // Identifier
@@ -415,7 +414,7 @@ namespace yy {
       // NEW
       // RETURN
       // LENGHT
-      // PRINTLN
+      // PRINT
       // STR
       // ID
       // LP
@@ -501,7 +500,7 @@ namespace yy {
     NEW = 281,                     // NEW
     RETURN = 282,                  // RETURN
     LENGHT = 283,                  // LENGHT
-    PRINTLN = 284,                 // PRINTLN
+    PRINT = 284,                   // PRINT
     STR = 285,                     // STR
     ID = 286,                      // ID
     LP = 287,                      // LP
@@ -564,7 +563,7 @@ namespace yy {
         S_NEW = 26,                              // NEW
         S_RETURN = 27,                           // RETURN
         S_LENGHT = 28,                           // LENGHT
-        S_PRINTLN = 29,                          // PRINTLN
+        S_PRINT = 29,                            // PRINT
         S_STR = 30,                              // STR
         S_ID = 31,                               // ID
         S_LP = 32,                               // LP
@@ -582,10 +581,9 @@ namespace yy {
         S_RIGHT_ARROW = 44,                      // RIGHT_ARROW
         S_YYACCEPT = 45,                         // $accept
         S_root = 46,                             // root
-        S_Statement = 47,                        // Statement
-        S_Expression = 48,                       // Expression
-        S_factor = 49,                           // factor
-        S_Identifier = 50                        // Identifier
+        S_Expression = 47,                       // Expression
+        S_factor = 48,                           // factor
+        S_Identifier = 49                        // Identifier
       };
     };
 
@@ -621,7 +619,6 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -654,7 +651,7 @@ namespace yy {
       case symbol_kind::S_NEW: // NEW
       case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_LENGHT: // LENGHT
-      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
@@ -743,7 +740,6 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -776,7 +772,7 @@ switch (yykind)
       case symbol_kind::S_NEW: // NEW
       case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_LENGHT: // LENGHT
-      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
@@ -1381,16 +1377,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_PRINTLN (std::string v)
+      make_PRINT (std::string v)
       {
-        return symbol_type (token::PRINTLN, std::move (v));
+        return symbol_type (token::PRINT, std::move (v));
       }
 #else
       static
       symbol_type
-      make_PRINTLN (const std::string& v)
+      make_PRINT (const std::string& v)
       {
-        return symbol_type (token::PRINTLN, v);
+        return symbol_type (token::PRINT, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1686,7 +1682,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const short yypact_[];
+    static const signed char yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1694,7 +1690,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const signed char yypgoto_[];
+    static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -1946,9 +1942,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 210,     ///< Last index in yytable_.
-      yynnts_ = 6,  ///< Number of nonterminal symbols.
-      yyfinal_ = 17 ///< Termination state number.
+      yylast_ = 162,     ///< Last index in yytable_.
+      yynnts_ = 5,  ///< Number of nonterminal symbols.
+      yyfinal_ = 18 ///< Termination state number.
     };
 
 
@@ -2016,7 +2012,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -2049,7 +2044,7 @@ switch (yykind)
       case symbol_kind::S_NEW: // NEW
       case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_LENGHT: // LENGHT
-      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
@@ -2100,7 +2095,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_Statement: // Statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
@@ -2133,7 +2127,7 @@ switch (yykind)
       case symbol_kind::S_NEW: // NEW
       case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_LENGHT: // LENGHT
-      case symbol_kind::S_PRINTLN: // PRINTLN
+      case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
@@ -2217,7 +2211,7 @@ switch (yykind)
 
 
 } // yy
-#line 2221 "parser.tab.hh"
+#line 2215 "parser.tab.hh"
 
 
 
