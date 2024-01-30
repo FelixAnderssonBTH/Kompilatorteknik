@@ -384,6 +384,7 @@ namespace yy {
     {
       // root
       // Expression
+      // Recursive_Expression
       // factor
       // Identifier
       char dummy1[sizeof (Node *)];
@@ -391,7 +392,7 @@ namespace yy {
       // INT
       // LS
       // RS
-      // CEMI
+      // COM
       // NOT
       // DOT
       // EUQUAL_SIGN
@@ -477,7 +478,7 @@ namespace yy {
     INT = 258,                     // INT
     LS = 259,                      // LS
     RS = 260,                      // RS
-    CEMI = 261,                    // CEMI
+    COM = 261,                     // COM
     NOT = 262,                     // NOT
     DOT = 263,                     // DOT
     EUQUAL_SIGN = 264,             // EUQUAL_SIGN
@@ -540,7 +541,7 @@ namespace yy {
         S_INT = 3,                               // INT
         S_LS = 4,                                // LS
         S_RS = 5,                                // RS
-        S_CEMI = 6,                              // CEMI
+        S_COM = 6,                               // COM
         S_NOT = 7,                               // NOT
         S_DOT = 8,                               // DOT
         S_EUQUAL_SIGN = 9,                       // EUQUAL_SIGN
@@ -582,8 +583,9 @@ namespace yy {
         S_YYACCEPT = 45,                         // $accept
         S_root = 46,                             // root
         S_Expression = 47,                       // Expression
-        S_factor = 48,                           // factor
-        S_Identifier = 49                        // Identifier
+        S_Recursive_Expression = 48,             // Recursive_Expression
+        S_factor = 49,                           // factor
+        S_Identifier = 50                        // Identifier
       };
     };
 
@@ -620,6 +622,7 @@ namespace yy {
     {
       case symbol_kind::S_root: // root
       case symbol_kind::S_Expression: // Expression
+      case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
         value.move< Node * > (std::move (that.value));
@@ -628,7 +631,7 @@ namespace yy {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
-      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_COM: // COM
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -741,6 +744,7 @@ switch (yykind)
     {
       case symbol_kind::S_root: // root
       case symbol_kind::S_Expression: // Expression
+      case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
         value.template destroy< Node * > ();
@@ -749,7 +753,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
-      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_COM: // COM
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -1032,16 +1036,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CEMI (std::string v)
+      make_COM (std::string v)
       {
-        return symbol_type (token::CEMI, std::move (v));
+        return symbol_type (token::COM, std::move (v));
       }
 #else
       static
       symbol_type
-      make_CEMI (const std::string& v)
+      make_COM (const std::string& v)
       {
-        return symbol_type (token::CEMI, v);
+        return symbol_type (token::COM, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1690,7 +1694,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const short yypgoto_[];
+    static const signed char yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -1942,8 +1946,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 162,     ///< Last index in yytable_.
-      yynnts_ = 5,  ///< Number of nonterminal symbols.
+      yylast_ = 149,     ///< Last index in yytable_.
+      yynnts_ = 6,  ///< Number of nonterminal symbols.
       yyfinal_ = 18 ///< Termination state number.
     };
 
@@ -2013,6 +2017,7 @@ switch (yykind)
     {
       case symbol_kind::S_root: // root
       case symbol_kind::S_Expression: // Expression
+      case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
         value.copy< Node * > (YY_MOVE (that.value));
@@ -2021,7 +2026,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
-      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_COM: // COM
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -2096,6 +2101,7 @@ switch (yykind)
     {
       case symbol_kind::S_root: // root
       case symbol_kind::S_Expression: // Expression
+      case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_Identifier: // Identifier
         value.move< Node * > (YY_MOVE (s.value));
@@ -2104,7 +2110,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_LS: // LS
       case symbol_kind::S_RS: // RS
-      case symbol_kind::S_CEMI: // CEMI
+      case symbol_kind::S_COM: // COM
       case symbol_kind::S_NOT: // NOT
       case symbol_kind::S_DOT: // DOT
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
@@ -2211,7 +2217,7 @@ switch (yykind)
 
 
 } // yy
-#line 2215 "parser.tab.hh"
+#line 2221 "parser.tab.hh"
 
 
 

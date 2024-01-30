@@ -90,7 +90,8 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | LP Expression RP {$$ = new Node("BracketsExpression", "",yylineno); $$->children.push_back($2);}
             | factor      {$$ = $1; /* printf("r4 ");*/};
             | Identifier      {$$ = $1; /* printf("r4 ");*/};
-Recursive_Expression: Statement {$$ = $1;}
+
+Recursive_Expression: Expression {$$ = $1;}
 | Recursive_Expression COM Expression { $$ = new Node("Expression", ""); $$->children.push_back($1); $$->children.push_back($2);};          
 
 

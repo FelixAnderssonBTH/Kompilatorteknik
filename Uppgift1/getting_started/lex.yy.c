@@ -910,7 +910,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 20 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("CEMI ");} else {return yy::parser::make_CEMI(yytext);}}
+{if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -960,7 +960,7 @@ YY_RULE_SETUP
 case 22:
 YY_RULE_SETUP
 #line 30 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
+{if(USE_LEX_ONLY) {printf("COM ");} else {return yy::parser::make_COM(yytext);}}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
