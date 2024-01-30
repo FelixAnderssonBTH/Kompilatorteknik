@@ -16,7 +16,7 @@ MethodDeclaration ::= "public" Type Identifier "(" ( Type Identifier ( "," Type 
        Expression ::= Expression ( "&&" | "||" | "<" | ">" | "==" | "+" | "-" | "*" | "/" ) Expression
                     | Expression "[" Expression "]"
                     | Expression "." "length"
-                    #| Expression "." Identifier "(" ( Expression ( "," Expression )* )? ")"
+                    | Expression "." Identifier "(" ( Expression ( "," Expression )* )? ")"
                     | <INTEGER_LITERAL>
                     | "true"
                     | "false"

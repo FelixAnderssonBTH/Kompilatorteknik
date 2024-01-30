@@ -17,7 +17,7 @@
 "}"                     {if(USE_LEX_ONLY) {printf("RB ");} else {return yy::parser::make_RB(yytext);}}
 "["                     {if(USE_LEX_ONLY) {printf("LS ");} else {return yy::parser::make_LS(yytext);}}
 "]"                     {if(USE_LEX_ONLY) {printf("RS ");} else {return yy::parser::make_RS(yytext);}}
-";"                     {if(USE_LEX_ONLY) {printf("CEMI ");} else {return yy::parser::make_CEMI(yytext);}}
+";"                     {if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
 "<"                     {if(USE_LEX_ONLY) {printf("LEFT_ARROW ");} else {return yy::parser::make_LEFT_ARROW(yytext);}}
 ">"                     {if(USE_LEX_ONLY) {printf("RIGHT_ARROW ");} else {return yy::parser::make_RIGHT_ARROW(yytext);}}
 "&&"                    {if(USE_LEX_ONLY) {printf("AND ");} else {return yy::parser::make_AND(yytext);}}
@@ -27,7 +27,7 @@
 "!"                     {if(USE_LEX_ONLY) {printf("NOT ");} else {return yy::parser::make_NOT(yytext);}}
 "."                     {if(USE_LEX_ONLY) {printf("DOT ");} else {return yy::parser::make_DOT(yytext);}}
 "="                     {if(USE_LEX_ONLY) {printf("EUQUAL_SIGN ");} else {return yy::parser::make_EUQUAL_SIGN(yytext);}}
-","                     {if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
+","                     {if(USE_LEX_ONLY) {printf("COM ");} else {return yy::parser::make_COM(yytext);}}
 "class"                 {if(USE_LEX_ONLY) {printf("CLASS ");} else {return yy::parser::make_CLASS(yytext);}}
 "extends"               {if(USE_LEX_ONLY) {printf("EXTENDS ");} else {return yy::parser::make_EXTENDS(yytext);}}
 "public"                {if(USE_LEX_ONLY) {printf("PUBLIC ");} else {return yy::parser::make_PUBLIC(yytext);}}

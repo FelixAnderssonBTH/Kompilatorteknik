@@ -19,13 +19,13 @@
 }
 
 // definition of set of tokens. All tokens are of type string
-%token <std::string> INT LS RS CEMI NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR ID
+%token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR ID
 %token <std::string> LP RP LB RB
 %token <std::string> PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root ClassDeclaration VarDeclaration MethodDeclaration MethodDeclaration_Body Recursive_MethodDeclaration Type Statement Recursive_statement Expression factor Identifier
+%type <Node *> root ClassDeclaration VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
 
 %%
 root:       Expression {root = $1;};
@@ -36,11 +36,14 @@ ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "");}
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
 
 MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB
-            | PUBLIC Type Identifier LP RP LB RETURN Expression SEMI RB
+            | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB
 
 MethodDeclaration_Body: RETURN Expression SEMI {$$ = $2;}
             | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "");$$->children.push_back($1); $$->children.push_back($3);}
             | Recursive_MethodDeclaration Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "");$$->children.push_back($1); $$->children.push_back($2); $$->children.push_back($4);};
+
+MethodDeclaration_Variables: Type Identifier {$$ = new Node("MethodDeclaration_Variables", ""); $$->children.push_back($1);$$->children.push_back($2);}
+            | MethodDeclaration_Variables COM Type Identifier {$$ = $1; $$->children.push_back($3);$$->children.push_back($4);};
 
 Recursive_MethodDeclaration: VarDeclaration {$$ = new Node("MethodDeclaration_Variables", ""); $$->children.push_back($1);}
             | Recursive_MethodDeclaration VarDeclaration {$$ = $1; $$->children.push_back($2);};
@@ -61,9 +64,8 @@ LP RP { $$ = new Node("EmptyStatement", "",yylineno); }
             | Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Identifier LS Expression RS EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);$$->children.push_back($6);}
 
-Recursive_statement: 
-  Statement {$$ = $1;}
-| Recursive_statement Statement { $$ = new Node("Statement", ""); $$->children.push_back($1); $$->children.push_back($2);};          
+Recursive_statement: Statement {$$ = $1;}
+            | Recursive_statement Statement { $$ = new Node("Statement", ""); $$->children.push_back($1); $$->children.push_back($2);};          
 
 
 Expression:
@@ -78,6 +80,7 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | Expression RIGHT_ARROW Expression { $$ = new Node("RightArrowExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression LS Expression RS { $$ = new Node("ArrayExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression DOT Expression LENGHT { $$ = new Node("LenghtExpression", "", yylineno); $$->children.push_back($1);}
+            | Expression DOT Identifier LP Recursive_Expression RP {$$ = new Node("Recursive_Expression", ""); $$->children.push_back($1); $$->children.push_back($3); $$->children.push_back($5);}
             | TRUE {$$ = new Node("TRUE", "",yylineno);}
             | FALSE {$$ = new Node("FALSE", "",yylineno);}
             | THIS {$$ = new Node("THIS", "",yylineno);}
@@ -87,6 +90,9 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | LP Expression RP {$$ = new Node("BracketsExpression", "",yylineno); $$->children.push_back($2);}
             | factor      {$$ = $1; /* printf("r4 ");*/};
             | Identifier      {$$ = $1; /* printf("r4 ");*/};
+Recursive_Expression: Statement {$$ = $1;}
+| Recursive_Expression COM Expression { $$ = new Node("Expression", ""); $$->children.push_back($1); $$->children.push_back($2);};          
+
 
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
