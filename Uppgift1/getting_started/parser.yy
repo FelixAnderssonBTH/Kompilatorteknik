@@ -25,13 +25,21 @@
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root ClassDeclaration VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
+%type <Node *> root ClassDeclaration Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
 
 %%
 root:       Expression {root = $1;};
  
 ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "");}
-            | 
+            | CLASS Identifier LB Recursive_ClassDeclarationVar RB
+            | CLASS Identifier LB Recursive_ClassDeclarationMeth RB
+            | CLASS Identifier LB Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth RB
+
+Recursive_ClassDeclarationVar: VarDeclaration {$$ = $1;}
+            |Recursive_ClassDeclarationVar VarDeclaration { $$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};      
+
+Recursive_ClassDeclarationMeth: MethodDeclaration {$$ = $1;}
+            |Recursive_ClassDeclarationMeth MethodDeclaration { $$ = new Node("MethodDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};    
 
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
 

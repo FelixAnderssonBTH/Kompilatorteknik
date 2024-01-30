@@ -417,7 +417,6 @@ namespace yy {
       // LENGHT
       // PRINT
       // STR
-      // ID
       // LP
       // RP
       // LB
@@ -503,20 +502,19 @@ namespace yy {
     LENGHT = 283,                  // LENGHT
     PRINT = 284,                   // PRINT
     STR = 285,                     // STR
-    ID = 286,                      // ID
-    LP = 287,                      // LP
-    RP = 288,                      // RP
-    LB = 289,                      // LB
-    RB = 290,                      // RB
-    PLUSOP = 291,                  // PLUSOP
-    MINUSOP = 292,                 // MINUSOP
-    MULTOP = 293,                  // MULTOP
-    DIVIDE = 294,                  // DIVIDE
-    AND = 295,                     // AND
-    OR = 296,                      // OR
-    EQUAL = 297,                   // EQUAL
-    LEFT_ARROW = 298,              // LEFT_ARROW
-    RIGHT_ARROW = 299              // RIGHT_ARROW
+    LP = 286,                      // LP
+    RP = 287,                      // RP
+    LB = 288,                      // LB
+    RB = 289,                      // RB
+    PLUSOP = 290,                  // PLUSOP
+    MINUSOP = 291,                 // MINUSOP
+    MULTOP = 292,                  // MULTOP
+    DIVIDE = 293,                  // DIVIDE
+    AND = 294,                     // AND
+    OR = 295,                      // OR
+    EQUAL = 296,                   // EQUAL
+    LEFT_ARROW = 297,              // LEFT_ARROW
+    RIGHT_ARROW = 298              // RIGHT_ARROW
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -533,7 +531,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 45, ///< Number of tokens.
+        YYNTOKENS = 44, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -566,26 +564,25 @@ namespace yy {
         S_LENGHT = 28,                           // LENGHT
         S_PRINT = 29,                            // PRINT
         S_STR = 30,                              // STR
-        S_ID = 31,                               // ID
-        S_LP = 32,                               // LP
-        S_RP = 33,                               // RP
-        S_LB = 34,                               // LB
-        S_RB = 35,                               // RB
-        S_PLUSOP = 36,                           // PLUSOP
-        S_MINUSOP = 37,                          // MINUSOP
-        S_MULTOP = 38,                           // MULTOP
-        S_DIVIDE = 39,                           // DIVIDE
-        S_AND = 40,                              // AND
-        S_OR = 41,                               // OR
-        S_EQUAL = 42,                            // EQUAL
-        S_LEFT_ARROW = 43,                       // LEFT_ARROW
-        S_RIGHT_ARROW = 44,                      // RIGHT_ARROW
-        S_YYACCEPT = 45,                         // $accept
-        S_root = 46,                             // root
-        S_Expression = 47,                       // Expression
-        S_Recursive_Expression = 48,             // Recursive_Expression
-        S_factor = 49,                           // factor
-        S_Identifier = 50                        // Identifier
+        S_LP = 31,                               // LP
+        S_RP = 32,                               // RP
+        S_LB = 33,                               // LB
+        S_RB = 34,                               // RB
+        S_PLUSOP = 35,                           // PLUSOP
+        S_MINUSOP = 36,                          // MINUSOP
+        S_MULTOP = 37,                           // MULTOP
+        S_DIVIDE = 38,                           // DIVIDE
+        S_AND = 39,                              // AND
+        S_OR = 40,                               // OR
+        S_EQUAL = 41,                            // EQUAL
+        S_LEFT_ARROW = 42,                       // LEFT_ARROW
+        S_RIGHT_ARROW = 43,                      // RIGHT_ARROW
+        S_YYACCEPT = 44,                         // $accept
+        S_root = 45,                             // root
+        S_Expression = 46,                       // Expression
+        S_Recursive_Expression = 47,             // Recursive_Expression
+        S_factor = 48,                           // factor
+        S_Identifier = 49                        // Identifier
       };
     };
 
@@ -656,7 +653,6 @@ namespace yy {
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
-      case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
       case symbol_kind::S_LB: // LB
@@ -778,7 +774,6 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
-      case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
       case symbol_kind::S_LB: // LB
@@ -1411,21 +1406,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_ID (std::string v)
-      {
-        return symbol_type (token::ID, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_ID (const std::string& v)
-      {
-        return symbol_type (token::ID, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_LP (std::string v)
       {
         return symbol_type (token::LP, std::move (v));
@@ -1686,7 +1666,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const signed char yypact_[];
+    static const short yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1946,7 +1926,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 149,     ///< Last index in yytable_.
+      yylast_ = 159,     ///< Last index in yytable_.
       yynnts_ = 6,  ///< Number of nonterminal symbols.
       yyfinal_ = 18 ///< Termination state number.
     };
@@ -1994,10 +1974,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43,    44
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
     // Last valid token kind.
-    const int code_max = 299;
+    const int code_max = 298;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2051,7 +2031,6 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
-      case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
       case symbol_kind::S_LB: // LB
@@ -2135,7 +2114,6 @@ switch (yykind)
       case symbol_kind::S_LENGHT: // LENGHT
       case symbol_kind::S_PRINT: // PRINT
       case symbol_kind::S_STR: // STR
-      case symbol_kind::S_ID: // ID
       case symbol_kind::S_LP: // LP
       case symbol_kind::S_RP: // RP
       case symbol_kind::S_LB: // LB
@@ -2217,7 +2195,7 @@ switch (yykind)
 
 
 } // yy
-#line 2221 "parser.tab.hh"
+#line 2199 "parser.tab.hh"
 
 
 
