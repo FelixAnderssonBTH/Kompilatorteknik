@@ -1,1 +1,3 @@
-10+12*18
+public class knas{
+    public int q = 10;
+}

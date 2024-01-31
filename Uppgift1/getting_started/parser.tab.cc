@@ -845,7 +845,7 @@ namespace yy {
 #line 846 "parser.tab.cc"
     break;
 
-  case 6: // MainClass: PUBLIC CLASS Identifier RB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB
+  case 6: // MainClass: PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB
 #line 36 "parser.yy"
                                                                                                               {yylhs.value.as < Node * > () = new Node("Main Class", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[15].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
 #line 852 "parser.tab.cc"
@@ -1556,7 +1556,7 @@ namespace yy {
   parser::yypact_[] =
   {
       26,    33,    11,     8,   -20,   -91,   -91,   -20,    16,   -91,
-     -91,    63,    13,    15,   -91,   -91,   -91,    63,   -91,   -91,
+     -91,    63,    14,    15,   -91,   -91,   -91,    63,   -91,   -91,
      -91,    53,    63,   136,   -91,   -91,    36,     3,   416,    48,
       44,   151,    63,    63,   -91,    63,    63,    63,    63,    63,
       63,    63,    63,    63,    61,   104,   -91,    72,   -91,    51,
@@ -1672,7 +1672,7 @@ namespace yy {
       30,     0,   102,    12,    45,    12,     0,    21,     9,    11,
       17,    18,    12,    27,   114,    74,    49,    11,   118,    33,
       31,    31,    29,    30,    33,    17,    33,   127,    12,    30,
-      22,    45,   132,    33,    11,    49,    33,    32,    12,    53,
+      22,    45,   132,    33,    11,    49,    32,    32,    12,    53,
       32,    33,     4,    35,    36,    37,    38,    39,    40,    41,
       42,    43,    93,    12,   154,   155,     3,    71,    17,    18,
        7,    18,   103,    55,    30,    14,     4,   167,   168,    30,
@@ -1723,7 +1723,7 @@ namespace yy {
   {
        0,    12,    44,    46,    11,     0,     0,    11,    45,    47,
       29,    30,    61,    61,     0,    47,     3,     7,    22,    23,
-      24,    25,    30,    58,    60,    61,    33,    32,    58,    18,
+      24,    25,    30,    58,    60,    61,    32,    32,    58,    18,
       61,    58,     4,     8,    31,    34,    35,    36,    37,    38,
       39,    40,    41,    42,    12,    12,    17,    18,    33,    48,
       49,    50,    51,    55,    61,     4,    30,    31,    58,    58,

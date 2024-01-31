@@ -33,7 +33,7 @@ Recursive_ClassDeclaration: ClassDeclaration {$$ = new Node("Recursive_ClassDecl
             | Recursive_ClassDeclaration ClassDeclaration {$$ = $1; $$->children.push_back($2);};
 
 MainClass:
-PUBLIC CLASS Identifier RB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB {$$ = new Node("Main Class", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
+PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB {$$ = new Node("Main Class", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
 
 ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "", yylineno);$$->children.push_back($2);}
             | CLASS Identifier LB Recursive_ClassDeclarationVar RB {$$ = new Node("ClassDeclaration", "", yylineno);$$->children.push_back($2);$$->children.push_back($4);}

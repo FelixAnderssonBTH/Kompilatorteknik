@@ -377,8 +377,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 46
-#define YY_END_OF_BUFFER 47
+#define YY_NUM_RULES 44
+#define YY_END_OF_BUFFER 45
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -388,20 +388,20 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[132] =
     {   0,
-        0,    0,   47,   45,   43,   43,   19,   45,    4,    5,
-        3,    1,   22,    2,   20,   18,   41,   41,   12,   13,
-       21,   14,   42,   42,   10,   11,   42,   42,   42,   42,
-       42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-        6,   45,    9,   43,   15,   44,   41,   17,   42,   42,
-       42,   42,   42,   42,   31,   42,   42,   42,   42,   42,
-       42,   42,   42,   42,   42,   42,   16,   44,   42,   42,
-       42,   42,   42,   30,   42,   42,   37,   42,   42,   42,
-       42,   42,   42,   42,   42,   42,   42,   42,   32,   42,
-       42,   27,   42,   42,   42,   42,   36,   34,   25,   42,
+        0,    0,   45,   43,   41,   41,   17,   43,    4,    5,
+        3,    1,   20,    2,   18,   16,   39,   39,   10,   11,
+       19,   12,   40,   40,    8,    9,   40,   40,   40,   40,
+       40,   40,   40,   40,   40,   40,   40,   40,   40,   40,
+        6,   43,    7,   41,   13,   42,   39,   15,   40,   40,
+       40,   40,   40,   40,   29,   40,   40,   40,   40,   40,
+       40,   40,   40,   40,   40,   40,   14,   42,   40,   40,
+       40,   40,   40,   28,   40,   40,   35,   40,   40,   40,
+       40,   40,   40,   40,   40,   40,   40,   40,   30,   40,
+       40,   25,   40,   40,   40,   40,   34,   32,   23,   40,
 
-       42,   42,   23,   35,   42,   42,   42,   42,   42,   33,
-       42,   42,   39,   24,   38,   26,   28,    0,   29,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,   40,
+       40,   40,   21,   33,   40,   40,   40,   40,   40,   31,
+       40,   40,   37,   22,   36,   24,   26,    0,   27,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,   38,
         0
     } ;
 
@@ -537,11 +537,11 @@ static const flex_int16_t yy_chk[195] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[47] =
+static const flex_int32_t yy_rule_can_match_eol[45] =
     {   0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 1, 0, 0, 0,     };
+    0, 1, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -878,214 +878,204 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 14 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("LB ");} else {return yy::parser::make_RP(yytext);}}
+{if(USE_LEX_ONLY) {printf("LB ");} else {return yy::parser::make_LB(yytext);}}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 15 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("RP ");} else {return yy::parser::make_RP(yytext);}}
+{if(USE_LEX_ONLY) {printf("RB ");} else {return yy::parser::make_RB(yytext);}}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 16 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("LB ");} else {return yy::parser::make_LB(yytext);}}
+{if(USE_LEX_ONLY) {printf("LS ");} else {return yy::parser::make_LS(yytext);}}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 17 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("RB ");} else {return yy::parser::make_RB(yytext);}}
+{if(USE_LEX_ONLY) {printf("RS ");} else {return yy::parser::make_RS(yytext);}}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 18 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("LS ");} else {return yy::parser::make_LS(yytext);}}
+{if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 19 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("RS ");} else {return yy::parser::make_RS(yytext);}}
+{if(USE_LEX_ONLY) {printf("LEFT_ARROW ");} else {return yy::parser::make_LEFT_ARROW(yytext);}}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 20 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("SEMI ");} else {return yy::parser::make_SEMI(yytext);}}
+{if(USE_LEX_ONLY) {printf("RIGHT_ARROW ");} else {return yy::parser::make_RIGHT_ARROW(yytext);}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 21 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("LEFT_ARROW ");} else {return yy::parser::make_LEFT_ARROW(yytext);}}
+{if(USE_LEX_ONLY) {printf("AND ");} else {return yy::parser::make_AND(yytext);}}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 22 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("RIGHT_ARROW ");} else {return yy::parser::make_RIGHT_ARROW(yytext);}}
+{if(USE_LEX_ONLY) {printf("OR ");} else {return yy::parser::make_OR(yytext);}}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 23 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("AND ");} else {return yy::parser::make_AND(yytext);}}
+{if(USE_LEX_ONLY) {printf("EQUAL ");} else {return yy::parser::make_EQUAL(yytext);}}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 24 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("OR ");} else {return yy::parser::make_OR(yytext);}}
+{if(USE_LEX_ONLY) {printf("DIVIDE ");} else {return yy::parser::make_DIVIDE(yytext);}}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 25 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("EQUAL ");} else {return yy::parser::make_EQUAL(yytext);}}
+{if(USE_LEX_ONLY) {printf("NOT ");} else {return yy::parser::make_NOT(yytext);}}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 26 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("DIVIDE ");} else {return yy::parser::make_DIVIDE(yytext);}}
+{if(USE_LEX_ONLY) {printf("DOT ");} else {return yy::parser::make_DOT(yytext);}}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 27 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("NOT ");} else {return yy::parser::make_NOT(yytext);}}
+{if(USE_LEX_ONLY) {printf("EUQUAL_SIGN ");} else {return yy::parser::make_EUQUAL_SIGN(yytext);}}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 28 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("DOT ");} else {return yy::parser::make_DOT(yytext);}}
+{if(USE_LEX_ONLY) {printf("COM ");} else {return yy::parser::make_COM(yytext);}}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 29 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("EUQUAL_SIGN ");} else {return yy::parser::make_EUQUAL_SIGN(yytext);}}
+{if(USE_LEX_ONLY) {printf("CLASS ");} else {return yy::parser::make_CLASS(yytext);}}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 30 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("COM ");} else {return yy::parser::make_COM(yytext);}}
+{if(USE_LEX_ONLY) {printf("PUBLIC ");} else {return yy::parser::make_PUBLIC(yytext);}}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 31 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("CLASS ");} else {return yy::parser::make_CLASS(yytext);}}
+{if(USE_LEX_ONLY) {printf("VOID ");} else {return yy::parser::make_VOID(yytext);}}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 32 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("PUBLIC ");} else {return yy::parser::make_PUBLIC(yytext);}}
+{if(USE_LEX_ONLY) {printf("STATIC ");} else {return yy::parser::make_STATIC(yytext);}}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 33 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("VOID ");} else {return yy::parser::make_VOID(yytext);}}
+{if(USE_LEX_ONLY) {printf("MAIN ");} else {return yy::parser::make_MAIN(yytext);}}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 34 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("STATIC ");} else {return yy::parser::make_STATIC(yytext);}}
+{if(USE_LEX_ONLY) {printf("STRING ");} else {return yy::parser::make_STRING(yytext);}}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 35 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("MAIN ");} else {return yy::parser::make_MAIN(yytext);}}
+{if(USE_LEX_ONLY) {printf("BOOL ");} else {return yy::parser::make_BOOL(yytext);}}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 36 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("STRING ");} else {return yy::parser::make_STRING(yytext);}}
+{if(USE_LEX_ONLY) {printf("INTEGER ");} else {return yy::parser::make_INTEGER(yytext);}}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 37 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("BOOL ");} else {return yy::parser::make_BOOL(yytext);}}
+{if(USE_LEX_ONLY) {printf("IF ");} else {return yy::parser::make_IF(yytext);}}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 38 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("INTEGER ");} else {return yy::parser::make_INTEGER(yytext);}}
+{if(USE_LEX_ONLY) {printf("ELSE ");} else {return yy::parser::make_ELSE(yytext);}}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 39 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("IF ");} else {return yy::parser::make_IF(yytext);}}
+{if(USE_LEX_ONLY) {printf("WHILE ");} else {return yy::parser::make_WHILE(yytext);}}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 40 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("ELSE ");} else {return yy::parser::make_ELSE(yytext);}}
+{if(USE_LEX_ONLY) {printf("TRUE ");} else {return yy::parser::make_TRUE(yytext);}}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 41 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("WHILE ");} else {return yy::parser::make_WHILE(yytext);}}
+{if(USE_LEX_ONLY) {printf("FALSE ");} else {return yy::parser::make_FALSE(yytext);}}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 42 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("TRUE ");} else {return yy::parser::make_TRUE(yytext);}}
+{if(USE_LEX_ONLY) {printf("THIS ");} else {return yy::parser::make_THIS(yytext);}}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 43 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("FALSE ");} else {return yy::parser::make_FALSE(yytext);}}
+{if(USE_LEX_ONLY) {printf("NEW ");} else {return yy::parser::make_NEW(yytext);}}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 44 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("THIS ");} else {return yy::parser::make_THIS(yytext);}}
+{if(USE_LEX_ONLY) {printf("RETURN ");} else {return yy::parser::make_RETURN(yytext);}}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 45 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("NEW ");} else {return yy::parser::make_NEW(yytext);}}
+{if(USE_LEX_ONLY) {printf("LENGHT ");} else {return yy::parser::make_LENGHT(yytext);}}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 46 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("RETURN ");} else {return yy::parser::make_RETURN(yytext);}}
+{if(USE_LEX_ONLY) {printf("PRINT ");} else {return yy::parser::make_PRINT(yytext);}}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 47 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("LENGHT ");} else {return yy::parser::make_LENGHT(yytext);}}
+#line 48 "lexer.flex"
+{if(USE_LEX_ONLY) {printf("INT ");} else {return yy::parser::make_INT(yytext);}}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 48 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("PRINT ");} else {return yy::parser::make_PRINT(yytext);}}
+#line 49 "lexer.flex"
+{if(USE_LEX_ONLY) {printf("STR ");} else {return yy::parser::make_STR(yytext);}}
 	YY_BREAK
 case 41:
+/* rule 41 can match eol */
 YY_RULE_SETUP
-#line 50 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("INT ");} else {return yy::parser::make_INT(yytext);}}
+#line 51 "lexer.flex"
+{}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 51 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("STR ");} else {return yy::parser::make_STR(yytext);}}
+#line 52 "lexer.flex"
+{}
 	YY_BREAK
 case 43:
-/* rule 43 can match eol */
 YY_RULE_SETUP
 #line 53 "lexer.flex"
-{}
-	YY_BREAK
-case 44:
-YY_RULE_SETUP
-#line 54 "lexer.flex"
-{}
-	YY_BREAK
-case 45:
-YY_RULE_SETUP
-#line 55 "lexer.flex"
 { if(!lexical_errors) fprintf(stderr, "Lexical errors found! See the logs below: \n"); fprintf(stderr,"\t@error at line %d. Character %s is not recognized\n", yylineno, yytext); lexical_errors = 1;}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 56 "lexer.flex"
+#line 54 "lexer.flex"
 {return yy::parser::make_END();}
 	YY_BREAK
-case 46:
+case 44:
 YY_RULE_SETUP
-#line 57 "lexer.flex"
+#line 55 "lexer.flex"
 ECHO;
 	YY_BREAK
-#line 1089 "lex.yy.c"
+#line 1079 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2106,5 +2096,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 57 "lexer.flex"
+#line 55 "lexer.flex"
 
