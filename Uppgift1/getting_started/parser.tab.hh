@@ -382,7 +382,20 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // root
+      // Goal
+      // Recursive_ClassDeclaration
+      // MainClass
+      // ClassDeclaration
+      // Recursive_ClassDeclarationVar
+      // Recursive_ClassDeclarationMeth
+      // VarDeclaration
+      // MethodDeclaration
+      // MethodDeclaration_Body
+      // MethodDeclaration_Variables
+      // Recursive_MethodDeclaration
+      // Type
+      // Statement
+      // Recursive_statement
       // Expression
       // Recursive_Expression
       // factor
@@ -398,7 +411,6 @@ namespace yy {
       // EUQUAL_SIGN
       // SEMI
       // CLASS
-      // EXTENDS
       // PUBLIC
       // VOID
       // STATIC
@@ -483,38 +495,37 @@ namespace yy {
     EUQUAL_SIGN = 264,             // EUQUAL_SIGN
     SEMI = 265,                    // SEMI
     CLASS = 266,                   // CLASS
-    EXTENDS = 267,                 // EXTENDS
-    PUBLIC = 268,                  // PUBLIC
-    VOID = 269,                    // VOID
-    STATIC = 270,                  // STATIC
-    MAIN = 271,                    // MAIN
-    STRING = 272,                  // STRING
-    BOOL = 273,                    // BOOL
-    INTEGER = 274,                 // INTEGER
-    IF = 275,                      // IF
-    ELSE = 276,                    // ELSE
-    WHILE = 277,                   // WHILE
-    TRUE = 278,                    // TRUE
-    FALSE = 279,                   // FALSE
-    THIS = 280,                    // THIS
-    NEW = 281,                     // NEW
-    RETURN = 282,                  // RETURN
-    LENGHT = 283,                  // LENGHT
-    PRINT = 284,                   // PRINT
-    STR = 285,                     // STR
-    LP = 286,                      // LP
-    RP = 287,                      // RP
-    LB = 288,                      // LB
-    RB = 289,                      // RB
-    PLUSOP = 290,                  // PLUSOP
-    MINUSOP = 291,                 // MINUSOP
-    MULTOP = 292,                  // MULTOP
-    DIVIDE = 293,                  // DIVIDE
-    AND = 294,                     // AND
-    OR = 295,                      // OR
-    EQUAL = 296,                   // EQUAL
-    LEFT_ARROW = 297,              // LEFT_ARROW
-    RIGHT_ARROW = 298              // RIGHT_ARROW
+    PUBLIC = 267,                  // PUBLIC
+    VOID = 268,                    // VOID
+    STATIC = 269,                  // STATIC
+    MAIN = 270,                    // MAIN
+    STRING = 271,                  // STRING
+    BOOL = 272,                    // BOOL
+    INTEGER = 273,                 // INTEGER
+    IF = 274,                      // IF
+    ELSE = 275,                    // ELSE
+    WHILE = 276,                   // WHILE
+    TRUE = 277,                    // TRUE
+    FALSE = 278,                   // FALSE
+    THIS = 279,                    // THIS
+    NEW = 280,                     // NEW
+    RETURN = 281,                  // RETURN
+    LENGHT = 282,                  // LENGHT
+    PRINT = 283,                   // PRINT
+    STR = 284,                     // STR
+    LP = 285,                      // LP
+    RP = 286,                      // RP
+    LB = 287,                      // LB
+    RB = 288,                      // RB
+    PLUSOP = 289,                  // PLUSOP
+    MINUSOP = 290,                 // MINUSOP
+    MULTOP = 291,                  // MULTOP
+    DIVIDE = 292,                  // DIVIDE
+    AND = 293,                     // AND
+    OR = 294,                      // OR
+    EQUAL = 295,                   // EQUAL
+    LEFT_ARROW = 296,              // LEFT_ARROW
+    RIGHT_ARROW = 297              // RIGHT_ARROW
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -531,7 +542,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 44, ///< Number of tokens.
+        YYNTOKENS = 43, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -545,44 +556,56 @@ namespace yy {
         S_EUQUAL_SIGN = 9,                       // EUQUAL_SIGN
         S_SEMI = 10,                             // SEMI
         S_CLASS = 11,                            // CLASS
-        S_EXTENDS = 12,                          // EXTENDS
-        S_PUBLIC = 13,                           // PUBLIC
-        S_VOID = 14,                             // VOID
-        S_STATIC = 15,                           // STATIC
-        S_MAIN = 16,                             // MAIN
-        S_STRING = 17,                           // STRING
-        S_BOOL = 18,                             // BOOL
-        S_INTEGER = 19,                          // INTEGER
-        S_IF = 20,                               // IF
-        S_ELSE = 21,                             // ELSE
-        S_WHILE = 22,                            // WHILE
-        S_TRUE = 23,                             // TRUE
-        S_FALSE = 24,                            // FALSE
-        S_THIS = 25,                             // THIS
-        S_NEW = 26,                              // NEW
-        S_RETURN = 27,                           // RETURN
-        S_LENGHT = 28,                           // LENGHT
-        S_PRINT = 29,                            // PRINT
-        S_STR = 30,                              // STR
-        S_LP = 31,                               // LP
-        S_RP = 32,                               // RP
-        S_LB = 33,                               // LB
-        S_RB = 34,                               // RB
-        S_PLUSOP = 35,                           // PLUSOP
-        S_MINUSOP = 36,                          // MINUSOP
-        S_MULTOP = 37,                           // MULTOP
-        S_DIVIDE = 38,                           // DIVIDE
-        S_AND = 39,                              // AND
-        S_OR = 40,                               // OR
-        S_EQUAL = 41,                            // EQUAL
-        S_LEFT_ARROW = 42,                       // LEFT_ARROW
-        S_RIGHT_ARROW = 43,                      // RIGHT_ARROW
-        S_YYACCEPT = 44,                         // $accept
-        S_root = 45,                             // root
-        S_Expression = 46,                       // Expression
-        S_Recursive_Expression = 47,             // Recursive_Expression
-        S_factor = 48,                           // factor
-        S_Identifier = 49                        // Identifier
+        S_PUBLIC = 12,                           // PUBLIC
+        S_VOID = 13,                             // VOID
+        S_STATIC = 14,                           // STATIC
+        S_MAIN = 15,                             // MAIN
+        S_STRING = 16,                           // STRING
+        S_BOOL = 17,                             // BOOL
+        S_INTEGER = 18,                          // INTEGER
+        S_IF = 19,                               // IF
+        S_ELSE = 20,                             // ELSE
+        S_WHILE = 21,                            // WHILE
+        S_TRUE = 22,                             // TRUE
+        S_FALSE = 23,                            // FALSE
+        S_THIS = 24,                             // THIS
+        S_NEW = 25,                              // NEW
+        S_RETURN = 26,                           // RETURN
+        S_LENGHT = 27,                           // LENGHT
+        S_PRINT = 28,                            // PRINT
+        S_STR = 29,                              // STR
+        S_LP = 30,                               // LP
+        S_RP = 31,                               // RP
+        S_LB = 32,                               // LB
+        S_RB = 33,                               // RB
+        S_PLUSOP = 34,                           // PLUSOP
+        S_MINUSOP = 35,                          // MINUSOP
+        S_MULTOP = 36,                           // MULTOP
+        S_DIVIDE = 37,                           // DIVIDE
+        S_AND = 38,                              // AND
+        S_OR = 39,                               // OR
+        S_EQUAL = 40,                            // EQUAL
+        S_LEFT_ARROW = 41,                       // LEFT_ARROW
+        S_RIGHT_ARROW = 42,                      // RIGHT_ARROW
+        S_YYACCEPT = 43,                         // $accept
+        S_Goal = 44,                             // Goal
+        S_Recursive_ClassDeclaration = 45,       // Recursive_ClassDeclaration
+        S_MainClass = 46,                        // MainClass
+        S_ClassDeclaration = 47,                 // ClassDeclaration
+        S_Recursive_ClassDeclarationVar = 48,    // Recursive_ClassDeclarationVar
+        S_Recursive_ClassDeclarationMeth = 49,   // Recursive_ClassDeclarationMeth
+        S_VarDeclaration = 50,                   // VarDeclaration
+        S_MethodDeclaration = 51,                // MethodDeclaration
+        S_MethodDeclaration_Body = 52,           // MethodDeclaration_Body
+        S_MethodDeclaration_Variables = 53,      // MethodDeclaration_Variables
+        S_Recursive_MethodDeclaration = 54,      // Recursive_MethodDeclaration
+        S_Type = 55,                             // Type
+        S_Statement = 56,                        // Statement
+        S_Recursive_statement = 57,              // Recursive_statement
+        S_Expression = 58,                       // Expression
+        S_Recursive_Expression = 59,             // Recursive_Expression
+        S_factor = 60,                           // factor
+        S_Identifier = 61                        // Identifier
       };
     };
 
@@ -617,7 +640,20 @@ namespace yy {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_root: // root
+      case symbol_kind::S_Goal: // Goal
+      case symbol_kind::S_Recursive_ClassDeclaration: // Recursive_ClassDeclaration
+      case symbol_kind::S_MainClass: // MainClass
+      case symbol_kind::S_ClassDeclaration: // ClassDeclaration
+      case symbol_kind::S_Recursive_ClassDeclarationVar: // Recursive_ClassDeclarationVar
+      case symbol_kind::S_Recursive_ClassDeclarationMeth: // Recursive_ClassDeclarationMeth
+      case symbol_kind::S_VarDeclaration: // VarDeclaration
+      case symbol_kind::S_MethodDeclaration: // MethodDeclaration
+      case symbol_kind::S_MethodDeclaration_Body: // MethodDeclaration_Body
+      case symbol_kind::S_MethodDeclaration_Variables: // MethodDeclaration_Variables
+      case symbol_kind::S_Recursive_MethodDeclaration: // Recursive_MethodDeclaration
+      case symbol_kind::S_Type: // Type
+      case symbol_kind::S_Statement: // Statement
+      case symbol_kind::S_Recursive_statement: // Recursive_statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
@@ -634,7 +670,6 @@ namespace yy {
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
       case symbol_kind::S_SEMI: // SEMI
       case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_EXTENDS: // EXTENDS
       case symbol_kind::S_PUBLIC: // PUBLIC
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_STATIC: // STATIC
@@ -738,7 +773,20 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_root: // root
+      case symbol_kind::S_Goal: // Goal
+      case symbol_kind::S_Recursive_ClassDeclaration: // Recursive_ClassDeclaration
+      case symbol_kind::S_MainClass: // MainClass
+      case symbol_kind::S_ClassDeclaration: // ClassDeclaration
+      case symbol_kind::S_Recursive_ClassDeclarationVar: // Recursive_ClassDeclarationVar
+      case symbol_kind::S_Recursive_ClassDeclarationMeth: // Recursive_ClassDeclarationMeth
+      case symbol_kind::S_VarDeclaration: // VarDeclaration
+      case symbol_kind::S_MethodDeclaration: // MethodDeclaration
+      case symbol_kind::S_MethodDeclaration_Body: // MethodDeclaration_Body
+      case symbol_kind::S_MethodDeclaration_Variables: // MethodDeclaration_Variables
+      case symbol_kind::S_Recursive_MethodDeclaration: // Recursive_MethodDeclaration
+      case symbol_kind::S_Type: // Type
+      case symbol_kind::S_Statement: // Statement
+      case symbol_kind::S_Recursive_statement: // Recursive_statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
@@ -755,7 +803,6 @@ switch (yykind)
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
       case symbol_kind::S_SEMI: // SEMI
       case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_EXTENDS: // EXTENDS
       case symbol_kind::S_PUBLIC: // PUBLIC
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_STATIC: // STATIC
@@ -1116,21 +1163,6 @@ switch (yykind)
       make_CLASS (const std::string& v)
       {
         return symbol_type (token::CLASS, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_EXTENDS (std::string v)
-      {
-        return symbol_type (token::EXTENDS, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_EXTENDS (const std::string& v)
-      {
-        return symbol_type (token::EXTENDS, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1626,7 +1658,7 @@ switch (yykind)
 
 
     /// Stored state numbers (used for stacks).
-    typedef signed char state_type;
+    typedef unsigned char state_type;
 
     /// The arguments of the error message.
     int yy_syntax_error_arguments_ (const context& yyctx,
@@ -1674,7 +1706,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const signed char yypgoto_[];
+    static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -1682,9 +1714,9 @@ switch (yykind)
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
     // number is the opposite.  If YYTABLE_NINF, syntax error.
-    static const signed char yytable_[];
+    static const short yytable_[];
 
-    static const signed char yycheck_[];
+    static const short yycheck_[];
 
     // YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
     // state STATE-NUM.
@@ -1926,9 +1958,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 159,     ///< Last index in yytable_.
-      yynnts_ = 6,  ///< Number of nonterminal symbols.
-      yyfinal_ = 18 ///< Termination state number.
+      yylast_ = 478,     ///< Last index in yytable_.
+      yynnts_ = 19,  ///< Number of nonterminal symbols.
+      yyfinal_ = 5 ///< Termination state number.
     };
 
 
@@ -1974,10 +2006,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43
+      35,    36,    37,    38,    39,    40,    41,    42
     };
     // Last valid token kind.
-    const int code_max = 298;
+    const int code_max = 297;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1995,7 +2027,20 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_root: // root
+      case symbol_kind::S_Goal: // Goal
+      case symbol_kind::S_Recursive_ClassDeclaration: // Recursive_ClassDeclaration
+      case symbol_kind::S_MainClass: // MainClass
+      case symbol_kind::S_ClassDeclaration: // ClassDeclaration
+      case symbol_kind::S_Recursive_ClassDeclarationVar: // Recursive_ClassDeclarationVar
+      case symbol_kind::S_Recursive_ClassDeclarationMeth: // Recursive_ClassDeclarationMeth
+      case symbol_kind::S_VarDeclaration: // VarDeclaration
+      case symbol_kind::S_MethodDeclaration: // MethodDeclaration
+      case symbol_kind::S_MethodDeclaration_Body: // MethodDeclaration_Body
+      case symbol_kind::S_MethodDeclaration_Variables: // MethodDeclaration_Variables
+      case symbol_kind::S_Recursive_MethodDeclaration: // Recursive_MethodDeclaration
+      case symbol_kind::S_Type: // Type
+      case symbol_kind::S_Statement: // Statement
+      case symbol_kind::S_Recursive_statement: // Recursive_statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
@@ -2012,7 +2057,6 @@ switch (yykind)
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
       case symbol_kind::S_SEMI: // SEMI
       case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_EXTENDS: // EXTENDS
       case symbol_kind::S_PUBLIC: // PUBLIC
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_STATIC: // STATIC
@@ -2078,7 +2122,20 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_root: // root
+      case symbol_kind::S_Goal: // Goal
+      case symbol_kind::S_Recursive_ClassDeclaration: // Recursive_ClassDeclaration
+      case symbol_kind::S_MainClass: // MainClass
+      case symbol_kind::S_ClassDeclaration: // ClassDeclaration
+      case symbol_kind::S_Recursive_ClassDeclarationVar: // Recursive_ClassDeclarationVar
+      case symbol_kind::S_Recursive_ClassDeclarationMeth: // Recursive_ClassDeclarationMeth
+      case symbol_kind::S_VarDeclaration: // VarDeclaration
+      case symbol_kind::S_MethodDeclaration: // MethodDeclaration
+      case symbol_kind::S_MethodDeclaration_Body: // MethodDeclaration_Body
+      case symbol_kind::S_MethodDeclaration_Variables: // MethodDeclaration_Variables
+      case symbol_kind::S_Recursive_MethodDeclaration: // Recursive_MethodDeclaration
+      case symbol_kind::S_Type: // Type
+      case symbol_kind::S_Statement: // Statement
+      case symbol_kind::S_Recursive_statement: // Recursive_statement
       case symbol_kind::S_Expression: // Expression
       case symbol_kind::S_Recursive_Expression: // Recursive_Expression
       case symbol_kind::S_factor: // factor
@@ -2095,7 +2152,6 @@ switch (yykind)
       case symbol_kind::S_EUQUAL_SIGN: // EUQUAL_SIGN
       case symbol_kind::S_SEMI: // SEMI
       case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_EXTENDS: // EXTENDS
       case symbol_kind::S_PUBLIC: // PUBLIC
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_STATIC: // STATIC
@@ -2195,7 +2251,7 @@ switch (yykind)
 
 
 } // yy
-#line 2199 "parser.tab.hh"
+#line 2255 "parser.tab.hh"
 
 
 

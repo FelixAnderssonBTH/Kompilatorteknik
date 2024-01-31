@@ -29,7 +29,6 @@
 "="                     {if(USE_LEX_ONLY) {printf("EUQUAL_SIGN ");} else {return yy::parser::make_EUQUAL_SIGN(yytext);}}
 ","                     {if(USE_LEX_ONLY) {printf("COM ");} else {return yy::parser::make_COM(yytext);}}
 "class"                 {if(USE_LEX_ONLY) {printf("CLASS ");} else {return yy::parser::make_CLASS(yytext);}}
-"extends"               {if(USE_LEX_ONLY) {printf("EXTENDS ");} else {return yy::parser::make_EXTENDS(yytext);}}
 "public"                {if(USE_LEX_ONLY) {printf("PUBLIC ");} else {return yy::parser::make_PUBLIC(yytext);}}
 "void"                  {if(USE_LEX_ONLY) {printf("VOID ");} else {return yy::parser::make_VOID(yytext);}}
 "static"                {if(USE_LEX_ONLY) {printf("STATIC ");} else {return yy::parser::make_STATIC(yytext);}}

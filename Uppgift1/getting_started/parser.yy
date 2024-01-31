@@ -19,27 +19,34 @@
 }
 
 // definition of set of tokens. All tokens are of type string
-%token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS EXTENDS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR
+%token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR
 %token <std::string> LP RP LB RB
 %token <std::string> PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root ClassDeclaration Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
+%type <Node *> Goal Recursive_ClassDeclaration MainClass ClassDeclaration Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
 
 %%
-root:       Expression {root = $1;};
- 
-ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "");}
-            | CLASS Identifier LB Recursive_ClassDeclarationVar RB
-            | CLASS Identifier LB Recursive_ClassDeclarationMeth RB
-            | CLASS Identifier LB Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth RB
+Goal: MainClass END  {$$ = $1; root = $$;}
+            | MainClass Recursive_ClassDeclaration END {$$ = $1; $$->children.push_back($2); root = $$;};
+
+Recursive_ClassDeclaration: ClassDeclaration {$$ = new Node("Recursive_ClassDeclaration", ""); $$->children.push_back($1);}
+            | Recursive_ClassDeclaration ClassDeclaration {$$ = $1; $$->children.push_back($2);};
+
+MainClass:
+PUBLIC CLASS Identifier RB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB {$$ = new Node("Main Class", ""); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
+
+ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "");$$->children.push_back($2);}
+            | CLASS Identifier LB Recursive_ClassDeclarationVar RB {$$ = new Node("ClassDeclaration", "");$$->children.push_back($2);$$->children.push_back($4);}
+            | CLASS Identifier LB Recursive_ClassDeclarationMeth RB{$$ = new Node("ClassDeclaration", "");$$->children.push_back($2);$$->children.push_back($4);}
+            | CLASS Identifier LB Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth RB{$$ = new Node("ClassDeclaration", "");$$->children.push_back($2);$$->children.push_back($4);$$->children.push_back($5);}
 
 Recursive_ClassDeclarationVar: VarDeclaration {$$ = $1;}
-            |Recursive_ClassDeclarationVar VarDeclaration { $$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};      
+            | Recursive_ClassDeclarationVar VarDeclaration { $$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};      
 
 Recursive_ClassDeclarationMeth: MethodDeclaration {$$ = $1;}
-            |Recursive_ClassDeclarationMeth MethodDeclaration { $$ = new Node("MethodDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};    
+            | Recursive_ClassDeclarationMeth MethodDeclaration { $$ = new Node("MethodDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};    
 
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", ""); $$->children.push_back($1); $$->children.push_back($2);};
 
@@ -55,10 +62,10 @@ MethodDeclaration_Variables: Type Identifier {$$ = new Node("MethodDeclaration_V
 
 Recursive_MethodDeclaration: VarDeclaration {$$ = new Node("MethodDeclaration_Variables", ""); $$->children.push_back($1);}
             | Recursive_MethodDeclaration VarDeclaration {$$ = $1; $$->children.push_back($2);};
-            |Statement {$$ = new Node("MethodDeclaration_Statements", ""); $$->children.push_back($1);}
+            | Statement {$$ = new Node("MethodDeclaration_Statements", ""); $$->children.push_back($1);}
             | Recursive_MethodDeclaration Statement {$$ = $1; $$->children.push_back($2);};
 
-Type: INTEGER LB RB {$$ = new Node("Type", "int[]");}
+Type: INTEGER LS RS {$$ = new Node("Type", "int[]");}
             | BOOL {$$ = new Node("Type", "boolean");}
             | INTEGER {$$ = new Node("Type", "integer");}
             | Identifier {$$ = new Node("Type", "Identifier"); $$->children.push_back($1);};
@@ -100,7 +107,7 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | Identifier      {$$ = $1; /* printf("r4 ");*/};
 
 Recursive_Expression: Expression {$$ = $1;}
-| Recursive_Expression COM Expression { $$ = new Node("Expression", ""); $$->children.push_back($1); $$->children.push_back($2);};          
+| Recursive_Expression COM Expression { $$ = new Node("Expression", ""); $$->children.push_back($1); $$->children.push_back($3);};          
 
 
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
