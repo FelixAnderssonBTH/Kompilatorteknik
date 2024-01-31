@@ -835,7 +835,7 @@ namespace yy {
 
   case 4: // Recursive_ClassDeclaration: ClassDeclaration
 #line 32 "parser.yy"
-                                             {yylhs.value.as < Node * > () = new Node("Recursive_ClassDeclaration", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                             {yylhs.value.as < Node * > () = new Node("Recursive_ClassDeclaration", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 840 "parser.tab.cc"
     break;
 
@@ -847,31 +847,31 @@ namespace yy {
 
   case 6: // MainClass: PUBLIC CLASS Identifier RB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB
 #line 36 "parser.yy"
-                                                                                                              {yylhs.value.as < Node * > () = new Node("Main Class", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[15].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
+                                                                                                              {yylhs.value.as < Node * > () = new Node("Main Class", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[15].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
 #line 852 "parser.tab.cc"
     break;
 
   case 7: // ClassDeclaration: CLASS Identifier LB RB
 #line 38 "parser.yy"
-                                         {yylhs.value.as < Node * > () = new Node("EmptyClass", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
+                                         {yylhs.value.as < Node * > () = new Node("EmptyClass", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
 #line 858 "parser.tab.cc"
     break;
 
   case 8: // ClassDeclaration: CLASS Identifier LB Recursive_ClassDeclarationVar RB
 #line 39 "parser.yy"
-                                                                   {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                   {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 864 "parser.tab.cc"
     break;
 
   case 9: // ClassDeclaration: CLASS Identifier LB Recursive_ClassDeclarationMeth RB
 #line 40 "parser.yy"
-                                                                   {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                   {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 870 "parser.tab.cc"
     break;
 
   case 10: // ClassDeclaration: CLASS Identifier LB Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth RB
 #line 41 "parser.yy"
-                                                                                                 {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                                                 {yylhs.value.as < Node * > () = new Node("ClassDeclaration", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 876 "parser.tab.cc"
     break;
 
@@ -883,7 +883,7 @@ namespace yy {
 
   case 12: // Recursive_ClassDeclarationVar: Recursive_ClassDeclarationVar VarDeclaration
 #line 44 "parser.yy"
-                                                           { yylhs.value.as < Node * > () = new Node("VarDeclaration", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                                           { yylhs.value.as < Node * > () = new Node("VarDeclaration", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 888 "parser.tab.cc"
     break;
 
@@ -895,13 +895,13 @@ namespace yy {
 
   case 14: // Recursive_ClassDeclarationMeth: Recursive_ClassDeclarationMeth MethodDeclaration
 #line 47 "parser.yy"
-                                                               { yylhs.value.as < Node * > () = new Node("MethodDeclaration", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                                               { yylhs.value.as < Node * > () = new Node("MethodDeclaration", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 900 "parser.tab.cc"
     break;
 
   case 15: // VarDeclaration: Type Identifier SEMI
 #line 49 "parser.yy"
-                                      {yylhs.value.as < Node * > () = new Node("VarDeclaration", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                      {yylhs.value.as < Node * > () = new Node("VarDeclaration", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 906 "parser.tab.cc"
     break;
 
@@ -913,19 +913,19 @@ namespace yy {
 
   case 19: // MethodDeclaration_Body: Recursive_MethodDeclaration RETURN Expression SEMI
 #line 55 "parser.yy"
-                                                                 {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Body", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                 {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Body", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 918 "parser.tab.cc"
     break;
 
   case 20: // MethodDeclaration_Body: Recursive_MethodDeclaration Recursive_MethodDeclaration RETURN Expression SEMI
 #line 56 "parser.yy"
-                                                                                             {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Body", "");yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                                             {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Body", "", yylineno);yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 924 "parser.tab.cc"
     break;
 
   case 21: // MethodDeclaration_Variables: Type Identifier
 #line 58 "parser.yy"
-                                             {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Variables", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                             {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Variables", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 930 "parser.tab.cc"
     break;
 
@@ -937,7 +937,7 @@ namespace yy {
 
   case 23: // Recursive_MethodDeclaration: VarDeclaration
 #line 61 "parser.yy"
-                                            {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Variables", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                            {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Variables", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 942 "parser.tab.cc"
     break;
 
@@ -949,7 +949,7 @@ namespace yy {
 
   case 25: // Recursive_MethodDeclaration: Statement
 #line 63 "parser.yy"
-                        {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Statements", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                        {yylhs.value.as < Node * > () = new Node("MethodDeclaration_Statements", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 954 "parser.tab.cc"
     break;
 
@@ -961,25 +961,25 @@ namespace yy {
 
   case 27: // Type: INTEGER LS RS
 #line 66 "parser.yy"
-                    {yylhs.value.as < Node * > () = new Node("Type", "int[]");}
+                    {yylhs.value.as < Node * > () = new Node("Type", "int[]", yylineno);}
 #line 966 "parser.tab.cc"
     break;
 
   case 28: // Type: BOOL
 #line 67 "parser.yy"
-                   {yylhs.value.as < Node * > () = new Node("Type", "boolean");}
+                   {yylhs.value.as < Node * > () = new Node("Type", "boolean", yylineno);}
 #line 972 "parser.tab.cc"
     break;
 
   case 29: // Type: INTEGER
 #line 68 "parser.yy"
-                      {yylhs.value.as < Node * > () = new Node("Type", "integer");}
+                      {yylhs.value.as < Node * > () = new Node("Type", "integer", yylineno);}
 #line 978 "parser.tab.cc"
     break;
 
   case 30: // Type: Identifier
 #line 69 "parser.yy"
-                         {yylhs.value.as < Node * > () = new Node("Type", "Identifier"); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                         {yylhs.value.as < Node * > () = new Node("Type", "Identifier", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 984 "parser.tab.cc"
     break;
 
@@ -997,19 +997,19 @@ namespace yy {
 
   case 33: // Statement: IF LP Expression RP Statement ELSE Statement
 #line 74 "parser.yy"
-                                                           {yylhs.value.as < Node * > () = new Node(" IfElseStatement", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                                           {yylhs.value.as < Node * > () = new Node(" IfElseStatement", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 1002 "parser.tab.cc"
     break;
 
   case 34: // Statement: WHILE LP Expression RP Statement
 #line 75 "parser.yy"
-                                               {yylhs.value.as < Node * > () = new Node("WhileStatement", ""), yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()), yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                               {yylhs.value.as < Node * > () = new Node("WhileStatement", "", yylineno), yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()), yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 1008 "parser.tab.cc"
     break;
 
   case 35: // Statement: PRINT LP Expression RP SEMI
 #line 76 "parser.yy"
-                                          {yylhs.value.as < Node * > () = new Node("PrintStatement", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
+                                          {yylhs.value.as < Node * > () = new Node("PrintStatement", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());}
 #line 1014 "parser.tab.cc"
     break;
 
@@ -1033,7 +1033,7 @@ namespace yy {
 
   case 39: // Recursive_statement: Recursive_statement Statement
 #line 81 "parser.yy"
-                                            { yylhs.value.as < Node * > () = new Node("Statement", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                            { yylhs.value.as < Node * > () = new Node("Statement", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 1038 "parser.tab.cc"
     break;
 
@@ -1105,7 +1105,7 @@ namespace yy {
 
   case 51: // Expression: Expression DOT Identifier LP Recursive_Expression RP
 #line 96 "parser.yy"
-                                                                   {yylhs.value.as < Node * > () = new Node("Recursive_Expression", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
+                                                                   {yylhs.value.as < Node * > () = new Node("Recursive_Expression", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());}
 #line 1110 "parser.tab.cc"
     break;
 
@@ -1171,7 +1171,7 @@ namespace yy {
 
   case 62: // Recursive_Expression: Recursive_Expression COM Expression
 #line 108 "parser.yy"
-                                      { yylhs.value.as < Node * > () = new Node("Expression", ""); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
+                                      { yylhs.value.as < Node * > () = new Node("Expression", "", yylineno); yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());}
 #line 1176 "parser.tab.cc"
     break;
 
