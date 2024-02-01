@@ -61,7 +61,7 @@ class BS{
 		int aux01 ;
 		aux01 = 0 ;	
 		
-		while (var_cont){
+		while (var_cont) {
 			medium = left + right ;
 			medium = this.Div(medium);
 			aux01 = number[medium] ;

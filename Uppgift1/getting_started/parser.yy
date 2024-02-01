@@ -82,9 +82,10 @@ Type: INTEGER LS RS {$$ = new Node("Type", "int[]", yylineno);}
             | Identifier {$$ = new Node("Type", "Identifier", yylineno); $$->children.push_back($1);};
 
 Statement:
-LP RP { $$ = new Node("EmptyStatement", "",yylineno); }
-            | LP Recursive_statement RP {$$ = $2;}
+LB RB { $$ = new Node("EmptyStatement", "",yylineno); }
+            | LB Recursive_statement RB {$$ = $2;}
             | IF LP Expression RP Statement ELSE Statement {$$ = new Node(" IfElseStatement", "", yylineno); $$->children.push_back($3); $$->children.push_back($5); $$->children.push_back($7);}
+            | IF LP Expression RP {$$ = new Node(" IfElseStatement", "", yylineno); $$->children.push_back($3);}
             | WHILE LP Expression RP Statement {$$ = new Node("WhileStatement", "", yylineno), $$->children.push_back($3), $$->children.push_back($5);}
             | PRINT LP Expression RP SEMI {$$ = new Node("PrintStatement", "", yylineno); $$->children.push_back($3);}
             | Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
@@ -105,7 +106,7 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | Expression LEFT_ARROW Expression { $$ = new Node("LeftArrowExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression RIGHT_ARROW Expression { $$ = new Node("RightArrowExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression LS Expression RS { $$ = new Node("ArrayExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
-            | Expression DOT Expression LENGHT { $$ = new Node("LenghtExpression", "", yylineno); $$->children.push_back($1);}
+            | Expression DOT LENGHT { $$ = new Node("LenghtExpression", "", yylineno); $$->children.push_back($1);}
             | Expression DOT Identifier LP Recursive_Expression RP {$$ = new Node("Recursive_Expression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3); $$->children.push_back($5);}
             | Expression DOT Identifier LP RP {$$ = new Node("Recursive_Expression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | factor      {$$ = $1; /* printf("r4 ");*/};

@@ -42,7 +42,7 @@
 "this"                  {if(USE_LEX_ONLY) {printf("THIS ");} else {return yy::parser::make_THIS(yytext);}}
 "new"                   {if(USE_LEX_ONLY) {printf("NEW ");} else {return yy::parser::make_NEW(yytext);}}
 "return"                {if(USE_LEX_ONLY) {printf("RETURN ");} else {return yy::parser::make_RETURN(yytext);}}
-"lenght"                {if(USE_LEX_ONLY) {printf("LENGHT ");} else {return yy::parser::make_LENGHT(yytext);}}
+"length"                {if(USE_LEX_ONLY) {printf("LENGHT ");} else {return yy::parser::make_LENGHT(yytext);}}
 "System.out.println"    {if(USE_LEX_ONLY) {printf("PRINT ");} else {return yy::parser::make_PRINT(yytext);}}
 
 0|[1-9][0-9]*           {if(USE_LEX_ONLY) {printf("INT ");} else {return yy::parser::make_INT(yytext);}}
