@@ -1,0 +1,23 @@
+digraph {
+n0 [label="Main Class:"];
+n1 [label="Str:ClassMissingClosingBracket"];
+n0 -> n1
+n2 [label="Str:a"];
+n0 -> n2
+n3 [label="PrintStatement:"];
+n4 [label="Recursive_Expression:"];
+n5 [label="newIdentifierExpression:"];
+n6 [label="Str:Element"];
+n5 -> n6
+n4 -> n5
+n7 [label="Str:no_method"];
+n4 -> n7
+n3 -> n4
+n0 -> n3
+n8 [label="Recursive_ClassDeclaration:"];
+n9 [label="EmptyClass:"];
+n10 [label="Str:Element"];
+n9 -> n10
+n8 -> n9
+n0 -> n8
+}

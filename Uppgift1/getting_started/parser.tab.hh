@@ -1709,7 +1709,7 @@ switch (yykind)
     static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
-    static const signed char yydefgoto_[];
+    static const unsigned char yydefgoto_[];
 
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
@@ -1958,7 +1958,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 478,     ///< Last index in yytable_.
+      yylast_ = 517,     ///< Last index in yytable_.
       yynnts_ = 19,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };

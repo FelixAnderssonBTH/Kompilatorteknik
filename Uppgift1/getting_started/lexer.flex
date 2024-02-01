@@ -31,7 +31,7 @@
 "void"                  {if(USE_LEX_ONLY) {printf("VOID ");} else {return yy::parser::make_VOID(yytext);}}
 "static"                {if(USE_LEX_ONLY) {printf("STATIC ");} else {return yy::parser::make_STATIC(yytext);}}
 "main"                  {if(USE_LEX_ONLY) {printf("MAIN ");} else {return yy::parser::make_MAIN(yytext);}}
-"string"                {if(USE_LEX_ONLY) {printf("STRING ");} else {return yy::parser::make_STRING(yytext);}}
+"String"                {if(USE_LEX_ONLY) {printf("STRING ");} else {return yy::parser::make_STRING(yytext);}}
 "boolean"               {if(USE_LEX_ONLY) {printf("BOOL ");} else {return yy::parser::make_BOOL(yytext);}}
 "int"                   {if(USE_LEX_ONLY) {printf("INTEGER ");} else {return yy::parser::make_INTEGER(yytext);}}
 "if"                    {if(USE_LEX_ONLY) {printf("IF ");} else {return yy::parser::make_IF(yytext);}}

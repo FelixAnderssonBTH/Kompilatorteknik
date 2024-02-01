@@ -18,6 +18,15 @@
   extern int yylineno;
 }
 
+%left
+%left
+%left
+%left
+%left
+%left
+%left
+
+
 // definition of set of tokens. All tokens are of type string
 %token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR LP RP LB RB PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
@@ -33,7 +42,7 @@ Recursive_ClassDeclaration: ClassDeclaration {$$ = new Node("Recursive_ClassDecl
             | Recursive_ClassDeclaration ClassDeclaration {$$ = $1; $$->children.push_back($2);};
 
 MainClass:
-PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP RB Recursive_statement RB RB {$$ = new Node("Main Class", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
+PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP LB Recursive_statement RB RB {$$ = new Node("Main Class", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
 
 ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "", yylineno);$$->children.push_back($2);}
             | CLASS Identifier LB Recursive_ClassDeclarationVar RB {$$ = new Node("ClassDeclaration", "", yylineno);$$->children.push_back($2);$$->children.push_back($4);}
@@ -94,6 +103,8 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | Expression LS Expression RS { $$ = new Node("ArrayExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression DOT Expression LENGHT { $$ = new Node("LenghtExpression", "", yylineno); $$->children.push_back($1);}
             | Expression DOT Identifier LP Recursive_Expression RP {$$ = new Node("Recursive_Expression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3); $$->children.push_back($5);}
+            | Expression DOT Identifier LP RP {$$ = new Node("Recursive_Expression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | factor      {$$ = $1; /* printf("r4 ");*/};
             | TRUE {$$ = new Node("TRUE", "",yylineno);}
             | FALSE {$$ = new Node("FALSE", "",yylineno);}
             | THIS {$$ = new Node("THIS", "",yylineno);}
@@ -101,8 +112,9 @@ Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$-
             | NEW Identifier LP RP {$$ = new Node("newIdentifierExpression", "",yylineno); $$->children.push_back($2);}
             | NOT Expression {$$ = new Node("NotExpression", "",yylineno); $$->children.push_back($2);}
             | LP Expression RP {$$ = new Node("BracketsExpression", "",yylineno); $$->children.push_back($2);}
-            | factor      {$$ = $1; /* printf("r4 ");*/};
-            | Identifier      {$$ = $1; /* printf("r4 ");*/};
+            | Identifier {$$ = $1; /* printf("r4 ");*/};
+            
+
 
 Recursive_Expression: Expression {$$ = $1;}
 | Recursive_Expression COM Expression { $$ = new Node("Expression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);};          
