@@ -858,7 +858,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 10 "lexer.flex"
-{if(USE_LEX_ONLY) {printf("SUBOP ");} else {return yy::parser::make_MINUSOP(yytext);}}
+{if(USE_LEX_ONLY) {printf("SUBOP ");} else {return yy::parser::make_SUBOP(yytext);}}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP

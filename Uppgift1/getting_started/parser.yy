@@ -18,21 +18,25 @@
   extern int yylineno;
 }
 
-%left
-%left
-%left
-%left
-%left
-%left
-%left
+
 
 
 // definition of set of tokens. All tokens are of type string
-%token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR LP RP LB RB PLUSOP MINUSOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
+%token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR LP RP LB RB PLUSOP SUBOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
 
+%left EUQUAL_SIGN 
+%left OR
+%left AND
+%left EQUAL 
+%left LEFT_ARROW RIGHT_ARROW 
+%left PLUSOP SUBOP
+%left MULTOP DIVIDE
+%left LP RP LB RB
 // definition of the production rules. All production rules are of type Node
 %type <Node *> Goal Recursive_ClassDeclaration MainClass ClassDeclaration Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
+
+
 
 %%
 Goal: MainClass END  {$$ = $1; root = $$;}
@@ -92,7 +96,7 @@ Recursive_statement: Statement {$$ = $1;}
 
 Expression:
 Expression PLUSOP Expression { $$ = new Node("AddExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3); }
-            | Expression MINUSOP Expression { $$ = new Node("SubExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
+            | Expression SUBOP Expression { $$ = new Node("SubExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression MULTOP Expression { $$ = new Node("MultExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression DIVIDE Expression { $$ = new Node("DivideExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
             | Expression AND Expression { $$ = new Node("AndExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}

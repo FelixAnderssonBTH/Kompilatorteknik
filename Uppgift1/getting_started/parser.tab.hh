@@ -434,7 +434,7 @@ namespace yy {
       // LB
       // RB
       // PLUSOP
-      // MINUSOP
+      // SUBOP
       // MULTOP
       // DIVIDE
       // AND
@@ -518,7 +518,7 @@ namespace yy {
     LB = 287,                      // LB
     RB = 288,                      // RB
     PLUSOP = 289,                  // PLUSOP
-    MINUSOP = 290,                 // MINUSOP
+    SUBOP = 290,                   // SUBOP
     MULTOP = 291,                  // MULTOP
     DIVIDE = 292,                  // DIVIDE
     AND = 293,                     // AND
@@ -579,7 +579,7 @@ namespace yy {
         S_LB = 32,                               // LB
         S_RB = 33,                               // RB
         S_PLUSOP = 34,                           // PLUSOP
-        S_MINUSOP = 35,                          // MINUSOP
+        S_SUBOP = 35,                            // SUBOP
         S_MULTOP = 36,                           // MULTOP
         S_DIVIDE = 37,                           // DIVIDE
         S_AND = 38,                              // AND
@@ -693,7 +693,7 @@ namespace yy {
       case symbol_kind::S_LB: // LB
       case symbol_kind::S_RB: // RB
       case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_SUBOP: // SUBOP
       case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_AND: // AND
@@ -826,7 +826,7 @@ switch (yykind)
       case symbol_kind::S_LB: // LB
       case symbol_kind::S_RB: // RB
       case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_SUBOP: // SUBOP
       case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_AND: // AND
@@ -1513,16 +1513,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_MINUSOP (std::string v)
+      make_SUBOP (std::string v)
       {
-        return symbol_type (token::MINUSOP, std::move (v));
+        return symbol_type (token::SUBOP, std::move (v));
       }
 #else
       static
       symbol_type
-      make_MINUSOP (const std::string& v)
+      make_SUBOP (const std::string& v)
       {
-        return symbol_type (token::MINUSOP, v);
+        return symbol_type (token::SUBOP, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1731,7 +1731,7 @@ switch (yykind)
 
 #if YYDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-    static const signed char yyrline_[];
+    static const unsigned char yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
@@ -1958,7 +1958,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 517,     ///< Last index in yytable_.
+      yylast_ = 536,     ///< Last index in yytable_.
       yynnts_ = 19,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
@@ -2080,7 +2080,7 @@ switch (yykind)
       case symbol_kind::S_LB: // LB
       case symbol_kind::S_RB: // RB
       case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_SUBOP: // SUBOP
       case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_AND: // AND
@@ -2175,7 +2175,7 @@ switch (yykind)
       case symbol_kind::S_LB: // LB
       case symbol_kind::S_RB: // RB
       case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
+      case symbol_kind::S_SUBOP: // SUBOP
       case symbol_kind::S_MULTOP: // MULTOP
       case symbol_kind::S_DIVIDE: // DIVIDE
       case symbol_kind::S_AND: // AND
