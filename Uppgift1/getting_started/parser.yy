@@ -85,7 +85,7 @@ Statement:
 LB RB { $$ = new Node("EmptyStatement", "",yylineno); }
             | LB Recursive_statement RB {$$ = $2;}
             | IF LP Expression RP Statement ELSE Statement {$$ = new Node(" IfElseStatement", "", yylineno); $$->children.push_back($3); $$->children.push_back($5); $$->children.push_back($7);}
-            | IF LP Expression RP {$$ = new Node(" IfElseStatement", "", yylineno); $$->children.push_back($3);}
+            | IF LP Expression RP Statement {$$ = new Node(" IfElseStatement", "", yylineno); $$->children.push_back($3);$$->children.push_back($5);}
             | WHILE LP Expression RP Statement {$$ = new Node("WhileStatement", "", yylineno), $$->children.push_back($3), $$->children.push_back($5);}
             | PRINT LP Expression RP SEMI {$$ = new Node("PrintStatement", "", yylineno); $$->children.push_back($3);}
             | Identifier EUQUAL_SIGN Expression SEMI { $$ = new Node("AssinedExpression", "", yylineno); $$->children.push_back($1); $$->children.push_back($3);}
