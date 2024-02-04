@@ -24,7 +24,7 @@
 // definition of set of tokens. All tokens are of type string
 %token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR LP RP LB RB PLUSOP SUBOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
-//%right IF ELSE WHILE
+//%right IF ELSE WHILE //behöver vi dessa?
 %left EUQUAL_SIGN 
 %left OR
 %left AND
@@ -65,7 +65,7 @@ Recursive_ClassDeclarationMeth:
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};
 
 MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB
-            | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB
+            | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB //vafan är detta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 MethodDeclaration_Body: RETURN Expression SEMI {$$ = $2;}
             | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "", yylineno);$$->children.push_back($1); $$->children.push_back($3);}
