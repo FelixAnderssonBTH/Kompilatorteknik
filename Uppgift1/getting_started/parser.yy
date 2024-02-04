@@ -64,8 +64,8 @@ Recursive_ClassDeclarationMeth:
 
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};
 
-MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB
-            | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB //vafan är detta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB {$$ = new Node("MethodDeclaration", "", yylineno); $$->children.push_back($2); $$->children.push_back($3); $$->children.push_back($7);};
+            | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB {$$ = new Node("MethodDeclaration", "", yylineno); $$->children.push_back($2); $$->children.push_back($3); $$->children.push_back($5);$$->children.push_back($8);};
 
 MethodDeclaration_Body: RETURN Expression SEMI {$$ = $2;}
             | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "", yylineno);$$->children.push_back($1); $$->children.push_back($3);}
