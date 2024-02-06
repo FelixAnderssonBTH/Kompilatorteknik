@@ -24,7 +24,7 @@
 // definition of set of tokens. All tokens are of type string
 %token <std::string> INT LS RS COM NOT DOT EUQUAL_SIGN SEMI CLASS PUBLIC VOID STATIC MAIN STRING BOOL INTEGER IF ELSE WHILE TRUE FALSE THIS NEW RETURN LENGHT PRINT STR LP RP LB RB PLUSOP SUBOP MULTOP DIVIDE AND OR EQUAL LEFT_ARROW RIGHT_ARROW
 %token END 0 "end of file"
-//%right IF ELSE WHILE //behöver vi dessa?
+
 %left EUQUAL_SIGN 
 %left OR
 %left AND
@@ -129,6 +129,4 @@ Recursive_Expression: Expression {$$ = $1;}
 
 
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-            | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
 Identifier: STR           {  $$ = new Node("Str", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-            | LP Expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */};
