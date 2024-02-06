@@ -1,302 +1,250 @@
 digraph {
 n0 [label="Main Class:"];
-n1 [label="Str:SemanticValidMethodCall"];
+n1 [label="Str:OperatorPriority"];
 n0 -> n1
 n2 [label="Str:a"];
 n0 -> n2
 n3 [label="PrintStatement:"];
 n4 [label="Recursive_Expression:"];
 n5 [label="newIdentifierExpression:"];
-n6 [label="Str:A"];
+n6 [label="Str:OP"];
 n5 -> n6
 n4 -> n5
-n7 [label="Str:a2"];
+n7 [label="Str:arithmetic"];
 n4 -> n7
 n3 -> n4
 n0 -> n3
 n8 [label="Recursive_ClassDeclaration:"];
 n9 [label="ClassDeclaration:"];
-n10 [label="Str:A"];
+n10 [label="Str:OP"];
 n9 -> n10
 n11 [label="MethodDeclaration:"];
 n12 [label="MethodDeclaration:"];
-n13 [label="MethodDeclaration:"];
-n14 [label="MethodDeclaration:"];
-n15 [label="MethodDeclaration:"];
-n16 [label="Type:Identifier"];
-n17 [label="Str:A"];
-n16 -> n17
-n15 -> n16
-n18 [label="Str:a1"];
-n15 -> n18
-n19 [label="MethodDeclaration_Variables:"];
-n20 [label="Type:integer"];
-n19 -> n20
-n21 [label="Str:num"];
-n19 -> n21
-n15 -> n19
-n22 [label="MethodDeclaration_Body:"];
-n23 [label="MethodDeclaration_Variables:"];
-n24 [label="VarDeclaration:"];
-n25 [label="Type:integer"];
-n24 -> n25
-n26 [label="Str:num_aux"];
-n24 -> n26
-n23 -> n24
-n22 -> n23
-n27 [label="MethodDeclaration_Statements:"];
-n28 [label=" IfElseStatement:"];
-n29 [label="LeftArrowExpression:"];
-n30 [label="Str:num"];
-n29 -> n30
-n31 [label="Int:1"];
-n29 -> n31
-n28 -> n29
-n32 [label="AssinedExpression:"];
-n33 [label="Str:num_aux"];
-n32 -> n33
-n34 [label="Int:1"];
-n32 -> n34
-n28 -> n32
-n35 [label="AssinedExpression:"];
-n36 [label="Str:num_aux"];
-n35 -> n36
-n37 [label="MultExpression:"];
-n38 [label="Str:num"];
-n37 -> n38
-n39 [label="BracketsExpression:"];
-n40 [label="Recursive_Expression:"];
-n41 [label="Recursive_Expression:"];
-n42 [label="THIS:"];
-n41 -> n42
-n43 [label="Str:a3"];
-n41 -> n43
-n40 -> n41
-n44 [label="Str:a2"];
-n40 -> n44
-n39 -> n40
-n37 -> n39
-n35 -> n37
-n28 -> n35
-n27 -> n28
-n22 -> n27
-n45 [label="THIS:"];
-n22 -> n45
-n15 -> n22
-n14 -> n15
-n46 [label="MethodDeclaration:"];
-n47 [label="Type:integer"];
-n46 -> n47
-n48 [label="Str:a2"];
-n46 -> n48
-n49 [label="Int:0"];
-n46 -> n49
-n14 -> n46
-n13 -> n14
-n50 [label="MethodDeclaration:"];
-n51 [label="Type:Identifier"];
-n52 [label="Str:A"];
-n51 -> n52
-n50 -> n51
-n53 [label="Str:a3"];
-n50 -> n53
-n54 [label="MethodDeclaration_Body:"];
-n55 [label="MethodDeclaration_Variables:"];
-n56 [label="VarDeclaration:"];
-n57 [label="Type:Identifier"];
-n58 [label="Str:A"];
-n57 -> n58
-n56 -> n57
-n59 [label="Str:a"];
-n56 -> n59
-n55 -> n56
-n54 -> n55
-n60 [label="MethodDeclaration_Statements:"];
-n61 [label="AssinedExpression:"];
-n62 [label="Str:a"];
-n61 -> n62
-n63 [label="newIdentifierExpression:"];
-n64 [label="Str:A"];
-n63 -> n64
-n61 -> n63
-n60 -> n61
-n54 -> n60
-n65 [label="Str:a"];
-n54 -> n65
-n50 -> n54
-n13 -> n50
+n13 [label="Type:integer"];
 n12 -> n13
-n66 [label="MethodDeclaration:"];
-n67 [label="Type:Identifier"];
-n68 [label="Str:A"];
-n67 -> n68
+n14 [label="Str:arithmetic"];
+n12 -> n14
+n15 [label="MethodDeclaration_Body:"];
+n16 [label="MethodDeclaration_Variables:"];
+n17 [label="VarDeclaration:"];
+n18 [label="Type:integer"];
+n17 -> n18
+n19 [label="Str:b"];
+n17 -> n19
+n16 -> n17
+n20 [label="AssinedExpression:"];
+n21 [label="Str:b"];
+n20 -> n21
+n22 [label="Int:4"];
+n20 -> n22
+n16 -> n20
+n23 [label="VarDeclaration:"];
+n24 [label="Type:integer"];
+n23 -> n24
+n25 [label="Str:c"];
+n23 -> n25
+n16 -> n23
+n26 [label="AssinedExpression:"];
+n27 [label="Str:c"];
+n26 -> n27
+n28 [label="Int:8"];
+n26 -> n28
+n16 -> n26
+n29 [label="VarDeclaration:"];
+n30 [label="Type:integer"];
+n29 -> n30
+n31 [label="Str:ret"];
+n29 -> n31
+n16 -> n29
+n32 [label="AssinedExpression:"];
+n33 [label="Str:ret"];
+n32 -> n33
+n34 [label="AddExpression:"];
+n35 [label="SubExpression:"];
+n36 [label="AddExpression:"];
+n37 [label="Int:1"];
+n36 -> n37
+n38 [label="DivideExpression:"];
+n39 [label="Int:18"];
+n38 -> n39
+n40 [label="Int:3"];
+n38 -> n40
+n36 -> n38
+n35 -> n36
+n41 [label="Str:b"];
+n35 -> n41
+n34 -> n35
+n42 [label="MultExpression:"];
+n43 [label="Str:c"];
+n42 -> n43
+n44 [label="Int:9"];
+n42 -> n44
+n34 -> n42
+n32 -> n34
+n16 -> n32
+n45 [label="AssinedExpression:"];
+n46 [label="Str:ret"];
+n45 -> n46
+n47 [label="AddExpression:"];
+n48 [label="SubExpression:"];
+n49 [label="AddExpression:"];
+n50 [label="Int:1"];
+n49 -> n50
+n51 [label="BracketsExpression:"];
+n52 [label="DivideExpression:"];
+n53 [label="Int:18"];
+n52 -> n53
+n54 [label="Int:3"];
+n52 -> n54
+n51 -> n52
+n49 -> n51
+n48 -> n49
+n55 [label="Str:b"];
+n48 -> n55
+n47 -> n48
+n56 [label="BracketsExpression:"];
+n57 [label="MultExpression:"];
+n58 [label="Str:c"];
+n57 -> n58
+n59 [label="Int:9"];
+n57 -> n59
+n56 -> n57
+n47 -> n56
+n45 -> n47
+n16 -> n45
+n15 -> n16
+n60 [label="Str:ret"];
+n15 -> n60
+n12 -> n15
+n11 -> n12
+n61 [label="MethodDeclaration:"];
+n62 [label="Type:boolean"];
+n61 -> n62
+n63 [label="Str:relational"];
+n61 -> n63
+n64 [label="MethodDeclaration_Body:"];
+n65 [label="MethodDeclaration_Variables:"];
+n66 [label="VarDeclaration:"];
+n67 [label="Type:integer"];
 n66 -> n67
-n69 [label="Str:a4"];
-n66 -> n69
-n70 [label="MethodDeclaration_Body:"];
-n71 [label="MethodDeclaration_Variables:"];
+n68 [label="Str:a"];
+n66 -> n68
+n65 -> n66
+n69 [label="VarDeclaration:"];
+n70 [label="Type:integer"];
+n69 -> n70
+n71 [label="Str:b"];
+n69 -> n71
+n65 -> n69
 n72 [label="VarDeclaration:"];
-n73 [label="Type:Identifier"];
-n74 [label="Str:A"];
-n73 -> n74
+n73 [label="Type:boolean"];
 n72 -> n73
-n75 [label="Str:a"];
-n72 -> n75
-n71 -> n72
-n70 -> n71
-n76 [label="MethodDeclaration_Variables:"];
-n77 [label="VarDeclaration:"];
-n78 [label="Type:integer"];
-n77 -> n78
-n79 [label="Str:i"];
-n77 -> n79
-n76 -> n77
-n80 [label="AssinedExpression:"];
-n81 [label="Str:a"];
-n80 -> n81
-n82 [label="Recursive_Expression:"];
-n83 [label="Recursive_Expression:"];
-n84 [label="THIS:"];
-n83 -> n84
-n85 [label="Str:a1"];
-n83 -> n85
-n86 [label="Recursive_Expression:"];
-n87 [label="Recursive_Expression:"];
-n88 [label="newIdentifierExpression:"];
-n89 [label="Str:A"];
-n88 -> n89
+n74 [label="Str:c"];
+n72 -> n74
+n65 -> n72
+n75 [label="VarDeclaration:"];
+n76 [label="Type:boolean"];
+n75 -> n76
+n77 [label="Str:d"];
+n75 -> n77
+n65 -> n75
+n78 [label="AssinedExpression:"];
+n79 [label="Str:a"];
+n78 -> n79
+n80 [label="Int:10"];
+n78 -> n80
+n65 -> n78
+n81 [label="AssinedExpression:"];
+n82 [label="Str:b"];
+n81 -> n82
+n83 [label="Int:12"];
+n81 -> n83
+n65 -> n81
+n84 [label="AssinedExpression:"];
+n85 [label="Str:d"];
+n84 -> n85
+n86 [label="FALSE:"];
+n84 -> n86
+n65 -> n84
+n87 [label="AssinedExpression:"];
+n88 [label="Str:c"];
 n87 -> n88
-n90 [label="Str:a1"];
-n87 -> n90
-n91 [label="Recursive_Expression:"];
-n92 [label="THIS:"];
-n91 -> n92
-n93 [label="Str:a2"];
-n91 -> n93
-n87 -> n91
-n86 -> n87
-n94 [label="Str:a2"];
-n86 -> n94
-n83 -> n86
-n82 -> n83
-n95 [label="Str:a3"];
-n82 -> n95
-n80 -> n82
-n76 -> n80
-n96 [label="AssinedExpression:"];
-n97 [label="Str:i"];
+n89 [label="TRUE:"];
+n87 -> n89
+n65 -> n87
+n90 [label="VarDeclaration:"];
+n91 [label="Type:boolean"];
+n90 -> n91
+n92 [label="Str:ret"];
+n90 -> n92
+n65 -> n90
+n93 [label="AssinedExpression:"];
+n94 [label="Str:ret"];
+n93 -> n94
+n95 [label="OrExpression:"];
+n96 [label="AndExpression:"];
+n97 [label="LeftArrowExpression:"];
+n98 [label="Str:a"];
+n97 -> n98
+n99 [label="Str:b"];
+n97 -> n99
 n96 -> n97
-n98 [label="Recursive_Expression:"];
-n99 [label="Recursive_Expression:"];
-n100 [label="THIS:"];
-n99 -> n100
-n101 [label="Str:a1"];
-n99 -> n101
-n102 [label="Recursive_Expression:"];
-n103 [label="Recursive_Expression:"];
-n104 [label="newIdentifierExpression:"];
-n105 [label="Str:A"];
-n104 -> n105
-n103 -> n104
-n106 [label="Str:a1"];
-n103 -> n106
-n107 [label="Recursive_Expression:"];
-n108 [label="THIS:"];
-n107 -> n108
-n109 [label="Str:a2"];
-n107 -> n109
-n103 -> n107
+n100 [label="NotExpression:"];
+n101 [label="Str:d"];
+n100 -> n101
+n96 -> n100
+n95 -> n96
+n102 [label="EqualExpression:"];
+n103 [label="Str:d"];
 n102 -> n103
-n110 [label="Str:a2"];
-n102 -> n110
-n99 -> n102
-n98 -> n99
-n111 [label="Str:a2"];
-n98 -> n111
-n96 -> n98
-n76 -> n96
-n112 [label="AssinedExpression:"];
+n104 [label="NotExpression:"];
+n105 [label="Str:c"];
+n104 -> n105
+n102 -> n104
+n95 -> n102
+n93 -> n95
+n65 -> n93
+n106 [label="AssinedExpression:"];
+n107 [label="Str:ret"];
+n106 -> n107
+n108 [label="OrExpression:"];
+n109 [label="BracketsExpression:"];
+n110 [label="AndExpression:"];
+n111 [label="BracketsExpression:"];
+n112 [label="LeftArrowExpression:"];
 n113 [label="Str:a"];
 n112 -> n113
-n114 [label="Recursive_Expression:"];
-n115 [label="Recursive_Expression:"];
-n116 [label="THIS:"];
-n115 -> n116
-n117 [label="Str:a1"];
-n115 -> n117
-n118 [label="Int:2"];
-n115 -> n118
-n114 -> n115
-n119 [label="Str:a3"];
-n114 -> n119
+n114 [label="Str:b"];
 n112 -> n114
-n76 -> n112
-n120 [label="VarDeclaration:"];
-n121 [label="Type:int[]"];
-n120 -> n121
-n122 [label="Str:ia"];
-n120 -> n122
-n76 -> n120
-n123 [label="AssinedExpression:"];
-n124 [label="Str:i"];
-n123 -> n124
-n125 [label="Recursive_Expression:"];
-n126 [label="THIS:"];
-n125 -> n126
-n127 [label="Str:a5"];
-n125 -> n127
-n128 [label="Expression:"];
-n129 [label="Expression:"];
-n130 [label="Expression:"];
-n131 [label="FALSE:"];
-n130 -> n131
-n132 [label="Str:i"];
-n130 -> n132
-n129 -> n130
-n133 [label="Str:ia"];
-n129 -> n133
-n128 -> n129
-n134 [label="THIS:"];
-n128 -> n134
-n125 -> n128
-n123 -> n125
-n76 -> n123
-n70 -> n76
-n135 [label="newIdentifierExpression:"];
-n136 [label="Str:A"];
-n135 -> n136
-n70 -> n135
-n66 -> n70
-n12 -> n66
-n11 -> n12
-n137 [label="MethodDeclaration:"];
-n138 [label="Type:integer"];
-n137 -> n138
-n139 [label="Str:a5"];
-n137 -> n139
-n140 [label="MethodDeclaration_Variables:"];
-n141 [label="Type:boolean"];
-n140 -> n141
-n142 [label="Str:a"];
-n140 -> n142
-n143 [label="Type:integer"];
-n140 -> n143
-n144 [label="Str:b"];
-n140 -> n144
-n145 [label="Type:int[]"];
-n140 -> n145
-n146 [label="Str:c"];
-n140 -> n146
-n147 [label="Type:Identifier"];
-n148 [label="Str:A"];
-n147 -> n148
-n140 -> n147
-n149 [label="Str:d"];
-n140 -> n149
-n137 -> n140
-n150 [label="Int:1"];
-n137 -> n150
-n11 -> n137
+n111 -> n112
+n110 -> n111
+n115 [label="BracketsExpression:"];
+n116 [label="NotExpression:"];
+n117 [label="Str:d"];
+n116 -> n117
+n115 -> n116
+n110 -> n115
+n109 -> n110
+n108 -> n109
+n118 [label="BracketsExpression:"];
+n119 [label="EqualExpression:"];
+n120 [label="Str:d"];
+n119 -> n120
+n121 [label="BracketsExpression:"];
+n122 [label="NotExpression:"];
+n123 [label="Str:c"];
+n122 -> n123
+n121 -> n122
+n119 -> n121
+n118 -> n119
+n108 -> n118
+n106 -> n108
+n65 -> n106
+n64 -> n65
+n124 [label="Str:ret"];
+n64 -> n124
+n61 -> n64
+n11 -> n61
 n9 -> n11
 n8 -> n9
 n0 -> n8

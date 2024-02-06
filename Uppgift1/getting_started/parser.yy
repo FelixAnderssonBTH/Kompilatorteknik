@@ -35,6 +35,7 @@
 %left NOT
 %left DOT
 %left LP RP LS RS
+
 // definition of the production rules. All production rules are of type Node
 %type <Node *> Goal Recursive_ClassDeclaration MainClass ClassDeclaration Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth VarDeclaration MethodDeclaration MethodDeclaration_Body MethodDeclaration_Variables Recursive_MethodDeclaration Type Statement Recursive_statement Expression Recursive_Expression factor Identifier
 
@@ -68,8 +69,7 @@ MethodDeclaration: PUBLIC Type Identifier LP RP LB MethodDeclaration_Body RB {$$
             | PUBLIC Type Identifier LP MethodDeclaration_Variables RP LB MethodDeclaration_Body RB {$$ = new Node("MethodDeclaration", "", yylineno); $$->children.push_back($2); $$->children.push_back($3); $$->children.push_back($5);$$->children.push_back($8);};
 
 MethodDeclaration_Body: RETURN Expression SEMI {$$ = $2;}
-            | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "", yylineno);$$->children.push_back($1); $$->children.push_back($3);}
-            | Recursive_MethodDeclaration Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "", yylineno);$$->children.push_back($1); $$->children.push_back($2); $$->children.push_back($4);};
+            | Recursive_MethodDeclaration RETURN Expression SEMI {$$ = new Node("MethodDeclaration_Body", "", yylineno);$$->children.push_back($1); $$->children.push_back($3);};
 
 MethodDeclaration_Variables: Type Identifier {$$ = new Node("MethodDeclaration_Variables", "", yylineno); $$->children.push_back($1);$$->children.push_back($2);}
             | MethodDeclaration_Variables COM Type Identifier {$$ = $1; $$->children.push_back($3);$$->children.push_back($4);};
