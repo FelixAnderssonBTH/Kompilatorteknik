@@ -86,23 +86,69 @@ std::string lookupParameter(std::string para){
 class Scope{
     int next = 0;
     Scope* parentScope;
-    std::vector <Scope> childrenScopes;
+    std::vector <Scope*> childrenScopes;
     std::map<std::string,record>records;
-    Scope(){};
+    Scope(){
+        
+    };
+    Scope(Scope* nano){
+        if(nano == NULL){
+        this->next = 0;
+        this->parentScope = nullptr;
+        }else{
+        this->childrenScopes = (*nano).childrenScopes;
+        this->next = (*nano).next;
+        this->parentScope = (*nano).parentScope;
+        this->records = (*nano).records;}
+    };
+
     Scope nextChild(){
-        Scope nextChild;
+        Scope* nextChild;
         if (next==childrenScopes.size())
         {
-            nextChild = new Scope(this);
-
+            nextChild = new Scope(*this);
+            childrenScopes.push_back(nextChild);
+        }else
+        {
+            nextChild = childrenScopes.at(next);
+        }
+        next++;
+        return *nextChild;
+    }
+    record* lookup(std::string key){
+        if (records.find(key)!= records.end())
+        {
+            return &records[key];
+        }else
+        {
+            if (parentScope == NULL)
+            {
+                return NULL;
+            }
+            else
+            {
+                return parentScope->lookup(key);
+            }   
+        }
+    }
+    void resetScope(){
+        next=0;
+        for (int i = 0; i < childrenScopes.size(); i++)
+        {
+            childrenScopes[i]->resetScope();
         }
         
     }
-
 };
 
 
-class SymbolTable{};
+class SymbolTable{
+    Scope root;
+    Scope current;
+    SymbolTable(){root = new Scope(NULL); current = root;}
+    void enterScope(){current = current.nextChild();}
+    void exitScope(){current = current.parent();}
+};
 
 
 
