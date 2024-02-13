@@ -47,33 +47,64 @@ void addMethod(Method meth){
     methods[meth.getID()] = meth;
 };
 std::string lookupVariable(std::string var){
-    return variables[var.id];
+    return variables[var].getID();
 };
-void lookupMethod(std::string meth){
+std::string lookupMethod(std::string meth){
+    return variables[meth].getID();
 };
 };
 
-class Variable: public record{};
+class Variable: public record{
+    Variable(std::string id, std::string type):record(id,type){};
+};
 
 class Method: public record{
 std::vector<Variable> parameters;
 std::map<std::string, Variable> variables;
 
-void addVariable(){
+void addVariable(Variable var){
+    variables[var.getID()]= var;
+};
+void addParameter(Variable para){
+    parameters.push_back(para);
+};
+std::string lookupVariable(std::string var){
+    return variables[var].getID();
+}
+std::string lookupParameter(std::string para){
+    for (int i = 0; i < parameters.size(); i++)
+    {
+        if (parameters[i].getID()==para) return para;
+    }
+    
+    return NULL;
+}
 
 };
-void addParameter(){
+
+
+class Scope{
+    int next = 0;
+    Scope* parentScope;
+    std::vector <Scope> childrenScopes;
+    std::map<std::string,record>records;
+    Scope(){};
+    Scope nextChild(){
+        Scope nextChild;
+        if (next==childrenScopes.size())
+        {
+            nextChild = new Scope(this);
+
+        }
+        
+    }
 
 };
-};
-
-
 
 
 class SymbolTable{};
 
 
-class Scope{};
 
 
 
