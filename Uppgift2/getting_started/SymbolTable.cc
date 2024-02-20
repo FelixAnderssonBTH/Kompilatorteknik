@@ -165,6 +165,15 @@ public:
             childrenScopes[i]->resetScope();
         }
     }
+    Scope parent()
+    {
+        return *parentScope;
+    }
+    void printScope()
+    {
+        std::cout << "Scope"
+                  << "\n";
+    }
 };
 
 class SymbolTable
