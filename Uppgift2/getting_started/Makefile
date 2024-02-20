@@ -11,3 +11,5 @@ tree:
 clean:
 		rm -f parser.tab.* lex.yy.c* compiler stack.hh position.hh location.hh tree.dot tree.pdf
 		rm -R compiler.dSYM
+me:
+	make clean; make compiler; ./compiler  test.txt
