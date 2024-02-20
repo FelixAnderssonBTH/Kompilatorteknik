@@ -2,7 +2,7 @@
 #include <map>
 #include <vector>
 #include <iostream>
-
+#include "Node.h"
 class record
 {
 private:
@@ -178,6 +178,7 @@ public:
 
 class SymbolTable
 {
+public:
     Scope root;
     Scope current;
     SymbolTable()
@@ -194,3 +195,24 @@ class SymbolTable
     void printTable() { root.printScope(); }
     void resetTable() { root.resetScope(); }
 };
+
+void traverse_tree(Node *root, int depth = 0, SymbolTable *table)
+{
+    for (int i = 0; i < depth; i++)
+        std::cout << "  ";
+    std::cout << (*root).id << ":" << (*root).value << std::endl;
+    for (auto i = (*root).children.begin(); i != (*root).children.end(); i++)
+    {
+        if ((*i)->type == "Variable")
+        {
+            Variable::record item((*i)->value, (*i)->type);
+            table->put((*i)->value, item);
+        }
+        if ((*i)->type == "Method")
+        {
+            traverse_tree(*i, depth + 1, table);
+        }
+
+        traverse_tree(*i, depth + 1, table);
+    }
+}
