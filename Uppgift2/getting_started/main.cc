@@ -1,6 +1,6 @@
 #include <iostream>
 #include "parser.tab.hh"
-
+#include "st.cc"
 extern Node *root;
 extern FILE *yyin;
 extern int yylineno;
@@ -18,7 +18,6 @@ enum errCodes
 };
 
 int errCode = errCodes::SUCCESS;
-
 // Handling Syntax Errors
 void yy::parser::error(std::string const &err)
 {
@@ -61,8 +60,12 @@ int main(int argc, char **argv)
 			printf("\nPrint Tree:  \n");
 			try
 			{
+				// SymbolTable *table;
 				root->print_tree();
 				root->generate_tree();
+				SymbolTable *table = new SymbolTable();
+				std::cout << "--------\n";
+				traverse_tree(root, table);
 			}
 			catch (...)
 			{

@@ -10,6 +10,7 @@ private:
     std::string type;
 
 public:
+    record(){};
     record(std::string id, std::string type)
     { // con
         this->id = id;
@@ -35,69 +36,69 @@ public:
     }
 
     // print func
-    int printRecord()
+    void printRecord()
     {
         std::cout << "Name: " << this->id << "\n";
         std::cout << "Type: " << this->type << "\n";
     }
 };
 
-class CLASS : public record
-{
-    std::map<std::string, Variable> variables;
-    std::map<std::string, Method> methods;
-    CLASS(std::string id, std::string type) : record(id, type){};
-
-    void addVariable(Variable var)
-    {
-        variables[var.getID()] = var;
-    };
-    void addMethod(Method meth)
-    {
-        methods[meth.getID()] = meth;
-    };
-    std::string lookupVariable(std::string var)
-    {
-        return variables[var].getID();
-    };
-    std::string lookupMethod(std::string meth)
-    {
-        return variables[meth].getID();
-    };
-};
-
 class Variable : public record
 {
+public:
     Variable(std::string id, std::string type) : record(id, type){};
 };
-
 class Method : public record
 {
-    std::vector<Variable> parameters;
-    std::map<std::string, Variable> variables;
+    std::vector<Variable *> parameters;
+    std::map<std::string, Variable *> variables;
 
     void addVariable(Variable var)
     {
-        variables[var.getID()] = var;
+        variables[var.getID()] = &var;
     };
     void addParameter(Variable para)
     {
-        parameters.push_back(para);
+        parameters.push_back(&para);
     };
     std::string lookupVariable(std::string var)
     {
-        return variables[var].getID();
+        return (*variables[var]).getID();
     }
     std::string lookupParameter(std::string para)
     {
         for (int i = 0; i < parameters.size(); i++)
         {
-            if (parameters[i].getID() == para)
+            if ((*parameters[i]).getID() == para)
                 return para;
         }
 
         return NULL;
     }
+};
+
+class CLASS : public record
+{
+    std::map<std::string, Variable *> variables;
+    std::map<std::string, Method *> methods;
+    CLASS(std::string id, std::string type) : record(id, type){};
+
+    void addVariable(Variable var)
+    {
+        variables[var.getID()] = &var;
+    };
+    void addMethod(Method meth)
+    {
+        methods[meth.getID()] = &meth;
+    };
+    std::string lookupVariable(std::string var)
+    {
+        return (*variables[var]).getID();
+    };
+    std::string lookupMethod(std::string meth)
+    {
+        return (*variables[meth]).getID();
+    };
 };
 
 class Scope
@@ -106,7 +107,7 @@ public:
     int next = 0;
     Scope *parentScope;
     std::vector<Scope *> childrenScopes;
-    std::map<std::string, record> records;
+    std::map<std::string, record *> records;
     Scope(){};
     Scope(Scope *nano)
     {
@@ -143,7 +144,7 @@ public:
     {
         if (records.find(key) != records.end())
         {
-            return &records[key];
+            return records[key];
         }
         else
         {
@@ -196,23 +197,23 @@ public:
     void resetTable() { root.resetScope(); }
 };
 
-void traverse_tree(Node *root, int depth = 0, SymbolTable *table)
+void traverse_tree(Node *root, SymbolTable *table)
 {
-    for (int i = 0; i < depth; i++)
-        std::cout << "  ";
-    std::cout << (*root).id << ":" << (*root).value << std::endl;
+    record item;
+    // int depth = 0;
+    // for (int i = 0; i < depth; i++)
+    //     std::cout << "  ";
+    // std::cout << (*root).id << ":" << (*root).value << std::endl;
     for (auto i = (*root).children.begin(); i != (*root).children.end(); i++)
     {
-        if ((*i)->type == "Variable")
+        if ((*i)->type == "Str")
         {
-            Variable::record item((*i)->value, (*i)->type);
-            table->put((*i)->value, item);
-        }
-        if ((*i)->type == "Method")
-        {
-            traverse_tree(*i, depth + 1, table);
+            item.setID((*i)->type);
+            item.setType((*i)->value);
+            (*table).put();
         }
 
-        traverse_tree(*i, depth + 1, table);
+        // std::cout << (*i)->value << std::endl;
+        traverse_tree(*i, table);
     }
 }
