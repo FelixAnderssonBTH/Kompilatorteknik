@@ -221,13 +221,84 @@ void traverse_tree(Node *root, SymbolTable *table)
     // std::cout << (*root).id << ":" << (*root).value << std::endl;
     for (auto i = (*root).children.begin(); i != (*root).children.end(); i++)
     {
-        if ((*i)->type == "Str")
+        // if ((*i)->type == "Str")
+        // {
+        //     item.setType((*i)->type);
+        //     item.setID((*i)->value);
+        //     //(*table).put();
+        // }
+        if ((*i)->type == "MainClass")
         {
-            item.setType((*i)->type);
-            item.setID((*i)->value);
-            //(*table).put();
+            /* code */
         }
-
+        else if ((*i)->type == "Recursive_ClassDeclaration")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "ClassDeclaration")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Recursive_ClassDeclarationVar")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Recursive_ClassDeclarationMeth")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "VarDeclaration")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "MethodDeclaration")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "MethodDeclaration_Body")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "MethodDeclaration_Variables")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Recursive_MethodDeclaration")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Statement")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Type")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Recursive_statement")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Statement")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Expression")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Identifier")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "factor")
+        {
+            /* code */
+        }
+        else if ((*i)->type == "Recursive_Expression")
+        {
+            /* code */
+        }
         // std::cout << (*i)->value << std::endl;
         traverse_tree(*i, table);
     }
