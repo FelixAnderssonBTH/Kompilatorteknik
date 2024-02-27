@@ -3,20 +3,21 @@
 #include <vector>
 #include <iostream>
 #include "Node.h"
-class record
+class Record
 {
 private:
     std::string id;
     std::string type;
+    std::string record;
 
 public:
-    record(){};
-    record(std::string id, std::string type)
+    Record(){};
+    Record(std::string id, std::string type)
     { // con
         this->id = id;
         this->type = type;
     }
-    ~record() {} // decon
+    ~Record() {} // decon
     // getters and setters
     void setID(std::string new_id)
     {
@@ -26,6 +27,10 @@ public:
     {
         this->type = new_type;
     }
+    void setrecord(std::string record)
+    {
+        this->record = record;
+    }
     std::string getID()
     {
         return this->id;
@@ -33,6 +38,10 @@ public:
     std::string getType()
     {
         return this->type;
+    }
+    std::string getrecord()
+    {
+        return this->record;
     }
 
     // print func
@@ -43,12 +52,12 @@ public:
     }
 };
 
-class Variable : public record
+class Variable : public Record
 {
 public:
-    Variable(std::string id, std::string type) : record(id, type){};
+    Variable(std::string id, std::string type) : Record(id, type){};
 };
-class Method : public record
+class Method : public Record
 {
     std::vector<Variable *> parameters;
     std::map<std::string, Variable *> variables;
@@ -77,11 +86,11 @@ class Method : public record
     }
 };
 
-class CLASS : public record
+class CLASS : public Record
 {
     std::map<std::string, Variable *> variables;
     std::map<std::string, Method *> methods;
-    CLASS(std::string id, std::string type) : record(id, type){};
+    CLASS(std::string id, std::string type) : Record(id, type){};
 
     void addVariable(Variable var)
     {
@@ -107,7 +116,7 @@ public:
     int next = 0;
     Scope *parentScope;
     std::vector<Scope *> childrenScopes;
-    std::map<std::string, record *> records;
+    std::map<std::string, Record *> records;
     Scope(){};
     Scope(Scope *nano)
     {
@@ -140,7 +149,7 @@ public:
         next++;
         return *nextChild;
     }
-    record *lookup(std::string key)
+    Record *lookup(std::string key)
     {
         if (records.find(key) != records.end())
         {
@@ -179,9 +188,12 @@ public:
 
 class SymbolTable
 {
+    std::vector<Record *> table;
+
 public:
     Scope root;
     Scope current;
+
     SymbolTable()
     {
         root = new Scope(NULL);
@@ -190,8 +202,11 @@ public:
     void enterScope() { current = current.nextChild(); }
     void exitScope() { current = current.parent(); }
 
-    void put(std::string key, record item) {}
-    record *lookup(std::string key) { return current.lookup(key); }
+    void put(std::string key, Record *item)
+    {
+        // table[key] = item;
+    }
+    Record *lookup(std::string key) { return current.lookup(key); }
 
     void printTable() { root.printScope(); }
     void resetTable() { root.resetScope(); }
@@ -199,7 +214,7 @@ public:
 
 void traverse_tree(Node *root, SymbolTable *table)
 {
-    record item;
+    Record item;
     // int depth = 0;
     // for (int i = 0; i < depth; i++)
     //     std::cout << "  ";
@@ -208,9 +223,9 @@ void traverse_tree(Node *root, SymbolTable *table)
     {
         if ((*i)->type == "Str")
         {
-            item.setID((*i)->type);
-            item.setType((*i)->value);
-            (*table).put();
+            item.setType((*i)->type);
+            item.setID((*i)->value);
+            //(*table).put();
         }
 
         // std::cout << (*i)->value << std::endl;
