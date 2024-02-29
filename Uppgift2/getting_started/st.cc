@@ -17,7 +17,6 @@ public:
         this->id = id;
         this->type = type;
     }
-    ~Record() {} // decon
     // getters and setters
     void setID(std::string new_id)
     {
@@ -49,40 +48,56 @@ public:
     {
         std::cout << "Name: " << this->id << "\n";
         std::cout << "Type: " << this->type << "\n";
+        std::cout << "Record" << this->record << "\n";
     }
 };
 
 class Variable : public Record
 {
 public:
-    Variable(std::string id, std::string type) : Record(id, type){};
+    Variable(std::string id, std::string type) : Record(id, type)
+    {
+        this->setrecord("Variable");
+    };
 };
 class Method : public Record
 {
-    std::vector<Variable *> parameters;
+    std::map<std::string, Variable *> parameters;
     std::map<std::string, Variable *> variables;
 
-    void addVariable(Variable var)
+public:
+    Method(std::string id, std::string type) : Record(id, type) { this->setrecord("Method"); } // con
+    void addVariable(Variable *var)
     {
-        variables[var.getID()] = &var;
+        variables[(*var).getID()] = var;
     };
-    void addParameter(Variable para)
+    void addParameter(Variable *para)
     {
-        parameters.push_back(&para);
+        parameters[(*para).getID()] = para;
     };
-    std::string lookupVariable(std::string var)
+    int lookupVariable(std::string var)
     {
-        return (*variables[var]).getID();
-    }
-    std::string lookupParameter(std::string para)
-    {
-        for (int i = 0; i < parameters.size(); i++)
+        auto it = variables.find(var);
+        if (it != variables.end())
         {
-            if ((*parameters[i]).getID() == para)
-                return para;
+            return 1;
         }
-
-        return NULL;
+        else
+        {
+            return 0;
+        }
+    }
+    int lookupParameter(std::string para)
+    {
+        auto it = parameters.find(para);
+        if (it != parameters.end())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 };
 
@@ -90,34 +105,59 @@ class CLASS : public Record
 {
     std::map<std::string, Variable *> variables;
     std::map<std::string, Method *> methods;
-    CLASS(std::string id, std::string type) : Record(id, type){};
 
-    void addVariable(Variable var)
+public:
+    CLASS(std::string id, std::string type) : Record(id, type) { this->setrecord("Class"); }; // con
+
+    void addVariable(Variable *var)
     {
-        variables[var.getID()] = &var;
+        variables[(*var).getID()] = var;
     };
-    void addMethod(Method meth)
+    void addMethod(Method *meth)
     {
-        methods[meth.getID()] = &meth;
+        methods[(*meth).getID()] = meth;
     };
-    std::string lookupVariable(std::string var)
+    int lookupVariable(std::string var)
     {
-        return (*variables[var]).getID();
+        auto it = variables.find(var);
+        if (it != variables.end())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     };
-    std::string lookupMethod(std::string meth)
+    int lookupMethod(std::string meth)
     {
-        return (*variables[meth]).getID();
+        auto it = methods.find(meth);
+        if (it != methods.end())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        };
     };
 };
 
 class Scope
 {
-public:
     int next = 0;
     Scope *parentScope;
     std::vector<Scope *> childrenScopes;
     std::map<std::string, Record *> records;
+    std::string Scope_ID;
+
+public:
     Scope(){};
+    Scope(Scope *parent, std::string id)
+    {
+        parentScope = parent;
+        Scope_ID = id;
+    } //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     Scope(Scope *nano)
     {
         if (nano == NULL)
@@ -133,13 +173,16 @@ public:
             this->records = (*nano).records;
         }
     };
-
-    Scope nextChild()
+    void put(std::string id, Record *rec)
+    {
+        records[id] = rec;
+    }
+    Scope *nextChild(std::string id)
     {
         Scope *nextChild;
         if (next == childrenScopes.size())
         {
-            nextChild = new Scope(*this);
+            nextChild = new Scope(this, id);
             childrenScopes.push_back(nextChild);
         }
         else
@@ -147,8 +190,9 @@ public:
             nextChild = childrenScopes.at(next);
         }
         next++;
-        return *nextChild;
+        return nextChild;
     }
+
     Record *lookup(std::string key)
     {
         if (records.find(key) != records.end())
@@ -169,15 +213,15 @@ public:
     }
     void resetScope()
     {
-        next = 0;
+        this->next = 0;
         for (int i = 0; i < childrenScopes.size(); i++)
         {
             childrenScopes[i]->resetScope();
         }
     }
-    Scope parent()
+    Scope *parent()
     {
-        return *parentScope;
+        return parentScope;
     }
     void printScope()
     {
@@ -188,118 +232,58 @@ public:
 
 class SymbolTable
 {
-    std::vector<Record *> table;
+    Scope *root;
+    Scope *current;
 
 public:
-    Scope root;
-    Scope current;
-
     SymbolTable()
     {
-        root = new Scope(NULL);
+        root = new Scope(NULL, "start");
         current = root;
     }
-    void enterScope() { current = current.nextChild(); }
-    void exitScope() { current = current.parent(); }
+    void enterScope(std::string id = NULL) { current = (*current).nextChild(id); }
+    void exitScope() { current = (*current).parent(); }
 
-    void put(std::string key, Record *item)
+    void put(std::string id, Record *item)
     {
-        // table[key] = item;
+        current->put(id, item);
     }
-    Record *lookup(std::string key) { return current.lookup(key); }
+    Record *lookup(std::string key) { return (*current).lookup(key); }
 
-    void printTable() { root.printScope(); }
-    void resetTable() { root.resetScope(); }
+    void printTable() { std::cout << "print table\n"; }
+    void resetTable() { (*root).resetScope(); }
 };
 
 void traverse_tree(Node *root, SymbolTable *table)
 {
-    Record item;
-    // int depth = 0;
-    // for (int i = 0; i < depth; i++)
-    //     std::cout << "  ";
-    // std::cout << (*root).id << ":" << (*root).value << std::endl;
-    for (auto i = (*root).children.begin(); i != (*root).children.end(); i++)
+    if ((*root).type == "start")
     {
-        // if ((*i)->type == "Str")
-        // {
-        //     item.setType((*i)->type);
-        //     item.setID((*i)->value);
-        //     //(*table).put();
-        // }
-        if ((*i)->type == "MainClass")
+        for (auto i = root->children.begin(); i != root->children.end(); i++)
         {
-            /* code */
+            table->put((*i)->value, new CLASS((*i)->value, (*i)->value));
+            table->enterScope("CLASS: " + (*i)->value);
+            traverse_tree((*i), table);
+            table->exitScope();
         }
-        else if ((*i)->type == "Recursive_ClassDeclaration")
+    }
+    else if (root->type == "CLASS")
+    {
+        table->put("this", new Variable("this", root->value));
+        for (auto i = root->children.begin(); i != root->children.end(); i++)
         {
-            /* code */
+            traverse_tree(*i, table);
         }
-        else if ((*i)->type == "ClassDeclaration")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Recursive_ClassDeclarationVar")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Recursive_ClassDeclarationMeth")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "VarDeclaration")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "MethodDeclaration")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "MethodDeclaration_Body")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "MethodDeclaration_Variables")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Recursive_MethodDeclaration")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Statement")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Type")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Recursive_statement")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Statement")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Expression")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Identifier")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "factor")
-        {
-            /* code */
-        }
-        else if ((*i)->type == "Recursive_Expression")
-        {
-            /* code */
-        }
-        // std::cout << (*i)->value << std::endl;
-        traverse_tree(*i, table);
+    }
+    else if (root->type == "Main Class")
+    {
+        table->put("this", new Variable("this", root->value));
+        table->put("main", new Method("main", "void"));
+        table->enterScope("Method: main");
+        table->put(root->children.front()->value, new Variable(root->children.front()->value, "string[]"));
+        table->exitScope();
+    }
+    else if (root->type == "")
+    {
+        /* code */
     }
 }
