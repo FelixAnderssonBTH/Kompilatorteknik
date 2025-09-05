@@ -1,7 +1,7 @@
 #include "stdlib.h"
 #include <iostream>
 #include "Node.h"
-
+#include <map>
 
 using namespace std;
 
@@ -20,6 +20,9 @@ public:
 
 };
 
+
+
+
 class VariableRecord: public Record{
 public:
   string scope;
@@ -34,14 +37,37 @@ public:
   }
 };
 
-class ClassRecord: public Record{
 
+class MethodRecord: public Record{
+public:
+  string return_type;
+  map<string, VariableRecord*>parameters;
+  map<string, VariableRecord*>local_variable;
 
+  MethodRecord(const string &name, const string &return_type)
+    : Record(name, "method"), return_type(return_type) {}
+    
+  void addParameters(VariableRecord *parms){
+    if (parameters.find(parms->name) != parameters.end()) {
+      cerr<<"Error! "<<parms->name<<" Alredy exists";
+      
+    }
+    parameters[parms->name] = parms;
+  }
+:
+  void addLocalVariable(VariableRecord *var){
+    local_variable[var->name] = var;
+  }
+
+  void print(int indent = 0) const override {
+    string padding(indent, ' ');
+    cout<< padding << "Method: " << name << " : " << return_type << "\n";
+  }
 };
 
 
-class MethodRecord: public Record{
 
+class ClassRecord: public Record{
 };
 
 
