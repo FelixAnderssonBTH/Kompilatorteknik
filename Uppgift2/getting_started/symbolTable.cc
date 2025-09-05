@@ -48,13 +48,9 @@ public:
     : Record(name, "method"), return_type(return_type) {}
     
   void addParameters(VariableRecord *parms){
-    if (parameters.find(parms->name) != parameters.end()) {
-      cerr<<"Error! "<<parms->name<<" Alredy exists";
-      
-    }
     parameters[parms->name] = parms;
   }
-:
+
   void addLocalVariable(VariableRecord *var){
     local_variable[var->name] = var;
   }
