@@ -57,10 +57,18 @@ public:
 
   void print(int indent = 0) const override {
     string padding(indent, ' ');
+    string second_padding(indent+2, ' ');
+
     cout<< padding << "Method: " << name << " : " << return_type << "\n";
+
+    for (auto &p : parameters){
+      p.second->print(indent+2);
+    }
+    for (auto &v : local_variable){
+      v.second->print(indent+2);
+    }
   }
 };
-
 
 
 class ClassRecord: public Record{
