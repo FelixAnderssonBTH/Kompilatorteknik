@@ -31,6 +31,9 @@ void yy::parser::error(std::string const &err)
 	}
 }
 
+void create_symbol_table(Node* root){
+
+}
 int main(int argc, char **argv)
 {
 	// Reads from file if a file name is passed as an argument. Otherwise, reads from stdin.
@@ -63,6 +66,7 @@ int main(int argc, char **argv)
 			{
 				root->print_tree();
 				root->generate_tree();
+        create_symbol_table(root);
 			}
 			catch (...)
 			{
