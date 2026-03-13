@@ -57,7 +57,7 @@ ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "", yyline
             | CLASS Identifier LB Recursive_ClassDeclarationVar Recursive_ClassDeclarationMeth RB{$$ = new Node("ClassDeclaration", "", yylineno);$$->children.push_back($2);$$->children.push_back($4);$$->children.push_back($5);}
 
 Recursive_ClassDeclarationVar: VarDeclaration {$$ = $1;}
-            | Recursive_ClassDeclarationVar VarDeclaration { $$ = new Node("VarDeclaration", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};      
+            | Recursive_ClassDeclarationVar VarDeclaration { $$ = new Node("ClassVarDeclarations", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};      
 
 Recursive_ClassDeclarationMeth: 
               MethodDeclaration {$$ = $1;}

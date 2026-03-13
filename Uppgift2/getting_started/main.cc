@@ -43,6 +43,13 @@ string get_str_type(Node *it) {
   }
   return it ? it->value : "unknown";
 }
+// returns a class rec in scope
+ClassRecord *find_class_record(SymbolTable &st, const string &name) {
+  auto it = st.globalScope->symbols.find(name);
+  if (it != st.globalScope->symbols.end())
+    return dynamic_cast<ClassRecord *>(it->second);
+  return nullptr;
+}
 
 //// returns the scope of a class
 
@@ -54,10 +61,55 @@ Scope *getClassScope(SymbolTable &st, const string &className) {
     return nullptr;
   }
 }
+// get the scope of a method in a class
+Scope *getMethodScope(SymbolTable &st, const string &className,
+                      const string &methodName) {
+  Scope *classScope = getClassScope(st, className);
+  if (!classScope)
+    return nullptr;
+  auto it = classScope->childrenScopes.find("Method_" + methodName);
+  if (it != classScope->childrenScopes.end()) {
+    return it->second;
+  } else {
+    return nullptr;
+  }
+}
+string getExprType(Node *node, Scope *sc, SymbolTable &st,
+                   const string &currentClass) {
+  const string &t = node->type;
 
+  if (t == "Int")
+    return "integer";
+  if (t == "TRUE" || t == "FALSE")
+    return "boolean";
+  if (t == "THIS")
+    return currentClass;
+
+  if (t == "Str") {
+    Record *rec = sc->getRecord(node->value);
+
+    if (!rec) {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Undeclared identifier '" << node->value << "')\n";
+      return "unknown";
+    }
+    VariableRecord *varRec = dynamic_cast<VariableRecord *>(rec);
+    if (varRec && declaration_lines.count(varRec) &&
+        node->lineno < declaration_lines[varRec]) {
+      total_errors++;
+      cerr << "@error at line " << node->lineno << ". semantic (Variable '"
+           << node->value << "' used before its declaration)\n";
+      return "unknown";
+    }
+    return rec->type;
+  }
+  return "unknown";
+}
 /////////////////////////////////////////
 // implement the analysis here
-void semantic_analysis(Node *root, SymbolTable &st, Scope &sc) {
+void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
+                       const string &currentClass) {
   const string &start = root->type;
 
   // if it is a main class
@@ -78,14 +130,14 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc) {
     auto it = root->children.begin();
     advance(it, 2); // skip class name and param name
     for (; it != root->children.end(); ++it)
-      semantic_analysis(*it, st, *mainMethod);
+      semantic_analysis(*it, st, *mainMethod, currentClass);
     return;
   }
   // pass by the recursive class dec
   if (start == "Recursive_ClassDeclarations") {
     for (Node *child : root->children) {
       std::cout << "Recursive_ClassDeclarations found" << std::endl;
-      semantic_analysis(child, st, sc);
+      semantic_analysis(child, st, sc, currentClass);
     }
     return;
   }
@@ -99,26 +151,80 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc) {
         return;
       for (Node *child : root->children)
         if (child->type != "Str")
-          semantic_analysis(child, st, *classScope);
+          semantic_analysis(child, st, *classScope, className);
     }
     return;
   }
   // pass by  MethodDeclarations
   if (start == "MethodDeclarations") {
+    std::cout << "Recursive_MethodDeclarations found" << std::endl;
     for (Node *child : root->children) {
-      std::cout << "Recursive_MethodDeclarations found" << std::endl;
-      semantic_analysis(child, st, sc);
+      semantic_analysis(child, st, sc, currentClass);
     }
     return;
   }
   // now method
   if (start == "MethodDeclaration") {
 
-    std::cout << "Mehod Found" << std::endl;
+    auto it = root->children.begin();
+    string declaredReturnType = get_str_type(*it++);
+    Node *methodNameNode = *it;
+    std::cout << "Mehod Found: " + methodNameNode->value +
+                     " with declared return type " + declaredReturnType
+              << std::endl;
+
+    Scope *methodScope =
+        getMethodScope(st, currentClass, methodNameNode->value);
+    if (!methodScope) {
+      methodScope = &sc;
+    }
+    Node *body = root->children.back();
+    if (body->type == "MethodDeclaration_Body") {
+      std::cout << "Method has body" << std::endl;
+      semantic_analysis(body->children.front(), st, *methodScope, currentClass);
+      Node *returnExpr = body->children.back();
+      string actual = getExprType(returnExpr, methodScope, st, currentClass);
+      if (actual != declaredReturnType && actual != "unknown") {
+        total_errors++;
+        cerr << "@error at line " << returnExpr->lineno
+             << ". semantic (Return type mismatch in '" << returnExpr->value
+             << "': expected '" << declaredReturnType << "', got '" << actual
+             << "')\n";
+      }
+    } else {
+
+      std::cout << "Method does not have body" << std::endl;
+    }
   }
+
+  // if the class//method have more than 1 vars pass by this
+  if (start == "ClassVarDeclarations" ||
+      start == "MethodDeclaration_Variables") {
+    std::cout << "Vars found inside class/method" << std::endl;
+    for (Node *child : root->children) {
+      semantic_analysis(child, st, sc, currentClass);
+    }
+    return;
+  }
+
+  // check a var
   if (start == "VarDeclaration") {
-    std::cout << "VAR Found" << std::endl;
+    Node *typeNode = root->children.front();
+    Node *nameNode = *std::next(root->children.begin()); // for debug
+    std::cout << "Var Found: type: " + typeNode->value +
+                     " name: " + nameNode->value
+              << std::endl; // for debug
+    if (typeNode->value == "Identifier" && !typeNode->children.empty()) {
+      string className = typeNode->children.front()->value;
+      if (!find_class_record(st, className)) {
+        total_errors++;
+        cerr << "@error at line " << typeNode->lineno
+             << ". semantic (Undefined class type '" << className << "')\n";
+      }
+    }
+    return;
   }
+  return;
 }
 
 void traverse_ast(Node *root, SymbolTable &st) {
@@ -128,10 +234,9 @@ void traverse_ast(Node *root, SymbolTable &st) {
   if ((root->type == "MainClass" || root->type == "ClassDeclaration" ||
        root->type == "EmptyClass") &&
       !root->children.empty() && root->children.front()->type == "Str") {
-    st.currentScope = st.globalScope; // since all classes are global
-    Node *idNode =
-        root->children
-            .front(); // changed the name to node so that i can visualize better
+    st.currentScope = st.globalScope;      // since all classes are global
+    Node *idNode = root->children.front(); // changed the name to node so that
+                                           // i can visualize better
 
     // record the class  if it doe not exist
     ClassRecord *classRec = new ClassRecord(idNode->value);
@@ -279,7 +384,7 @@ void create_symbol_table(Node *root) {
   std::cout << "\n--- Begining semantic analysis ---\n";
   // first we make sure to be in the global scope
   st.currentScope = st.globalScope;
-  semantic_analysis(root, st, *st.globalScope);
+  semantic_analysis(root, st, *st.globalScope, "");
 
   // now print the results
   if (total_errors > 0) {

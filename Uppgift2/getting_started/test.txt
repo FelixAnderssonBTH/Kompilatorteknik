@@ -6,6 +6,8 @@ public class OperatorPriority {
 
 class OP {
 
+    int miran;
+
     public int arithmetic() {
         int b;
         b = 4;
