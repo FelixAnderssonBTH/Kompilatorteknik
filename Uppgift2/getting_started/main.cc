@@ -224,6 +224,33 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
     }
     return;
   }
+
+  // now if else
+  if (start == " IfElseStatement") {
+    std::cout << "if else found" << std::endl;
+    auto it = root->children.begin();
+    string ct = getExprType(*it++, &sc, st, currentClass);
+    if (ct != "boolean" && ct != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << root->lineno
+           << ". semantic (If condition must be boolean, got '" << ct << "')\n";
+    }
+    for (; it != root->children.end(); ++it)
+      semantic_analysis(*it, st, sc, currentClass);
+    return;
+  }
+  // now while
+  if (start == "WhileStatement") {
+    std::cout << "While found" << std::endl;
+  }
+
+  if (start == "PrintStatement") {
+    std::cout << "PrintStatement found" << std::endl;
+  }
+
+  if (start == "AssinedExpression") {
+    std::cout << "AssinedExpression found" << std::endl;
+  }
   return;
 }
 

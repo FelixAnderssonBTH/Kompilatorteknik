@@ -29,6 +29,11 @@ class OP {
         b = 12;
         d = false;
         c = true;
+        if(a==10){
+            a=9;
+          }else{
+              a=8;
+            }
         boolean ret;
         // the following statements should generate the same tree
         ret = a < b && !d || d == !c;
