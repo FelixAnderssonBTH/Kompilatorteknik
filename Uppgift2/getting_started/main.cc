@@ -1,5 +1,4 @@
 #include "Node.h"
-#include "helpers.cc"
 #include "parser.tab.hh"
 #include "symbolTable.cc"
 #include <iostream>
@@ -11,13 +10,6 @@ extern int yylineno;
 extern int lexical_errors;
 extern yy::parser::symbol_type yylex();
 
-///////////////////////////////// this is just so i dont mess up string names
-#define CLASSM = "MainClass";
-#define CLASSE = "EmptyClass";
-#define CLASSD = "ClassDeclaration";
-#define VARD = "VarDeclaration";
-#define METHD = "MethodDeclaration";
-////////////////////////////////
 enum errCodes {
   SUCCESS = 0,
   LEXICAL_ERROR = 1,
@@ -43,8 +35,91 @@ void yy::parser::error(std::string const &err) {
     errCode = errCodes::SYNTAX_ERROR;
   }
 }
+////////Helper////////////////////////
+string get_str_type(Node *it) {
+
+  if (it && it->value == "Identifier" && !it->children.empty()) {
+    return it->children.front()->value;
+  }
+  return it ? it->value : "unknown";
+}
+
+//// returns the scope of a class
+
+Scope *getClassScope(SymbolTable &st, const string &className) {
+  auto it = st.globalScope->childrenScopes.find("Class_" + className);
+  if (it != st.globalScope->childrenScopes.end()) {
+    return it->second;
+  } else {
+    return nullptr;
+  }
+}
+
+/////////////////////////////////////////
 // implement the analysis here
-void semantic_analysis(Node *root, SymbolTable st) {}
+void semantic_analysis(Node *root, SymbolTable &st, Scope &sc) {
+  const string &start = root->type;
+
+  // if it is a main class
+  if (start == "MainClass") {
+    string className = root->children.front()->value;
+    std::cout << "Main Class FOUND:" + className << std::endl;
+    Scope *classScope = getClassScope(st, className);
+
+    // if ther is no scope
+    if (!classScope) {
+      classScope = st.globalScope;
+    }
+    Scope *mainMethod = classScope;
+    if (classScope->childrenScopes.count("Method_main")) {
+      mainMethod = classScope->childrenScopes["Method_main"];
+    }
+
+    auto it = root->children.begin();
+    advance(it, 2); // skip class name and param name
+    for (; it != root->children.end(); ++it)
+      semantic_analysis(*it, st, *mainMethod);
+    return;
+  }
+  // pass by the recursive class dec
+  if (start == "Recursive_ClassDeclarations") {
+    for (Node *child : root->children) {
+      std::cout << "Recursive_ClassDeclarations found" << std::endl;
+      semantic_analysis(child, st, sc);
+    }
+    return;
+  }
+  // Now we check for normal classes
+  if (start == "ClassDeclaration" || start == "EmptyClass") {
+    if (!root->children.empty() && root->children.front()->type == "Str") {
+      string className = root->children.front()->value;
+      std::cout << "Class FOUND:" + className << std::endl;
+      Scope *classScope = getClassScope(st, className);
+      if (!classScope)
+        return;
+      for (Node *child : root->children)
+        if (child->type != "Str")
+          semantic_analysis(child, st, *classScope);
+    }
+    return;
+  }
+  // pass by  MethodDeclarations
+  if (start == "MethodDeclarations") {
+    for (Node *child : root->children) {
+      std::cout << "Recursive_MethodDeclarations found" << std::endl;
+      semantic_analysis(child, st, sc);
+    }
+    return;
+  }
+  // now method
+  if (start == "MethodDeclaration") {
+
+    std::cout << "Mehod Found" << std::endl;
+  }
+  if (start == "VarDeclaration") {
+    std::cout << "VAR Found" << std::endl;
+  }
+}
 
 void traverse_ast(Node *root, SymbolTable &st) {
   int depth = 0; // this is to know how many time exit scope shpuld be called
@@ -204,7 +279,7 @@ void create_symbol_table(Node *root) {
   std::cout << "\n--- Begining semantic analysis ---\n";
   // first we make sure to be in the global scope
   st.currentScope = st.globalScope;
-  semantic_analysis(root, st);
+  semantic_analysis(root, st, *st.globalScope);
 
   // now print the results
   if (total_errors > 0) {

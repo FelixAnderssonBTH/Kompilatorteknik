@@ -45,11 +45,11 @@
 Goal: MainClass END  {$$ = $1; root = $$;}
             | MainClass Recursive_ClassDeclaration END {$$ = $1; $$->children.push_back($2); root = $$;};
 
-Recursive_ClassDeclaration: ClassDeclaration {$$ = new Node("Recursive_ClassDeclaration", "", yylineno); $$->children.push_back($1);}
+Recursive_ClassDeclaration: ClassDeclaration {$$ = new Node("Recursive_ClassDeclarations", "", yylineno); $$->children.push_back($1);}
             | Recursive_ClassDeclaration ClassDeclaration {$$ = $1; $$->children.push_back($2);};
 
 MainClass:
-PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP LB Recursive_statement RB RB {$$ = new Node("Main Class", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
+PUBLIC CLASS Identifier LB PUBLIC STATIC VOID MAIN LP STRING LS RS Identifier RP LB Recursive_statement RB RB {$$ = new Node("MainClass", "", yylineno); $$->children.push_back($3); $$->children.push_back($13); $$->children.push_back($16);};
 
 ClassDeclaration: CLASS Identifier LB RB {$$ = new Node("EmptyClass", "", yylineno);$$->children.push_back($2);}
             | CLASS Identifier LB Recursive_ClassDeclarationVar RB {$$ = new Node("ClassDeclaration", "", yylineno);$$->children.push_back($2);$$->children.push_back($4);}
@@ -61,7 +61,7 @@ Recursive_ClassDeclarationVar: VarDeclaration {$$ = $1;}
 
 Recursive_ClassDeclarationMeth: 
               MethodDeclaration {$$ = $1;}
-            | Recursive_ClassDeclarationMeth MethodDeclaration { $$ = new Node("MethodDeclaration", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};    
+            | Recursive_ClassDeclarationMeth MethodDeclaration { $$ = new Node("MethodDeclarations", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};    
 
 VarDeclaration: Type Identifier SEMI  {$$ = new Node("VarDeclaration", "", yylineno); $$->children.push_back($1); $$->children.push_back($2);};
 
