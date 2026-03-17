@@ -86,7 +86,7 @@ string getExprType(Node *node, Scope *sc, SymbolTable &st,
     return currentClass;
 
   if (t == "Str") {
-    Record *rec = sc->getRecord(node->value);
+    Record *rec = sc->getRecord(node->value, "var");
 
     if (!rec) {
       total_errors++;
@@ -242,14 +242,60 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
   // now while
   if (start == "WhileStatement") {
     std::cout << "While found" << std::endl;
+    auto it = root->children.begin();
+    string ct = getExprType(*it++, &sc, st, currentClass);
+    if (ct != "boolean" && ct != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << root->lineno
+           << ". semantic (While condition must be boolean, got '" << ct
+           << "')\n";
+    }
+    semantic_analysis(*it, st, sc, currentClass);
+    return;
   }
 
   if (start == "PrintStatement") {
-    std::cout << "PrintStatement found" << std::endl;
+    std::cout << "PrintStatement found" << std::endl; // just check the children
+    getExprType(root->children.front(), &sc, st, currentClass);
+    return;
   }
 
   if (start == "AssinedExpression") {
     std::cout << "AssinedExpression found" << std::endl;
+    auto it = root->children.begin();
+    // when we have simple expr like x=1;
+    Node *leftSide = *it++;
+    string leftSideType = "unknown";
+    if (root->children.size() == 2) {
+      Node *rightSide = *it;
+      Record *rec = sc.getRecord(leftSide->value, "var");
+      if (!rec) {
+        total_errors++;
+        cerr << "@error at line " << leftSide->lineno
+             << ". semantic (Undeclared variable '" << leftSide->value
+             << "')\n";
+      } else {
+        VariableRecord *varRec = dynamic_cast<VariableRecord *>(rec);
+        if (varRec && declaration_lines.count(varRec) &&
+            leftSide->lineno < declaration_lines.count(varRec)) {
+          total_errors++;
+          cerr << "@error at line " << leftSide->lineno
+               << ". semantic (Variable '" << leftSide->value
+               << "' used before its declaration)\n";
+        }
+        leftSideType = rec->type;
+      }
+      string rightSideType = getExprType(rightSide, &sc, st, currentClass);
+      if (rightSideType != "unknown" && leftSideType != "unknown" &&
+          rightSideType != leftSideType) {
+        total_errors++;
+        cerr << "@error at line " << leftSide->lineno
+             << ". semantic (Type mismatch: '" << leftSide->value << "' is '"
+             << leftSideType << "', expression is '" << rightSideType << "')\n";
+      }
+    } else {
+      // when we have array x[1]=1;
+    }
   }
   return;
 }
@@ -304,8 +350,7 @@ void traverse_ast(Node *root, SymbolTable &st) {
 
     MethodRecord *methRec = new MethodRecord(idNode->value, retTypeStr);
 
-    if (st.currentScope->symbols.count(idNode->value) &&
-        dynamic_cast<MethodRecord *>(st.currentScope->symbols[idNode->value])) {
+    if (st.currentScope->methodSymbols.count(idNode->value)) {
 
       std::cerr << "@error at line " << idNode->lineno
                 << ". semantic (Already Declared Function: '" << idNode->value
@@ -327,9 +372,7 @@ void traverse_ast(Node *root, SymbolTable &st) {
 
     VariableRecord *varRec =
         new VariableRecord(idNode->value, varTypeStr, st.currentScope->name);
-    if (st.currentScope->symbols.count(idNode->value) &&
-        dynamic_cast<VariableRecord *>(
-            st.currentScope->symbols[idNode->value])) {
+    if (st.currentScope->varSymbols.count(idNode->value)) {
 
       bool inMethod = st.currentScope->name.find("Method_") == 0;
       std::cerr << "@error at line " << idNode->lineno
@@ -349,8 +392,9 @@ void traverse_ast(Node *root, SymbolTable &st) {
     MethodRecord *currentMethod = nullptr;
     if (st.currentScope->parent && st.currentScope->name.find("Method_") == 0) {
       string mName = st.currentScope->name.substr(7);
-      currentMethod =
-          dynamic_cast<MethodRecord *>(st.currentScope->parent->symbols[mName]);
+      currentMethod = st.currentScope->parent->methodSymbols.count(mName)
+                          ? st.currentScope->parent->methodSymbols[mName]
+                          : nullptr;
     }
 
     auto it = root->children.begin();
@@ -365,7 +409,7 @@ void traverse_ast(Node *root, SymbolTable &st) {
         VariableRecord *parmRec =
             new VariableRecord(idNode->value, parmType, st.currentScope->name);
 
-        if (st.currentScope->symbols.count(idNode->value)) {
+        if (st.currentScope->varSymbols.count(idNode->value)) {
           std::cerr << "@error at line " << idNode->lineno
                     << ". semantic (Already Declared parameter: '"
                     << idNode->value << "')\n";

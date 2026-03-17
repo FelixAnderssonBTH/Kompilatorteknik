@@ -96,7 +96,10 @@ class Scope {
 public:
   string name;
   Scope *parent;
+  // three maps so that the semanalys dose not confuse method a with var a
   map<string, Record *> symbols;
+  map<string, VariableRecord *> varSymbols;
+  map<string, MethodRecord *> methodSymbols;
   map<string, Scope *> childrenScopes;
 
   Scope(const string &name, Scope *parent = nullptr) {
@@ -110,25 +113,50 @@ public:
       delete c.second;
   }
 
-  void addRecord(Record *record) { symbols[record->name] = record; }
+  void addRecord(Record *record) {
+    if (auto *var = dynamic_cast<VariableRecord *>(record)) {
+      varSymbols[var->name] = var;
+    } else if (auto *meth = dynamic_cast<MethodRecord *>(record)) {
+      methodSymbols[meth->name] = meth;
+    } else {
+      symbols[record->name] = record;
+    }
+  }
 
-  // this returns a record, if not in current scope it seraches for it in parent
-  Record *getRecord(const string &name) {
-    if (symbols.find(name) != symbols.end())
-      return symbols[name];
-    if (parent)
-      return parent->getRecord(name);
+  // this returns a record, if not in current scope it seraches for it in
+  // parent, has a optional to look fo var method or class
+  Record *getRecord(const string &name, const string &filter = "any") {
+    if (filter == "any" || filter == "var")
+      if (varSymbols.find(name) != varSymbols.end()) {
+        return varSymbols[name];
+      }
+
+    if (filter == "any" || filter == "method")
+      if (methodSymbols.find(name) != methodSymbols.end()) {
+        return methodSymbols[name];
+      }
+
+    if (filter == "any" || filter == "class")
+      if (symbols.find(name) != symbols.end()) {
+        return symbols[name];
+      }
+
+    if (parent) {
+      return parent->getRecord(name, filter);
+    }
     return nullptr;
   }
   void print(int indent = 0) const {
     string padding(indent, ' ');
     cout << padding << "Scope: " << name << "\n";
-    for (auto &s : symbols) {
+    for (auto &s : symbols)
       s.second->print(indent + 2);
-    }
-    for (auto &c : childrenScopes) {
+    for (auto &v : varSymbols)
+      v.second->print(indent + 2);
+    for (auto &m : methodSymbols)
+      m.second->print(indent + 2);
+    for (auto &c : childrenScopes)
       c.second->print(indent + 2);
-    }
   }
 };
 
