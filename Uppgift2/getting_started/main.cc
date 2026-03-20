@@ -294,7 +294,36 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
              << leftSideType << "', expression is '" << rightSideType << "')\n";
       }
     } else {
-      // when we have array x[1]=1;
+      // when we have array x[index]=value;
+      Node *index = *it++;
+      Node *value = *it;
+      Record *rec = sc.getRecord(leftSide->value, "var");
+      if (!rec) {
+        total_errors++;
+        cerr << "@error at line " << leftSide->lineno
+             << ". semantic (Undeclared variable '" << leftSide->value
+             << "')\n";
+      } else if (rec->type != "int[]") {
+        total_errors++;
+        cerr << "@error at line " << leftSide->lineno << ". semantic ('"
+             << leftSide->value << "' is not an array, type is '" << rec->type
+             << "')\n";
+      }
+      string indexType = getExprType(index, &sc, st, currentClass);
+
+      if (indexType != "integer" && indexType != "unknown") {
+        total_errors++;
+        cerr << "@error at line " << index->lineno
+             << ". semantic (Array index must be integer, got '" << indexType
+             << "')\n";
+      }
+      string valueType = getExprType(value, &sc, st, currentClass);
+      if (valueType != "integer" && valueType != "unknown") {
+        total_errors++;
+        cerr << "@error at line " << value->lineno
+             << ". semantic (Array element must be integer, got '" << valueType
+             << "')\n";
+      }
     }
   }
   return;
