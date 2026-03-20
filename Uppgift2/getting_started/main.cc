@@ -396,20 +396,26 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
     }
     Node *body = root->children.back();
     if (body->type == "MethodDeclaration_Body") {
-      std::cout << "Method has body" << std::endl;
       semantic_analysis(body->children.front(), st, *methodScope, currentClass);
       Node *returnExpr = body->children.back();
       string actual = getExprType(returnExpr, methodScope, st, currentClass);
       if (actual != declaredReturnType && actual != "unknown") {
         total_errors++;
         cerr << "@error at line " << returnExpr->lineno
-             << ". semantic (Return type mismatch in '" << returnExpr->value
+             << ". semantic (Return type mismatch in '" << methodNameNode->value
              << "': expected '" << declaredReturnType << "', got '" << actual
              << "')\n";
       }
     } else {
-
-      std::cout << "Method does not have body" << std::endl;
+      // body IS the return expression directly (no pre-statements)
+      string actual = getExprType(body, methodScope, st, currentClass);
+      if (actual != declaredReturnType && actual != "unknown") {
+        total_errors++;
+        cerr << "@error at line " << body->lineno
+             << ". semantic (Return type mismatch in '" << methodNameNode->value
+             << "': expected '" << declaredReturnType << "', got '" << actual
+             << "')\n";
+      }
     }
   }
 
@@ -475,6 +481,15 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
     getExprType(root->children.front(), &sc, st, currentClass);
     return;
   }
+  if (start == "MethodDeclaration_Statements" || start == "Statement") {
+    for (Node *child : root->children)
+      semantic_analysis(child, st, sc, currentClass);
+    return;
+  }
+
+  if (start == "EmptyStatement") {
+    return;
+  }
 
   if (start == "AssinedExpression") {
     std::cout << "AssinedExpression found" << std::endl;
@@ -493,7 +508,7 @@ void semantic_analysis(Node *root, SymbolTable &st, Scope &sc,
       } else {
         VariableRecord *varRec = dynamic_cast<VariableRecord *>(rec);
         if (varRec && declaration_lines.count(varRec) &&
-            leftSide->lineno < declaration_lines.count(varRec)) {
+            leftSide->lineno < declaration_lines[varRec]) {
           total_errors++;
           cerr << "@error at line " << leftSide->lineno
                << ". semantic (Variable '" << leftSide->value

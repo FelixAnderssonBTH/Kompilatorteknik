@@ -75,7 +75,7 @@ MethodDeclaration_Variables: Type Identifier {$$ = new Node("MethodDeclaration_V
             | MethodDeclaration_Variables COM Type Identifier {$$ = $1; $$->children.push_back($3);$$->children.push_back($4);};
 
 Recursive_MethodDeclaration: VarDeclaration {$$ = new Node("MethodDeclaration_Variables", "", yylineno); $$->children.push_back($1);}
-            | Recursive_MethodDeclaration VarDeclaration {$$ = $1; $$->children.push_back($2);};
+            | Recursive_MethodDeclaration VarDeclaration {$$ = $1; $$->children.push_back($2);}
             | Statement {$$ = new Node("MethodDeclaration_Statements", "", yylineno); $$->children.push_back($1);}
             | Recursive_MethodDeclaration Statement {$$ = $1; $$->children.push_back($2);};
 
