@@ -104,6 +104,72 @@ string getExprType(Node *node, Scope *sc, SymbolTable &st,
     }
     return rec->type;
   }
+
+  if (t == "ArrayExpression") {
+    auto it = node->children.begin();
+    string arrayType = getExprType(*it++, sc, st, currentClass);
+    string indexType = getExprType(*it, sc, st, currentClass);
+    if (arrayType != "int[]" && arrayType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Array access on non-array type '" << arrayType
+           << "')\n";
+    }
+    if (indexType != "integer" && indexType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Array index must be integer, got '" << indexType
+           << "')\n";
+    }
+    return "integer";
+  }
+  if (t == "BracketsExpression") {
+    return getExprType(node->children.front(), sc, st, currentClass);
+  }
+
+  if (t == "LenghtExpression") {
+    string arrayType =
+        getExprType(node->children.front(), sc, st, currentClass);
+    if (arrayType != "int[]" && arrayType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic ('.length' requires int[], got '" << arrayType
+           << "')\n";
+    }
+    return "integer";
+  }
+  if (t == "EqualExpression") {
+    auto it = node->children.begin();
+    string leftSideType = getExprType(*it++, sc, st, currentClass);
+    string rightSideType = getExprType(*it, sc, st, currentClass);
+    if (leftSideType != rightSideType && rightSideType != "unknown" &&
+        leftSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic ('==' type mismatch: '" << leftSideType << "' vs '"
+           << rightSideType << "')\n";
+    }
+    return "boolean";
+  }
+
+  if (t == "Recursive_Expression") {
+    auto it = node->children.begin();
+    Node *object = *it++;
+    Node *method = *it++;
+    string objectType = getExprType(object, sc, st, currentClass);
+    if (objectType == "unknown") {
+      return "unknown";
+    }
+
+    if (objectType == "integer" || objectType == "boolean" ||
+        objectType == "int[]") {
+      total_errors++;
+      cerr << "@error at line " << method->lineno
+           << ". semantic (Cannot call method '" << method->value
+           << "' on primitive type '" << objectType << "')\n";
+      return "unknown";
+    }
+  }
   return "unknown";
 }
 /////////////////////////////////////////
