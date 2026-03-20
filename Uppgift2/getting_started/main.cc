@@ -36,6 +36,15 @@ void yy::parser::error(std::string const &err) {
   }
 }
 ////////Helper////////////////////////
+/// a simple falttner
+void flattenArgs(Node *node, vector<Node *> &args) {
+  if (node->type == "Expression") {
+    for (Node *child : node->children)
+      flattenArgs(child, args);
+  } else {
+    args.push_back(node);
+  }
+}
 string get_str_type(Node *it) {
 
   if (it && it->value == "Identifier" && !it->children.empty()) {
@@ -152,23 +161,164 @@ string getExprType(Node *node, Scope *sc, SymbolTable &st,
     return "boolean";
   }
 
+  if (t == "AddExpression" || t == "SubExpression" || t == "MultExpression" ||
+      t == "DivideExpression") {
+    auto it = node->children.begin();
+    string leftSideType = getExprType(*it++, sc, st, currentClass);
+    string rightSideType = getExprType(*it, sc, st, currentClass);
+    if (leftSideType != "integer" && leftSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Arithmetic operator requires integer operands, left "
+              "is '"
+           << leftSideType << "')\n";
+    }
+    if (rightSideType != "integer" && rightSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Arithmetic operator requires integer operands, "
+              "right is '"
+           << rightSideType << "')\n";
+    }
+    return "integer";
+  }
+
+  if (t == "NotExpression") {
+    string inner = getExprType(node->children.front(), sc, st, currentClass);
+    if (inner != "boolean" && inner != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Operator '!' requires boolean, got '" << inner
+           << "')\n";
+    }
+    return "boolean";
+  }
+
+  if (t == "AndExpression" || t == "OrExpression") {
+    auto it = node->children.begin();
+    string leftSideType = getExprType(*it++, sc, st, currentClass);
+    string rightSideType = getExprType(*it, sc, st, currentClass);
+    if (leftSideType != "boolean" && leftSideType != "unknown") {
+      total_errors++;
+      cerr
+          << "@error at line " << node->lineno
+          << ". semantic (Logical operator requires boolean operands, left is '"
+          << leftSideType << "')\n";
+    }
+    if (rightSideType != "boolean" && rightSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Logical operator requires boolean operands, right "
+              "is '"
+           << rightSideType << "')\n";
+    }
+    return "boolean";
+  }
+
+  if (t == "LeftArrowExpression" || t == "RightArrowExpression") {
+    auto it = node->children.begin();
+    string leftSideType = getExprType(*it++, sc, st, currentClass);
+    string rightSideType = getExprType(*it, sc, st, currentClass);
+    if (leftSideType != "integer" && leftSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Relational operator requires integer operands, left "
+              "is '"
+           << leftSideType << "')\n";
+    }
+    if (rightSideType != "integer" && rightSideType != "unknown") {
+      total_errors++;
+      cerr << "@error at line " << node->lineno
+           << ". semantic (Relational operator requires integer operands, "
+              "right is '"
+           << rightSideType << "')\n";
+    }
+    return "boolean";
+  }
+
+  if (t == "newIntExpression") {
+    if (!node->children.empty()) {
+      string indexType =
+          getExprType(node->children.front(), sc, st, currentClass);
+      if (indexType != "integer" && indexType != "unknown") {
+        total_errors++;
+        cerr << "@error at line " << node->lineno
+             << ". semantic (Array size must be integer, got '" << indexType
+             << "')\n";
+      }
+    }
+    return "int[]";
+  }
+
+  if (t == "newIdentifierExpression") {
+    if (!node->children.empty()) {
+      string className = node->children.front()->value;
+      if (!find_class_record(st, className)) {
+        total_errors++;
+        cerr << "@error at line " << node->lineno
+             << ". semantic (Undefined class '" << className << "')\n";
+        return "unknown";
+      }
+      return className;
+    }
+    return "unknown";
+  }
   if (t == "Recursive_Expression") {
     auto it = node->children.begin();
-    Node *object = *it++;
-    Node *method = *it++;
-    string objectType = getExprType(object, sc, st, currentClass);
-    if (objectType == "unknown") {
+    if (node->children.size() < 2)
+      return "unknown";
+
+    Node *calleeNode = *it++;
+    Node *methodNameNode = *it++;
+    string calleeType = getExprType(calleeNode, sc, st, currentClass);
+    if (calleeType == "unknown")
+      return "unknown";
+
+    Scope *classScope = getClassScope(st, calleeType);
+    if (!classScope) {
+      total_errors++;
+      cerr << "@error at line " << node->lineno << ". semantic (Type '"
+           << calleeType << "' is not a class)\n";
       return "unknown";
     }
 
-    if (objectType == "integer" || objectType == "boolean" ||
-        objectType == "int[]") {
+    string methodName = methodNameNode->value;
+    MethodRecord *methRec = nullptr;
+    Record *record = classScope->getRecord(methodName, "method");
+    if (record)
+      methRec = dynamic_cast<MethodRecord *>(record);
+
+    if (!methRec) {
       total_errors++;
-      cerr << "@error at line " << method->lineno
-           << ". semantic (Cannot call method '" << method->value
-           << "' on primitive type '" << objectType << "')\n";
+      cerr << "@error at line " << node->lineno << ". semantic (Method '"
+           << methodName << "' not found in class '" << calleeType << "')\n";
       return "unknown";
     }
+
+    vector<Node *> args;
+    for (; it != node->children.end(); ++it)
+      flattenArgs(*it, args);
+    if (args.size() != methRec->param_list.size()) {
+      total_errors++;
+      cerr << "@error at line " << node->lineno << ". semantic (Method '"
+           << methodName << "' in '" << calleeType << "' expects "
+           << methRec->param_list.size() << " argument(s), got " << args.size()
+           << ")\n";
+    } else {
+      for (size_t i = 0; i < args.size(); i++) {
+        string argType = getExprType(args[i], sc, st, currentClass);
+        string paramType = methRec->param_list[i]->type;
+        if (argType != "unknown" && paramType != "unknown" &&
+            argType != paramType) {
+          total_errors++;
+          cerr << "@error at line " << args[i]->lineno
+               << ". semantic (Argument " << (i + 1) << " of '" << methodName
+               << "' expects '" << paramType << "', got '" << argType << "')\n";
+        }
+      }
+    }
+
+    return methRec->return_type;
   }
   return "unknown";
 }
