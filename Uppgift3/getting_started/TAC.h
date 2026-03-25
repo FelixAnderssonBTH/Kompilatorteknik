@@ -14,17 +14,28 @@ public:
     cout << result << " := " << lhs << " " << op << " " << rhs << endl;
   }
 };
-class Expression : public Tac {
-public:
-};
-class MethodCall : public Tac {
-public:
-};
-class Jump : public Tac {
-public:
-};
-class CondJump : public Tac {
-public:
-};
+class Expression : public Tac {};
+
+class UnaryExpression : public Tac {};
+
+class Copy : public Tac {};
+
+class ArrayAccess : public Tac {};
+
+class New : public Tac {};
+
+class NewArray : public Tac {};
+
+class Length : public Tac {};
+
+class Parameter : public Tac {};
+
+class MethodCall : public Tac {};
+
+class Return : public Tac {};
+
+class UndconditionalJump : public Tac {};
+
+class ConditionalJump : public Tac {};
 
 #endif
