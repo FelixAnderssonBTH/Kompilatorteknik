@@ -1,19 +1,19 @@
 #ifndef TAC_H
 #define TAC_H
 
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class Tac {
 public:
   string tac_output, op, lhs, rhs, result;
 
-  // getters and setters
   string dump() {
     // for debugging
-    cout << result << " := " << lhs << " " << op << " " << rhs << endl;
     return tac_output;
   }
 };
@@ -143,7 +143,7 @@ public:
     op = "iffalse";
     rhs = _rhs;
     result = _result;
-    tac_output = op + " " + rhs + "goto" + result;
+    tac_output = op + " " + rhs + " goto " + result;
   }
 };
 
@@ -151,12 +151,61 @@ class BasicBlock {
 public:
   string name;
   vector<Tac *> instructions;
+  Tac *condition;
+  BasicBlock *trueExit;
+  BasicBlock *falseExit;
+
+  BasicBlock() : condition(NULL), trueExit(NULL), falseExit(NULL) {}
 
   void dump() {
     cout << name << ":" << endl;
     for (auto t : instructions) {
       cout << "  " << t->dump() << endl;
     }
+    if (condition) {
+      cout << "  " << condition->dump() << endl;
+    }
   }
 };
+
+class CFG {
+public:
+  vector<BasicBlock *> blocks;
+
+  void add_block(BasicBlock *b) { blocks.push_back(b); }
+
+  void generate_dot(string filename) {
+    ofstream out;
+    out.open(filename);
+    out << "digraph {" << endl;
+    out << "graph [ splines = ortho ]" << endl;
+    out << "node [ shape = box ];" << endl;
+
+    for (auto b : blocks) {
+      out << b->name << " [ shape = box label = \"" << b->name << "\\n";
+      for (auto t : b->instructions) {
+        out << t->dump() << "\\n";
+      }
+      if (b->condition) {
+        out << b->condition->dump() << "\\n";
+      }
+      out << "\" ];" << endl;
+    }
+
+    for (auto b : blocks) {
+      if (b->trueExit) {
+        out << b->name << " -> " << b->trueExit->name
+            << " [ xlabel = \"true\" ];" << endl;
+      }
+      if (b->falseExit) {
+        out << b->name << " -> " << b->falseExit->name
+            << " [ xlabel = \"false\" ];" << endl;
+      }
+    }
+
+    out << "}" << endl;
+    out.close();
+  }
+};
+
 #endif
