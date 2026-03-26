@@ -1,46 +1,20 @@
-public class OperatorPriority {
+public class Main {
     public static void main(String[] a) {
-        System.out.println(new OP().arithmetic());
+        System.out.println(new Test().run());
     }
 }
-
-class OP {
-
-    int miran;
-
-    public int arithmetic() {
-        int b;
-        b = 4;
-        while(b ==4){
-            b = b+1;
-          }
-        int c;
-        c = 8;
-        int ret;
-        // the following statements should generate the same tree
-        ret = 1 + 18 / 3 - b + c * 9;
-        ret = 1 + (18 / 3) - b + (c * 9);
-        return ret;
-    }
-
-    public boolean relational() {
+class Test {
+    public int run() {
         int a;
         int b;
-        boolean c;
-        boolean d;
-        a = 10;
-        b = 12;
-        d = false;
-        c = true;
-        if(a==10){
-            a=9;
-          }else{
-              a=8;
-            }
-        boolean ret;
-        // the following statements should generate the same tree
-        ret = a < b && !d || d == !c;
-        ret = ((a < b) && (!d)) || (d == (!c));
-        return ret;
+        int x;
+        a = 1;
+        b = 2;
+        x = 0;
+        while (x < 1) {
+            a = b;
+            x=x+1;
+        }
+        return a;
     }
 }
