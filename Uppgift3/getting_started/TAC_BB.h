@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class Tac {
@@ -147,4 +147,16 @@ public:
   }
 };
 
+class BasicBlock {
+public:
+  string name;
+  vector<Tac *> instructions;
+
+  void dump() {
+    cout << name << ":" << endl;
+    for (auto t : instructions) {
+      cout << "  " << t->dump() << endl;
+    }
+  }
+};
 #endif
