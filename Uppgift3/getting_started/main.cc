@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "cfg.cc"
 #include "parser.tab.hh"
 #include "symbolTable.cc"
 #include <iostream>
@@ -758,6 +759,7 @@ int main(int argc, char **argv) {
         root->print_tree();
         root->generate_tree();
         create_symbol_table(root);
+        createCFG(root);
       } catch (...) {
         errCode = errCodes::AST_ERROR;
       }

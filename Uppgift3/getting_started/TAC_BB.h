@@ -44,7 +44,7 @@ public:
   Copy(string _lhs, string _result) {
     lhs = _lhs;
     result = _result;
-    tac_output = result + " := " + rhs;
+    tac_output = result + " := " + lhs;
   }
 };
 
