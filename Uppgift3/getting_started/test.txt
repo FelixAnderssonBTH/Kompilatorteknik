@@ -9,14 +9,12 @@ class Test {
         int b;
         int z;
         x = 1;
-
-        if (x==1){
-          b = x;
-          }
-        else{
-          b = 2;
-          }
+        b = 2;
     z = 2*b+x;
+    while (z<5){
+        z = z + 1;
+      }
+    z = 0;
     return 0;
     }
 }

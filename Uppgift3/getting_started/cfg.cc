@@ -92,6 +92,23 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     return;
   }
 
+  if (node->type == "WhileStatement") {
+    auto it = node->children.begin();
+    Node *cond = *it++;
+    Node *body = *it++;
+
+    cout << cond->type << endl;
+    cout << body->type << endl;
+
+    BasicBlock *whileCond = new BasicBlock();
+    BasicBlock *whileBody = new BasicBlock();
+
+    whileCond->name = "block_" + to_string(blockCount++);
+    whileBody->trueExit = whileCond;
+
+    return;
+  }
+
   if (node->type == "AssinedExpression") {
     auto it = node->children.begin();
     Node *dest = *it++;
