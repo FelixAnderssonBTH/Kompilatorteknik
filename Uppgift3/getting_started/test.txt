@@ -5,15 +5,20 @@ public class Main {
 }
 class Test {
 
-    public int run(int p1) {
+    public int run() {
     int x;
-    x = 1;
-		if (p1 < 2)
+    int b;
+    int c;
+    
+    if (x<1){
+      while(x<1){
+          a = b;
+        }
 
-			System.out.println(10);
-		else
-			System.out.println(0);
+      }else{
+          a = c;
+        }
+	return a;
+  }
 
-		return 1;
-	}
 }

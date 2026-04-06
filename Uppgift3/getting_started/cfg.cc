@@ -6,10 +6,50 @@ int tempCount = 0;
 int blockCount = 0;
 
 string mathOP(Node *node, BasicBlock *current, string dest = "") {
-  if (node->type == "Int" || node->type == "Str")
+  cout << node->type << endl;
+  if (node->type == "Int" || node->type == "Str" || node->type == "TRUE" ||
+      node->type == "FALSE" || node->type == "THIS")
     return node->value;
+
   if (node->type == "BracketsExpression")
     return mathOP(node->children.front(), current);
+
+  if (node->type == "ArrayExpression") {
+    auto it = node->children.begin();
+    string array = mathOP(*it++, current);
+    string index = mathOP(*it, current);
+    string result;
+    if (dest.empty())
+      result = "t_" + to_string(tempCount++);
+    else
+      result = dest;
+    current->instructions.push_back(new ArrayAccess(array, index, result));
+    return result;
+  }
+
+  if (node->type == "Recursive_Expression") {
+    auto it = node->children.begin();
+    Node *call = *it++;
+    Node *method = *it++;
+
+    string callOP = mathOP(call, current);
+
+    while (it != node->children.end()) {
+      current->instructions.push_back(new Parameter(mathOP(*it, current)));
+      ++it;
+    }
+
+    string result;
+    if (dest.empty())
+      result = "t_" + to_string(tempCount++);
+    else {
+      result = dest;
+    }
+    current->instructions.push_back(
+        new MethodCall(callOP + "." + method->value,
+                       to_string(node->children.size() - 2), result));
+    return result;
+  }
 
   string op;
   if (node->type == "AddExpression")
@@ -93,17 +133,21 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     condBlock->condition =
         new ConditionalJump(mathOP(cond, condBlock), elseBlock->name);
 
-    ifBlock->trueExit = mergeBlock;
-    elseBlock->trueExit = mergeBlock;
-
     cfg.add_block(ifBlock);
     cfg.add_block(elseBlock);
     cfg.add_block(mergeBlock);
 
-    traverse(ifNode, ifBlock, cfg);
-    traverse(elseNode, elseBlock, cfg);
+    BasicBlock *ifCurrent = ifBlock;
+    BasicBlock *elseCurrent = elseBlock;
+    traverse(ifNode, ifCurrent, cfg);
+    traverse(elseNode, elseCurrent, cfg);
 
+    ifCurrent->trueExit = mergeBlock;
+    elseCurrent->trueExit = mergeBlock;
     current = mergeBlock;
+    ifCurrent->instructions.push_back(new UndconditionalJump(mergeBlock->name));
+    elseCurrent->instructions.push_back(
+        new UndconditionalJump(mergeBlock->name));
     return;
   }
 
@@ -136,30 +180,37 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
 
     traverse(body, whileBody, cfg);
     whileBody->trueExit = whileCond;
-
+    whileBody->instructions.push_back(new UndconditionalJump(whileCond->name));
     current = exitWhile;
     return;
   }
 
   if (node->type == "AssinedExpression") {
     auto it = node->children.begin();
-    Node *dest = *it++;
-    Node *expr = *it;
-    if (expr->type == "Int" || expr->type == "Str") {
-      current->instructions.push_back(new Copy(expr->value, dest->value));
+    if (node->children.size() == 3) {
+      Node *dest = *it++;
+      Node *index = *it++;
+      Node *src = *it;
+      string srcVal = mathOP(src, current);
+      string indexVal = mathOP(index, current);
+      current->instructions.push_back(
+          new ArrayCopy(dest->value, indexVal, srcVal));
     } else {
-      mathOP(expr, current, dest->value);
+      Node *dest = *it++;
+      Node *expr = *it;
+      if (expr->type == "Int" || expr->type == "Str") {
+        current->instructions.push_back(new Copy(expr->value, dest->value));
+      } else {
+        mathOP(expr, current, dest->value);
+      }
     }
     return;
   }
 
   if (node->type == "PrintStatement") {
-    cout << node->type << node->value << endl;
-
-    cout << node->children.front()->type << node->children.front()->value
-         << endl;
-    if (node->children.front()->type == "Recursive_Expression")
+    if (!current)
       return;
+
     string expr = mathOP(node->children.front(), current);
     current->instructions.push_back(new Parameter(expr));
     current->instructions.push_back(
