@@ -1,20 +1,19 @@
 public class Main {
     public static void main(String[] a) {
-        System.out.println(new Test().run());
+    System.out.println(new Test().run());
     }
 }
 class Test {
-    public int run() {
-        int x;
-        int b;
-        int z;
-        x = 1;
-        b = 2;
-    z = 2*b+x;
-    while (z<5){
-        z = z + 1;
-      }
-    z = 0;
-    return 0;
-    }
+
+    public int run(int p1) {
+    int x;
+    x = 1;
+		if (p1 < 2)
+
+			System.out.println(10);
+		else
+			System.out.println(0);
+
+		return 1;
+	}
 }

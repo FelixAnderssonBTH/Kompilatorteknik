@@ -55,16 +55,31 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     current = block;
   }
 
+  if (node->type == "MethodDeclaration_Body") {
+    Node *returnExpr = node->children.back();
+    for (Node *child : node->children) {
+      if (child != returnExpr)
+        traverse(child, current, cfg);
+    }
+    string result = mathOP(returnExpr, current);
+    current->instructions.push_back(new Return(result));
+    return;
+  }
+
   if (node->type == " IfElseStatement") {
     auto it = node->children.begin();
     Node *cond = *it++;
     Node *ifNode = *it++;
     Node *elseNode = *it;
-
-    BasicBlock *condBlock = new BasicBlock();
-    condBlock->name = "block_" + to_string(blockCount++);
-    cfg.add_block(condBlock);
-    current->trueExit = condBlock;
+    BasicBlock *condBlock;
+    if (current->instructions.empty()) {
+      condBlock = current;
+    } else {
+      condBlock = new BasicBlock();
+      condBlock->name = "block_" + to_string(blockCount++);
+      cfg.add_block(condBlock);
+      current->trueExit = condBlock;
+    }
 
     BasicBlock *ifBlock = new BasicBlock();
     BasicBlock *elseBlock = new BasicBlock();
@@ -96,16 +111,33 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     auto it = node->children.begin();
     Node *cond = *it++;
     Node *body = *it++;
+    BasicBlock *whileCond;
+    if (current->instructions.empty()) {
+      whileCond = current;
+    } else {
+      whileCond = new BasicBlock();
+      whileCond->name = "block_" + to_string(blockCount++);
+      cfg.add_block(whileCond);
+      current->trueExit = whileCond;
+    }
 
-    cout << cond->type << endl;
-    cout << body->type << endl;
-
-    BasicBlock *whileCond = new BasicBlock();
     BasicBlock *whileBody = new BasicBlock();
+    whileBody->name = "block_" + to_string(blockCount++);
+    cfg.add_block(whileBody);
 
-    whileCond->name = "block_" + to_string(blockCount++);
+    BasicBlock *exitWhile = new BasicBlock();
+    exitWhile->name = "block_" + to_string(blockCount++);
+    cfg.add_block(exitWhile);
+
+    whileCond->trueExit = whileBody;
+    whileCond->falseExit = exitWhile;
+    whileCond->condition =
+        new ConditionalJump(mathOP(cond, whileCond), exitWhile->name);
+
+    traverse(body, whileBody, cfg);
     whileBody->trueExit = whileCond;
 
+    current = exitWhile;
     return;
   }
 
@@ -119,6 +151,19 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
       mathOP(expr, current, dest->value);
     }
     return;
+  }
+
+  if (node->type == "PrintStatement") {
+    cout << node->type << node->value << endl;
+
+    cout << node->children.front()->type << node->children.front()->value
+         << endl;
+    if (node->children.front()->type == "Recursive_Expression")
+      return;
+    string expr = mathOP(node->children.front(), current);
+    current->instructions.push_back(new Parameter(expr));
+    current->instructions.push_back(
+        new MethodCallVoid("System.out.println", "1"));
   }
 
   for (Node *child : node->children)

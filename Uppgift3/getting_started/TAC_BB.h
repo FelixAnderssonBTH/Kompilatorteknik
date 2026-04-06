@@ -119,6 +119,16 @@ public:
   }
 };
 
+class MethodCallVoid : public Tac {
+public:
+  MethodCallVoid(string _lhs, string _rhs) {
+    op = "call";
+    lhs = _lhs;
+    rhs = _rhs;
+    tac_output = op + " " + lhs + ", " + rhs;
+  }
+};
+
 class Return : public Tac {
 public:
   Return(string _result) {
