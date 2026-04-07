@@ -5,12 +5,48 @@
 int tempCount = 0;
 int blockCount = 0;
 
+void flattenArgs(Node *node, vector<Node *> &args);
+string mathOP(Node *node, BasicBlock *current, string dest);
+string boolOP(Node *node, BasicBlock *current);
+
+string boolOP(Node *node, BasicBlock *current) {
+  if (node->type == "NotExpression") {
+    string inner = mathOP(node->children.front(), current, "");
+    string result = "t_" + to_string(tempCount++);
+    current->instructions.push_back(new UnaryExpression("!", inner, result));
+    return result;
+  }
+
+  string op;
+  if (node->type == "AndExpression")
+    op = "&&";
+  else if (node->type == "OrExpression")
+    op = "||";
+  else if (node->type == "EqualExpression")
+    op = "==";
+  else if (node->type == "LeftArrowExpression")
+    op = "<";
+  else if (node->type == "RightArrowExpression")
+    op = ">";
+
+  auto it = node->children.begin();
+  string left = mathOP(*it++, current, "");
+  string right = mathOP(*it, current, "");
+  string result = "t_" + to_string(tempCount++);
+  current->instructions.push_back(new Expression(op, left, right, result));
+  return result;
+}
+
 string mathOP(Node *node, BasicBlock *current, string dest = "") {
-  cout << node->type << endl;
-  if (node->type == "Int" || node->type == "Str" || node->type == "TRUE" ||
-      node->type == "FALSE" || node->type == "THIS")
+  if (node->type == "Int" || node->type == "Str")
     return node->value;
 
+  if (node->type == "TRUE")
+    return "true";
+  if (node->type == "FALSE")
+    return "false";
+  if (node->type == "THIS")
+    return "this";
   if (node->type == "BracketsExpression")
     return mathOP(node->children.front(), current);
 
@@ -27,29 +63,70 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
     return result;
   }
 
+  if (node->type == "LenghtExpression") {
+    string array = mathOP(node->children.front(), current, "");
+    string result;
+    if (dest.empty())
+      result = "t_" + to_string(tempCount++);
+    else
+      result = dest;
+    current->instructions.push_back(new Length(array, result));
+    return result;
+  }
+
   if (node->type == "Recursive_Expression") {
     auto it = node->children.begin();
     Node *call = *it++;
     Node *method = *it++;
 
-    string callOP = mathOP(call, current);
+    string caller = mathOP(call, current);
 
+    vector<Node *> args;
     while (it != node->children.end()) {
-      current->instructions.push_back(new Parameter(mathOP(*it, current)));
+      flattenArgs(*it, args);
       ++it;
+    }
+
+    for (Node *arg : args) {
+      current->instructions.push_back(new Parameter(mathOP(arg, current)));
     }
 
     string result;
     if (dest.empty())
       result = "t_" + to_string(tempCount++);
-    else {
+    else
       result = dest;
-    }
-    current->instructions.push_back(
-        new MethodCall(callOP + "." + method->value,
-                       to_string(node->children.size() - 2), result));
+
+    current->instructions.push_back(new MethodCall(
+        caller + "." + method->value, to_string(args.size()), result));
     return result;
   }
+
+  if (node->type == "newIdentifierExpression") {
+    string className = node->children.front()->value;
+    string result;
+    if (dest.empty())
+      result = "t_" + to_string(tempCount++);
+    else
+      result = dest;
+    current->instructions.push_back(new New(className, result));
+    return result;
+  }
+  if (node->type == "newIntExpression") {
+    string size = mathOP(node->children.front(), current, "");
+    string result;
+    if (dest.empty())
+      result = "t_" + to_string(tempCount++);
+    else
+      result = dest;
+    current->instructions.push_back(new NewArray(size, "int", result));
+    return result;
+  }
+  if (node->type == "NotExpression" || node->type == "AndExpression" ||
+      node->type == "OrExpression" || node->type == "EqualExpression" ||
+      node->type == "LeftArrowExpression" ||
+      node->type == "RightArrowExpression")
+    return boolOP(node, current);
 
   string op;
   if (node->type == "AddExpression")
@@ -58,16 +135,9 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
     op = "-";
   if (node->type == "MultExpression")
     op = "*";
-  if (node->type == "EqualExpression")
-    op = "==";
-  if (node->type == "LeftArrowExpression")
-    op = "<";
-  if (node->type == "RightArrowExpression")
-    op = ">";
-  if (node->type == "AndExpression")
-    op = "&&";
-  if (node->type == "OrExpression")
-    op = "||";
+  if (node->type == "DivideExpression")
+    op = "/";
+
   auto it = node->children.begin();
   string left = mathOP(*it++, current);
   string right = mathOP(*it, current);
@@ -87,12 +157,24 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
 void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
   if (!node)
     return;
-
+  cout << "traverse: " << node->type << " " << node->value << endl;
+  if (node->type == "MainClass") {
+    BasicBlock *block = new BasicBlock();
+    block->name = "main_block_" + to_string(blockCount++);
+    cfg.add_block(block);
+    current = block;
+  }
   if (node->type == "MethodDeclaration") {
     BasicBlock *block = new BasicBlock();
     block->name = "block_" + to_string(blockCount++);
     cfg.add_block(block);
     current = block;
+    Node *body = node->children.back();
+    if (body->type != "MethodDeclaration_Body") {
+      string result = mathOP(body, current, "");
+      current->instructions.push_back(new Return(result));
+      return;
+    }
   }
 
   if (node->type == "MethodDeclaration_Body") {
@@ -119,28 +201,32 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
       condBlock->name = "block_" + to_string(blockCount++);
       cfg.add_block(condBlock);
       current->trueExit = condBlock;
+      current->instructions.push_back(new UndconditionalJump(condBlock->name));
     }
 
     BasicBlock *ifBlock = new BasicBlock();
-    BasicBlock *elseBlock = new BasicBlock();
-    BasicBlock *mergeBlock = new BasicBlock();
     ifBlock->name = "block_" + to_string(blockCount++);
+    cfg.add_block(ifBlock);
+
+    BasicBlock *elseBlock = new BasicBlock();
     elseBlock->name = "block_" + to_string(blockCount++);
+    cfg.add_block(elseBlock);
+
+    BasicBlock *mergeBlock = new BasicBlock();
     mergeBlock->name = "block_" + to_string(blockCount++);
+    cfg.add_block(mergeBlock);
 
     condBlock->trueExit = ifBlock;
     condBlock->falseExit = elseBlock;
     condBlock->condition =
         new ConditionalJump(mathOP(cond, condBlock), elseBlock->name);
 
-    cfg.add_block(ifBlock);
-    cfg.add_block(elseBlock);
-    cfg.add_block(mergeBlock);
-
     BasicBlock *ifCurrent = ifBlock;
     BasicBlock *elseCurrent = elseBlock;
+
     traverse(ifNode, ifCurrent, cfg);
-    traverse(elseNode, elseCurrent, cfg);
+    if (it != node->children.end())
+      traverse(*it, elseCurrent, cfg);
 
     ifCurrent->trueExit = mergeBlock;
     elseCurrent->trueExit = mergeBlock;
@@ -156,6 +242,8 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     Node *cond = *it++;
     Node *body = *it++;
     BasicBlock *whileCond;
+    cout << "while cond type: " << cond->type << " value: " << cond->value
+         << endl;
     if (current->instructions.empty()) {
       whileCond = current;
     } else {
@@ -163,6 +251,7 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
       whileCond->name = "block_" + to_string(blockCount++);
       cfg.add_block(whileCond);
       current->trueExit = whileCond;
+      current->instructions.push_back(new UndconditionalJump(whileCond->name));
     }
 
     BasicBlock *whileBody = new BasicBlock();
@@ -208,9 +297,6 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
   }
 
   if (node->type == "PrintStatement") {
-    if (!current)
-      return;
-
     string expr = mathOP(node->children.front(), current);
     current->instructions.push_back(new Parameter(expr));
     current->instructions.push_back(
