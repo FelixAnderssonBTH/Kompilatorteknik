@@ -157,7 +157,6 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
 void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
   if (!node)
     return;
-  cout << "traverse: " << node->type << " " << node->value << endl;
   if (node->type == "MainClass") {
     BasicBlock *block = new BasicBlock();
     block->name = "main_block_" + to_string(blockCount++);
@@ -242,8 +241,6 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
     Node *cond = *it++;
     Node *body = *it++;
     BasicBlock *whileCond;
-    cout << "while cond type: " << cond->type << " value: " << cond->value
-         << endl;
     if (current->instructions.empty()) {
       whileCond = current;
     } else {
@@ -312,4 +309,8 @@ void createCFG(Node *node) {
   BasicBlock *current = nullptr;
   traverse(node, current, cfg);
   cfg.generate_dot("cfg.dot");
+
+  for (auto block : cfg.blocks) {
+    block->dump();
+  }
 }
