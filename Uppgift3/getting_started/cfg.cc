@@ -1,9 +1,12 @@
 #include "Node.h"
 #include "TAC_BB.h"
+#include <map>
 #include <string>
-
 int tempCount = 0;
 int blockCount = 0;
+
+// Needed this to save which class is stored in temo var
+map<string, string> tempToClass;
 
 void flattenArgs(Node *node, vector<Node *> &args);
 string mathOP(Node *node, BasicBlock *current, string dest);
@@ -81,6 +84,12 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
 
     string caller = mathOP(call, current);
 
+    string callerName;
+    if (tempToClass.count(caller))
+      callerName = tempToClass[caller];
+    else
+      callerName = caller;
+
     vector<Node *> args;
     while (it != node->children.end()) {
       flattenArgs(*it, args);
@@ -98,7 +107,7 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
       result = dest;
 
     current->instructions.push_back(new MethodCall(
-        caller + "." + method->value, to_string(args.size()), result));
+        callerName + "." + method->value, to_string(args.size()), result));
     return result;
   }
 
@@ -110,6 +119,7 @@ string mathOP(Node *node, BasicBlock *current, string dest = "") {
     else
       result = dest;
     current->instructions.push_back(new New(className, result));
+    tempToClass[result] = className;
     return result;
   }
   if (node->type == "newIntExpression") {
@@ -158,16 +168,47 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
   if (!node)
     return;
   if (node->type == "MainClass") {
+    string name = node->children.front()->value;
+    tempToClass["this"] = name;
     BasicBlock *block = new BasicBlock();
-    block->name = "main_block_" + to_string(blockCount++);
+    block->name = name + ".main";
+    blockCount++;
     cfg.add_block(block);
     current = block;
   }
+
+  if (node->type == "ClassDeclaration" || node->type == "EmptyClass") {
+    tempToClass["this"] = node->children.front()->value;
+  }
+
   if (node->type == "MethodDeclaration") {
     BasicBlock *block = new BasicBlock();
-    block->name = "block_" + to_string(blockCount++);
+
+    auto it = node->children.begin();
+    ++it;
+    string methodName = (*it)->value;
+    string className = tempToClass["this"];
+    block->name = className + "." + methodName;
+    blockCount++;
     cfg.add_block(block);
     current = block;
+
+    // Added this to include MethodDeclaration_Variables
+    for (Node *child : node->children) {
+      if (child->type == "MethodDeclaration_Variables") {
+        auto it = child->children.begin();
+        while (it != child->children.end()) {
+          if ((*it)->type == "Type") {
+            ++it;
+            if (it != child->children.end()) {
+              block->params.push_back((*it)->value);
+            }
+          }
+          ++it;
+        }
+      }
+    }
+
     Node *body = node->children.back();
     if (body->type != "MethodDeclaration_Body") {
       string result = mathOP(body, current, "");
@@ -302,15 +343,4 @@ void traverse(Node *node, BasicBlock *&current, CFG &cfg) {
 
   for (Node *child : node->children)
     traverse(child, current, cfg);
-}
-
-void createCFG(Node *node) {
-  CFG cfg;
-  BasicBlock *current = nullptr;
-  traverse(node, current, cfg);
-  cfg.generate_dot("cfg.dot");
-
-  for (auto block : cfg.blocks) {
-    block->dump();
-  }
 }

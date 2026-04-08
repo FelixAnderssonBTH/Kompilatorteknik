@@ -1,0 +1,36 @@
+E.main:
+iconst 4
+iconst 2
+imul
+iconst 10
+iadd
+iconst 2
+iconst 6
+imul
+isub
+iconst 4
+iconst 1
+isub
+iconst 2
+imul
+iconst 2
+idiv
+iadd
+print
+iload true
+inot
+iload false
+iand
+iload true
+ieq
+iconst 10
+iconst 1
+igt
+iconst 1
+iconst 10
+ilt
+iand
+ior
+print
+stop
+

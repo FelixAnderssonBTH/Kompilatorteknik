@@ -1,4 +1,6 @@
 #include "Node.h"
+#include "TAC_BB.h"
+#include "bytecode.cc"
 #include "cfg.cc"
 #include "parser.tab.hh"
 #include "symbolTable.cc"
@@ -24,6 +26,9 @@ int total_errors = 0;
 std::map<Record *, int> declaration_lines; // this is so that we can catch
                                            // variables that are "pre-used"
 int errCode = errCodes::SUCCESS;
+
+void traverse(Node *root, BasicBlock *&entry, CFG &cfg);
+void generateBytecode(CFG &cfg);
 
 // Handling Syntax Errors
 void yy::parser::error(std::string const &err) {
@@ -759,7 +764,18 @@ int main(int argc, char **argv) {
         root->print_tree();
         root->generate_tree();
         create_symbol_table(root);
-        createCFG(root);
+
+        // Assignment 3
+        CFG cfg;
+        BasicBlock *current = nullptr;
+        traverse(root, current, cfg);
+        cfg.generate_dot("cfg.dot");
+        cout << "\n\n\n";
+        for (auto *block : cfg.blocks) {
+          block->dump();
+        }
+        cout << "\n\n\n";
+        generateBytecode(cfg);
       } catch (...) {
         errCode = errCodes::AST_ERROR;
       }

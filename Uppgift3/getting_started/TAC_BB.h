@@ -161,6 +161,7 @@ class BasicBlock {
 public:
   string name;
   vector<Tac *> instructions;
+  vector<string> params;
   Tac *condition;
   BasicBlock *trueExit;
   BasicBlock *falseExit;
@@ -192,7 +193,8 @@ public:
     out << "node [ shape = box ];" << endl;
 
     for (auto b : blocks) {
-      out << b->name << " [ shape = box label = \"" << b->name << "\\n";
+      out << "\"" << b->name << "\"" << " [ shape = box label = \"" << b->name
+          << "\\n";
       for (auto t : b->instructions) {
         out << t->dump() << "\\n";
       }
@@ -204,12 +206,12 @@ public:
 
     for (auto b : blocks) {
       if (b->trueExit) {
-        out << b->name << " -> " << b->trueExit->name
-            << " [ xlabel = \"true\" ];" << endl;
+        out << "\"" << b->name << "\"" << " -> " << "\"" << b->trueExit->name
+            << "\"" << " [ xlabel = \"true\" ];" << endl;
       }
       if (b->falseExit) {
-        out << b->name << " -> " << b->falseExit->name
-            << " [ xlabel = \"false\" ];" << endl;
+        out << "\"" << b->name << "\"" << " -> " << "\"" << b->falseExit->name
+            << "\"" << " [ xlabel = \"false\" ];" << endl;
       }
     }
 
