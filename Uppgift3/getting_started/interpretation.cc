@@ -154,6 +154,21 @@ public:
             break;
           }
         }
+
+      } else if (instruction_id == "iffalse") {
+        int v = data_stack.top();
+        data_stack.pop();
+        if (v == 0) {
+          for (int i = 0; i < current_activation.method.instructions.size();
+               i++) {
+            if (current_activation.method.instructions[i].id == "label" &&
+                current_activation.method.instructions[i].argument ==
+                    instruction.argument) {
+              current_activation.pc = i;
+              break;
+            }
+          }
+        }
       }
     }
   }
