@@ -14,6 +14,14 @@ bool isNumber(const string &s) {
 void valueOrVariable(const string &str, ostream &out) {
   if (str.find("t_") == 0)
     return;
+  if (str == "true") {
+    out << "iconst 1" << endl;
+    return;
+  }
+  if (str == "false") {
+    out << "iconst 0" << endl;
+    return;
+  }
   if (isNumber(str))
     out << "iconst " << str << endl;
   else
@@ -109,13 +117,8 @@ void byteOP(Tac *tac, ostream &out) {
 
   // NO OP
   else if (tac->op == "") {
-    if (tac->rhs == "" && isNumber(tac->lhs)) {
-      out << "iconst " << tac->lhs << endl;
-      out << "istore " << tac->result << endl;
-    } else if (tac->rhs == "" && !isNumber(tac->lhs)) {
-      out << "iload " << tac->lhs << endl;
-      out << "istore " << tac->result << endl;
-    }
+    valueOrVariable(tac->lhs, out);
+    out << "istore " << tac->result << endl;
   }
 
   // JUMP/return OP

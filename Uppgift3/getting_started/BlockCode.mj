@@ -17,11 +17,11 @@ iconst 2
 idiv
 iadd
 print
-iload true
+iconst 1
 inot
-iload false
+iconst 0
 iand
-iload true
+iconst 1
 ieq
 iconst 10
 iconst 1
