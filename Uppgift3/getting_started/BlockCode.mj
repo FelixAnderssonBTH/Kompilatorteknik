@@ -1,36 +1,108 @@
-E.main:
-iconst 4
-iconst 2
-imul
+B.main:
+iconst 5
 iconst 10
-iadd
-iconst 2
-iconst 6
-imul
-isub
-iconst 4
-iconst 1
-isub
-iconst 2
-imul
-iconst 2
-idiv
-iadd
-print
-iconst 1
-inot
-iconst 0
-iand
-iconst 1
-ieq
-iconst 10
-iconst 1
-igt
-iconst 1
-iconst 10
-ilt
-iand
-ior
+invokevirtual FacFib.Compute
 print
 stop
+
+FacFib.Compute:
+istore second
+istore first
+iload first
+iconst 1
+ilt
+inot
+iload second
+iconst 1
+ilt
+inot
+iand
+iffalse goto block_3
+
+block_2:
+iload first
+invokevirtual FacFib.ComputeFac
+istore fac
+iload fac
+print
+iload second
+invokevirtual FacFib.ComputeFib
+istore fib
+iload fib
+print
+iconst 1
+istore returnValue
+goto block_4
+
+block_3:
+iconst 0
+istore returnValue
+goto block_4
+
+block_4:
+iload returnValue
+ireturn
+
+FacFib.ComputeFac:
+istore num
+iload num
+iconst 1
+ilt
+iffalse goto block_7
+
+block_6:
+iconst 1
+istore fac
+goto block_8
+
+block_7:
+iload num
+iconst 1
+isub
+invokevirtual FacFib.ComputeFac
+iload num
+imul
+istore fac
+goto block_8
+
+block_8:
+iload fac
+ireturn
+
+FacFib.ComputeFib:
+istore num
+iconst 0
+istore f0
+iconst 1
+istore f1
+iload num
+istore fib
+iconst 1
+istore i
+goto block_10
+
+block_10:
+iload i
+iload num
+ilt
+iffalse goto block_12
+
+block_11:
+iload f1
+iload f0
+iadd
+istore fib
+iload f1
+istore f0
+iload fib
+istore f1
+iload i
+iconst 1
+iadd
+istore i
+goto block_10
+
+block_12:
+iload fib
+ireturn
 

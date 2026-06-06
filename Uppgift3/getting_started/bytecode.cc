@@ -139,9 +139,9 @@ void generateBytecode(CFG &cfg) {
   for (auto *block : cfg.blocks) {
     cout << block->name << ":" << endl;
     file << block->name << ":" << endl;
-    for (auto &param : block->params) {
-      cout << "istore " << param << endl;
-      file << "istore " << param << endl;
+    for (int i = block->params.size() - 1; i >= 0; i--) {
+      cout << "istore " << block->params[i] << endl;
+      file << "istore " << block->params[i] << endl;
     }
     for (auto *tac : block->instructions) {
       byteOP(tac, cout);

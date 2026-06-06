@@ -182,6 +182,11 @@ public:
 
       } else if (instruction_id == "label") {
 
+      } else if (instruction_id == "invokevirtual") {
+        activations_stack.push(current_activation);
+        Method newMethod = program.getMethod(instruction.argument);
+        current_activation = Activation(0, newMethod);
+
       } else if (instruction_id == "stop") {
         return;
       }

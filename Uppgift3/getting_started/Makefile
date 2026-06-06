@@ -10,7 +10,7 @@ tree:
 		 dot -Tpdf tree.dot -otree.pdf
 		 dot -Tpdf cfg.dot -o cfg.pdf
 clean:
-		rm -f parser.tab.* lex.yy.c* compiler stack.hh position.hh location.hh tree.dot tree.pdf cfg.dot cfg.pdf
+		rm -f parser.tab.* lex.yy.c* compiler stack.hh position.hh location.hh tree.dot tree.pdf cfg.dot cfg.pdf mj
 		rm -R compiler.dSYM
 cfg:
 		g++ -std=c++17 cfg.cc -o cfg
