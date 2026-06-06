@@ -16,3 +16,5 @@ cfg:
 		g++ -std=c++17 cfg.cc -o cfg
 		./cfg
 		dot -Tpdf cfg.dot -o cfg.pdf
+interpreter: interpretation.cc 
+		g++ -g -w -o mj interpretation.cc -std=c++14

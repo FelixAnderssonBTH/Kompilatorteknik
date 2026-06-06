@@ -169,7 +169,72 @@ public:
             }
           }
         }
+      } else if (instruction_id == "ireturn") {
+        int returnVal = data_stack.top();
+        data_stack.pop();
+        current_activation = activations_stack.top();
+        activations_stack.pop();
+        data_stack.push(returnVal);
+
+      } else if (instruction_id == "print") {
+        cout << data_stack.top() << endl;
+        data_stack.pop();
+
+      } else if (instruction_id == "label") {
+
+      } else if (instruction_id == "stop") {
+        return;
       }
     }
   }
 };
+
+int main(int arg_len, char *arg[]) {
+  if (arg_len < 2) {
+    return 1;
+  }
+
+  Program program;
+  ifstream file(arg[1]);
+  string row;
+  string method = "";
+
+  while (getline(file, row)) {
+    if (row.empty()) {
+      continue;
+    }
+    if (row.back() == ':') {
+      string method_name = row.substr(0, row.size() - 1);
+
+      if (method_name.find('.') != string::npos) {
+        method = method_name;
+        program.methods[method_name] = Method();
+        if (method_name.find(".main") != string::npos) {
+          program.mainMethod = method_name;
+        }
+
+      } else {
+        Instruction instruct;
+        instruct.id = "label";
+        instruct.argument = method_name;
+        program.methods[method].instructions.push_back(instruct);
+      }
+
+    } else {
+      Instruction instruct;
+      istringstream line(row);
+      line >> instruct.id;
+      if (instruct.id == "iffalse") {
+        string throw_away_goto;
+        line >> throw_away_goto >> instruct.argument;
+      } else {
+        line >> instruct.argument;
+      }
+      program.methods[method].instructions.push_back(instruct);
+    }
+  }
+  file.close();
+  Interpreter interpreter(program);
+  interpreter.execute();
+  return 0;
+}
