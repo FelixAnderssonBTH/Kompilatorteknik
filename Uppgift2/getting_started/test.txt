@@ -1,46 +1,24 @@
-public class OperatorPriority {
+public class SemanticTest {
     public static void main(String[] a) {
-        System.out.println(new OP().arithmetic());
+        System.out.println(new TestClass().run());
     }
 }
 
-class OP {
+class TestClass {
+    int x;
+    boolean b;
 
-    int miran;
-
-    public int arithmetic() {
-        int b;
-        b = 4;
-        while(b ==4){
-            b = b+1;
-          }
-        int c;
-        c = 8;
-        int ret;
-        // the following statements should generate the same tree
-        ret = 1 + 18 / 3 - b + c * 9;
-        ret = 1 + (18 / 3) - b + (c * 9);
-        return ret;
+    public int run() {
+        x = b;          // assigning boolean to int
+        x = unknown;    // undeclared variable
+        return b;       // return boolean instead of int
     }
 
-    public boolean relational() {
-        int a;
-        int b;
-        boolean c;
-        boolean d;
-        a = 10;
-        b = 12;
-        d = false;
-        c = true;
-        if(a==10){
-            a=9;
-          }else{
-              a=8;
-            }
-        boolean ret;
-        // the following statements should generate the same tree
-        ret = a < b && !d || d == !c;
-        ret = ((a < b) && (!d)) || (d == (!c));
-        return ret;
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int returnAdd() {
+        return this.add(true, 1); // wrong argument type, boolean instead of int
     }
 }
